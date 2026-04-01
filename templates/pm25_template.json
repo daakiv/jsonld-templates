@@ -443,7 +443,7 @@
   },
 
   "subjectOf": {
-    "@type": "SoftwareApplication",
+    "@type": "SoftwareSourceCode",
     "name": "GDSC ETL Tools",
     "description": "Pipeline scripts detailing the data retrieval (wget) and processing workflow.",
     "codeRepository": "https://github.com/Geospatial-Digital-Special-Collections/tools"

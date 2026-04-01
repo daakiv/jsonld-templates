@@ -1,1 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>JSON-LD Metadata Templates</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 0 20px;
+      color: #222;
+    }
+    h1, h2 {
+      color: #0b3d91;
+    }
+    code {
+      background: #f4f4f4;
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+    .box {
+      background: #f8f9fb;
+      border-left: 4px solid #0b3d91;
+      padding: 12px 16px;
+      margin: 20px 0;
+    }
+    ul {
+      padding-left: 20px;
+    }
+    a {
+      color: #0b3d91;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    .small {
+      color: #555;
+      font-size: 0.95em;
+    }
+  </style>
+</head>
+<body>
+  <h1>JSON-LD Metadata Templates</h1>
 
+  <p>
+    This page provides access to the current JSON-LD metadata templates being developed
+    for FAIR and Science-on-Schema.org aligned dataset description.
+  </p>
+
+  <div class="box">
+    <strong>Purpose:</strong> These templates are being refined to support a standardized
+    and reusable metadata structure across multiple dataset modalities, including tabular,
+    raster, and related geospatial data.
+  </div>
+
+  <h2>Available templates</h2>
+  <ul>
+    <li>
+      <a href="./templates/copernicus_avg_temp_v33.json">Copernicus raster template</a><br>
+      <span class="small">1984 Tanzania 2m temperature yearly average (Copernicus)</span>
+    </li>
+    <li>
+      <a href="./templates/svi_template.json">SVI tabular template</a><br>
+      <span class="small">Expanded tabular template for Social Vulnerability Index variables</span>
+    </li>
+    <li>
+      <a href="./templates/pm25_template.json">PM2.5 template</a><br>
+      <span class="small">Wide/vector geospatial example for PM2.5 concentrations</span>
+    </li>
+  </ul>
+
+  <h2>Notes</h2>
+  <p>
+    Supporting notes and rationale are available here:
+    <a href="./notes/rationale.md">rationale.md</a>
+  </p>
+
+  <h2>Review approach</h2>
+  <p>
+    The templates are being reviewed with attention to:
+  </p>
+  <ul>
+    <li>Schema.org and Science-on-Schema.org alignment</li>
+    <li>Clear separation of dataset-level and variable-level metadata</li>
+    <li>Consistency across raster, tabular, and future sensor datasets</li>
+    <li>Support for reusable metadata design and Gaia-related data modeling</li>
+  </ul>
+
+  <h2>Repository structure</h2>
+  <pre><code>jsonld-templates/
+├── index.html
+├── templates/
+│   ├── copernicus_avg_temp_v33.json
+│   ├── svi_template.json
+│   └── pm25_template.json
+└── notes/
+    └── rationale.md</code></pre>
+
+  <p class="small">
+    Maintained by David Amadi.
+  </p>
+</body>
+</html>

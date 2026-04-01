@@ -11,7 +11,7 @@ and prepares them for review as candidate reusable metadata templates.
 - moved spatial and grid-related metadata to `spatialCoverage` to improve conceptual clarity and template reusability across raster, sensor, and tabular datasets
 - structured `license`, `identifier`, `provider`, and `distribution` more consistently
 - aligned the templates more closely with Science-on-Schema.org guidance
-- improved QUDT usage and overall semantic consistency
+- improved QUDT usage ???
 
 ## Review requested on
 - whether `variableMeasured` is now appropriately scoped, or whether some elements should still be linked to `geocr` (GeoCroissant) attributes

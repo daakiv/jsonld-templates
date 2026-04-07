@@ -171,7 +171,6 @@
         "@type": "PropertyValue",
         "name": "geocr:pixel_value",
         "description": "The specific air temperature attribute bound to this spatial grid.",
-        /* This is the 'array of something' Jay mentioned */
         "valueReference": [
           {
             "@type": "PropertyValue",

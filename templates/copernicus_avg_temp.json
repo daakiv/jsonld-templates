@@ -140,7 +140,7 @@
     "propertyID": "http://www.opengis.net/def/property/OGC/0/SamplingLocation",
     "alternateName": "Raster grid location",
     "description": "Structured location for the raster grid used to represent the Tanzania 1984 temperature surface.",
-    "qudt:dataType": "http://qudt.org/schema/qudt/StructuredDataType",
+    "qudt:dataType": "http://qudt.org/schema/qudt/StructuredDataType"
     "valueReference": [
       {
         "@type": "PropertyValue",

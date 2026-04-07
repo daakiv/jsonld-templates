@@ -136,25 +136,55 @@
 "variableMeasured": [
   {
     "@type": "PropertyValue",
+    "name": "RasterLocation",
+    "propertyID": "http://www.opengis.net/def/property/OGC/0/SamplingLocation",
+    "alternateName": "Raster grid location",
+    "description": "Structured location for the raster grid used to represent the Tanzania 1984 temperature surface.",
+    "qudt:dataType": "http://qudt.org/schema/qudt/StructuredDataType",
+    "valueReference": [
+      {
+        "@type": "PropertyValue",
+        "name": "geoType",
+        "value": "boundingBox",
+        "qudt:dataType": "https://schema.org/Text"
+      },
+      {
+        "@type": "PropertyValue",
+        "name": "boundingBox",
+        "value": "-12.125 28.875 -0.875 41.125",
+        "qudt:dataType": "https://schema.org/Text"
+      },
+      {
+        "@type": "PropertyValue",
+        "name": "resolution",
+        "value": 0.25,
+        "unitText": "decimal degrees",
+        "qudt:dataType": "https://schema.org/Number"
+      },
+      {
+        "@type": "PropertyValue",
+        "name": "projection",
+        "value": "http://www.opengis.net/def/crs/OGC/1.3/CRS84",
+        "qudt:dataType": "https://schema.org/Text"
+      }
+    ]
+  },
+  {
+    "@type": "PropertyValue",
     "name": "2m_temperature",
     "description": "Average yearly 2 meter air temperature from Copernicus ERA5-Land reanalysis.",
-    "propertyID": "http://purl.obolibrary.org/obo/PATO_0000146",
+    "propertyID": "pato:0000146",
     "minValue": 287.315857,
     "maxValue": 301.010986,
+    "unitCode": "unit:K",
     "unitText": "Kelvin",
-    "unitCode": "http://qudt.org/vocab/unit/K",
     "measurementTechnique": "Model Output",
     "additionalProperty": [
       {
         "@type": "PropertyValue",
         "name": "statistic",
         "value": "average",
-        "propertyID": "http://purl.obolibrary.org/obo/STATO_0000574"
-      },
-      {
-        "@type": "PropertyValue",
-        "name": "dataRepresentation",
-        "value": "raster" 
+        "propertyID": "stato:0000574"
       }
     ]
   }

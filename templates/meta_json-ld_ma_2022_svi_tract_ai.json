@@ -22,7 +22,63 @@
   "name": "2022 Massachusetts CDC Social Vulnerability Index (tracts)",
   "description": "Social vulnerability refers to the potential negative effects on communities caused by external stresses on human health. Such stresses include natural or human-caused disasters, or disease outbreaks. Reducing social vulnerability can decrease both human suffering and economic loss.\n\nThe CDC/ATSDR Social Vulnerability Index (CDC/ATSDR SVI) uses 16 U.S. census variables to help local officials identify communities that may need support before, during, or after disasters.",
   "url": "https://gdsc.idsc.miami.edu/detail/ma_2022_svi_tract",
+  "version": "2026-02-10",
+  "dateCreated": "2026-02-23",
+  "dateModified": "2026-02-23",
+  "datePublished": "2020-10-22",
+  "license": "https://creativecommons.org/licenses/by/4.0/",
+  "keywords": [
+    "Massachusetts",
+    "CDC",
+    "Vulnerability",
+    "Social Vulnerability Index",
+    "Census Tracts",
+    "Public-Safety"
+  ],
   "isAccessibleForFree": true,
+  "hasPart": [
+    {
+      "@type": "DigitalDocument",
+      "name": "skills.md",
+      "encodingFormat": "text/markdown",
+      "url": "https://github.com/OHDSI/gaiaCatalog/blob/main/datastore/data/ma_2018_svi_tract/etl/skills.md"
+    },
+    {
+      "@type": "DigitalDocument",
+      "name": "agents.md",
+      "encodingFormat": "text/markdown",
+      "url": "https://github.com/OHDSI/gaiaCatalog/blob/main/AGENTS.md"
+    }
+  ],
+  "about": [
+    {
+      "@type": "Event",
+      "name": "ETL process for 2022 Massachusetts CDC Social Vulnerability Index (tracts)",
+      "description": "Direct from source",
+      "potentialAction": {
+        "@type": "Action",
+        "name": "wget",
+        "description": "ETL process for the SVI source dataset",
+        "object": {
+          "@type": "Dataset",
+          "name": "CDC/ATSDR SVI source dataset",
+          "producer": "Center for Disease Control",
+          "url": "https://www.atsdr.cdc.gov/place-health/php/svi/svi-data-documentation-download.html"
+        },
+        "instrument": {
+          "@type": "SoftwareApplication",
+          "@id": "https://github.com/Geospatial-Digital-Special-Collections/tools",
+          "featureList": "wget",
+          "downloadUrl": "https://github.com/Geospatial-Digital-Special-Collections/tools.git"
+        },
+        "result": {
+          "@type": "Dataset",
+          "name": "2022 Massachusetts CDC Social Vulnerability Index (tracts)",
+          "url": "https://gdsc.idsc.miami.edu/download/data/ma_2022_svi_tract/?file=ma_2022_svi_tract&format=sql"
+        }
+      }
+    }
+  ],
   "creator": [
     {
       "@type": "Role",
@@ -102,280 +158,5 @@
       },
       "termCode": "vector"
     }
-  },
-  "variableMeasured": [
-    {
-      "@type": "PropertyValue",
-      "name": "SVILocation",
-      "propertyID": "http://www.opengis.net/def/property/OGC/0/SamplingLocation",
-      "qudt:dataType": "http://qudt.org/schema/qudt/StructuredDataType",
-      "description": "Structured location anchor for the SVI vector polygons.",
-      "valueReference": [
-        {
-          "@type": "PropertyValue",
-          "name": "geoType",
-          "value": "polygon",
-          "qudt:dataType": "xsd:string"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "geometry",
-          "value": "census_tract_polygons",
-          "qudt:dataType": "xsd:string"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "boundingBox",
-          "value": "",
-          "qudt:dataType": "xsd:string"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "resolution",
-          "value": "",
-          "qudt:dataType": "xsd:string"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "geocr:shape_value",
-          "description": "Administrative attributes bound to the polygon shape.",
-          "valueReference": [
-            {
-              "@type": "PropertyValue",
-              "name": "fips",
-              "propertyID": "2052497174",
-              "qudt:dataType": "xsd:string"
-            },
-            {
-              "@type": "PropertyValue",
-              "name": "county",
-              "propertyID": "2052499639",
-              "qudt:dataType": "xsd:string"
-            },
-            {
-              "@type": "PropertyValue",
-              "name": "state",
-              "propertyID": "2052497730",
-              "qudt:dataType": "xsd:string"
-            },
-            {
-              "@type": "PropertyValue",
-              "name": "area_sqmi",
-              "propertyID": "2052497175",
-              "qudt:dataType": "xsd:float",
-              "unitCode": "unit:MI2",
-              "unitText": "square miles"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "@type": "PropertyValue",
-      "name": "e_afam",
-      "description": "Adjunct variable - Black/African American, not Hispanic or Latino persons estimate, 2016-2020 ACS",
-      "propertyID": "http://athena.ohdsi.org/sdoh/2052499783",
-      "qudt:dataType": "xsd:integer",
-      "unitCode": "unit:H87",
-      "unitText": "persons",
-      "stato:statistic": "stato:count",
-      "measurementTechnique": "multiyear period estimation",
-      "valueReference": {
-        "@type": "DefinedTerm",
-        "name": "Theme",
-        "termCode": "Racial & Ethnic Minority Status"
-      }
-    }
-  ]
-}      "identifier": "https://ror.org/04hsdam77",
-      "name": "Center for Disease Control"
-    }
-  ],
-  "provider": [
-    "CDC"
-  ],
-  "includedInDataCatalog": [
-    {
-      "@type": "DataCatalog",
-      "@id": "https://gdsc.idsc.miami.edu",
-      "name": "Geospatial Digital Special Collections",
-      "url": "https://gdsc.idsc.miami.edu"
-    },
-    {
-      "@type": "DataCatalog",
-      "name": "mdc-health-outcomes",
-      "@id": "https://gdsc.idsc.miami.edu/?collection=mdc-health-outcomes",
-      "url": "https://gdsc.idsc.miami.edu/?collection=mdc-health-outcomes"
-    }
-  ],
-  "spatialCoverage": [
-    {
-      "@id": "https://www.geonames.org/6254926",
-      "@type": "AdministrativeArea",
-      "name": "Massachusetts",
-      "geo": {
-        "@type": "GeoShape",
-        "polygon": "-73.508142 41.237964 -69.928393 41.237964 -69.928393 42.886589 -73.508142 42.886589 -73.508142 41.237964"
-      },
-      "additionalProperty": [
-        {
-          "@type": "PropertyValue",
-          "name": "Coordinate Reference System",
-          "value": "EPSG:4269",
-          "url": "https://epsg.io/4269"
-        }
-      ]
-    }
-  ],
-  "distribution": {
-    "@type": "DataDownload",
-    "contentUrl": "https://gdsc.idsc.miami.edu/download/data/ma_2022_svi_tract/?file=ma_2022_svi_tract&format=sql",
-    "encodingFormat": "text/csv",
-    "additionalProperty": [
-      {
-        "@type": "PropertyValue",
-        "name": "canonicalRepresentation",
-        "value": "wide",
-        "description": "Describes the data layout/shape of the file. SVI is distributed as a wide table."
-      }
-    ],
-    "keywords": {
-      "@type": "DefinedTerm",
-      "description": "GIS Data Structure for Representation",
-      "inDefinedTermSet": {
-        "@type": "DefinedTermSet",
-        "name": "dataRepresentation",
-        "hasDefinedTerm": [
-          { "@type": "DefinedTerm", "termCode": "raster" },
-          { "@type": "DefinedTerm", "termCode": "vector" },
-          { "@type": "DefinedTerm", "termCode": "table" }
-        ]
-      },
-      "termCode": "vector"
-    }
-  },
-  "variableMeasured": [
-    {
-      "@type": "PropertyValue",
-      "name": "SVILocation",
-      "propertyID": "http://www.opengis.net/def/property/OGC/0/SamplingLocation",
-      "qudt:dataType": "http://qudt.org/schema/qudt/StructuredDataType",
-      "description": "Structured location anchor for the SVI vector polygons.",
-      "valueReference": [
-        {
-          "@type": "PropertyValue",
-          "name": "geoType",
-          "value": "polygon",
-          "qudt:dataType": "xsd:string"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "geometry",
-          "value": "census_tract_polygons",
-          "qudt:dataType": "xsd:string"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "boundingBox",
-          "value": "",
-          "qudt:dataType": "xsd:string"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "resolution",
-          "value": "",
-          "qudt:dataType": "xsd:string"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "geocr:shape_value",
-          "description": "Administrative attributes bound to the polygon shape.",
-          "valueReference": [
-            {
-              "@type": "PropertyValue",
-              "name": "fips",
-              "propertyID": "2052497174",
-              "qudt:dataType": "xsd:string"
-            },
-            {
-              "@type": "PropertyValue",
-              "name": "county",
-              "propertyID": "2052499639",
-              "qudt:dataType": "xsd:string"
-            },
-            {
-              "@type": "PropertyValue",
-              "name": "state",
-              "propertyID": "2052497730",
-              "qudt:dataType": "xsd:string"
-            },
-            {
-              "@type": "PropertyValue",
-              "name": "area_sqmi",
-              "propertyID": "2052497175",
-              "qudt:dataType": "xsd:float",
-              "unitCode": "unit:MI2",
-              "unitText": "square miles"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "@type": "PropertyValue",
-      "name": "e_afam",
-      "description": "Adjunct variable - Black/African American, not Hispanic or Latino persons estimate, 2016-2020 ACS",
-      "propertyID": "http://athena.ohdsi.org/sdoh/2052499783",
-      "qudt:dataType": "xsd:integer",
-      "unitCode": "unit:H87",
-      "unitText": "persons",
-      "stato:statistic": "stato:count",
-      "measurementTechnique": "multiyear period estimation",
-      "valueReference": {
-        "@type": "DefinedTerm",
-        "name": "Theme",
-        "termCode": "Racial & Ethnic Minority Status"
-      }
-    },
-    {
-      "@type": "PropertyValue",
-      "name": "e_age17",
-      "description": "Persons aged 17 and younger estimate, 2016-2020 ACS",
-      "propertyID": "http://athena.ohdsi.org/sdoh/2052498115",
-      "qudt:dataType": "xsd:integer",
-      "unitCode": "unit:H87",
-      "unitText": "persons",
-      "stato:statistic": "stato:count",
-      "measurementTechnique": "multiyear period estimation",
-      "valueReference": {
-        "@type": "DefinedTerm",
-        "name": "Theme",
-        "termCode": "Household Characteristics"
-      }
-    },
-    {
-      "@type": "PropertyValue",
-      "name": "ep_hisp",
-      "description": "Adjunct variable - Percentage of Hispanic or Latino persons estimate, 2016-2020 ACS",
-      "propertyID": "2052498520",
-      "qudt:dataType": "xsd:float",
-      "unitCode": "unit:PERCENT",
-      "unitText": "percent",
-      "stato:statistic": "stato:percentage",
-      "measurementTechnique": "multiyear period estimation",
-      "valueReference": {
-        "@type": "DefinedTerm",
-        "name": "Theme",
-        "termCode": "Racial & Ethnic Minority Status"
-      }
-    },
-    {
-      "@type": "PropertyValue",
-      "name": "spl_themes",
-      "description": "Sum of series themes (Overall SVI Index)",
-      "propertyID": "2052498131",
-      "qudt:dataType": "xsd:float",
-      "unitText": "svi index"
-    }
-  ]
+  }
 }

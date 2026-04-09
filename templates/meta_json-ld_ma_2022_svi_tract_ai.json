@@ -16,8 +16,8 @@
   "identifier": {
     "@type": "PropertyValue",
     "propertyID": "https://registry.identifiers.org/registry/doi",
-    "value": "doi:10.XXXX/SVI2022MA", 
-    "url": "https://doi.org/10.XXXX/SVI2022MA" 
+    "value": "doi:10.XXXX/SVI2022MA",
+    "url": "https://doi.org/10.XXXX/SVI2022MA"
   },
   "name": "2022 Massachusetts CDC Social Vulnerability Index (tracts)",
   "description": "Social vulnerability refers to the potential negative effects on communities caused by external stresses on human health. Such stresses include natural or human-caused disasters, or disease outbreaks. Reducing social vulnerability can decrease both human suffering and economic loss.\n\nThe CDC/ATSDR Social Vulnerability Index (CDC/ATSDR SVI) uses 16 U.S. census variables to help local officials identify communities that may need support before, during, or after disasters.",
@@ -158,5 +158,184 @@
       },
       "termCode": "vector"
     }
-  }
+  },
+  "variableMeasured": [
+    {
+      "@type": "PropertyValue",
+      "name": "SVILocation",
+      "description": "Structured location anchor for the SVI vector polygons.",
+      "propertyID": "http://www.opengis.net/def/property/OGC/0/SamplingLocation",
+      "qudt:dataType": "http://qudt.org/schema/qudt/StructuredDataType",
+      "valueReference": [
+        {
+          "@type": "PropertyValue",
+          "name": "geoType",
+          "description": "",
+          "value": "polygon",
+          "qudt:dataType": "xsd:string"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "geometry",
+          "description": "",
+          "value": "census_tract_polygons",
+          "qudt:dataType": "xsd:string"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "boundingBox",
+          "description": "",
+          "value": "",
+          "qudt:dataType": "xsd:string"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "resolution",
+          "description": "",
+          "value": "",
+          "qudt:dataType": "xsd:string"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "geocr:shape_value",
+          "description": "Administrative attributes bound to the polygon shape.",
+          "valueReference": [
+            { "@type": "PropertyValue", "name": "fips", "description": "Tract-level FIPS code", "propertyID": "2052497174", "qudt:dataType": "xsd:string" },
+            { "@type": "PropertyValue", "name": "county", "description": "County name", "propertyID": "2052499639", "qudt:dataType": "xsd:string" },
+            { "@type": "PropertyValue", "name": "state", "description": "State name", "propertyID": "2052497730", "qudt:dataType": "xsd:string" },
+            { "@type": "PropertyValue", "name": "st_abbr", "description": "State abbreviation", "propertyID": "2052497733", "qudt:dataType": "xsd:string" },
+            { "@type": "PropertyValue", "name": "st", "description": "State-level FIPS code", "propertyID": "2052497725", "qudt:dataType": "xsd:string" },
+            { "@type": "PropertyValue", "name": "stcnty", "description": "County-level FIPS code", "propertyID": "2052499638", "qudt:dataType": "xsd:string" },
+            { "@type": "PropertyValue", "name": "area_sqmi", "description": "Tract area in square miles", "propertyID": "2052497175", "qudt:dataType": "xsd:float", "unitCode": "unit:MI2", "unitText": "square miles" },
+            { "@type": "PropertyValue", "name": "location", "description": "Text description of tract, county, state", "qudt:dataType": "xsd:string" }
+          ]
+        }
+      ]
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "e_afam",
+      "description": "Adjunct variable - Black/African American, not Hispanic or Latino persons estimate, 2016-2020 ACS",
+      "propertyID": "http://athena.ohdsi.org/sdoh/2052499783",
+      "qudt:dataType": "xsd:integer",
+      "unitCode": "unit:H87",
+      "unitText": "1 person",
+      "stato:statistic": "stato:count",
+      "measurementTechnique": "multiyear period estimation",
+      "geocr:temporalRange": "2016-01-01/2020-12-31",
+      "valueReference": {
+        "@type": "DefinedTerm",
+        "name": "Theme",
+        "termCode": "Racial & Ethnic Minority Status"
+      }
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "e_age17",
+      "description": "Persons aged 17 and younger estimate, 2016-2020 ACS",
+      "propertyID": "http://athena.ohdsi.org/sdoh/2052498115",
+      "qudt:dataType": "xsd:integer",
+      "unitCode": "unit:H87",
+      "unitText": "1 person",
+      "stato:statistic": "stato:count",
+      "measurementTechnique": "multiyear period estimation",
+      "geocr:temporalRange": "2016-01-01/2020-12-31",
+      "valueReference": {
+        "@type": "DefinedTerm",
+        "name": "Theme",
+        "termCode": "Household Characteristics"
+      }
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "ep_hisp",
+      "description": "Adjunct variable - Percentage of Hispanic or Latino persons estimate, 2016-2020 ACS",
+      "propertyID": "2052498520",
+      "qudt:dataType": "xsd:float",
+      "unitText": "percent",
+      "stato:statistic": "stato:percentage",
+      "measurementTechnique": "multiyear period estimation",
+      "geocr:temporalRange": "2016-01-01/2020-12-31",
+      "valueReference": {
+        "@type": "DefinedTerm",
+        "name": "Theme",
+        "termCode": "Racial & Ethnic Minority Status"
+      }
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "epl_crowd",
+      "description": "Percentile percentage households with more people than rooms estimate",
+      "propertyID": "2052498195",
+      "qudt:dataType": "xsd:float",
+      "unitText": "percentile percentage of households with more people than rooms",
+      "stato:statistic": "stato:percentile",
+      "measurementTechnique": "multiyear period estimation",
+      "geocr:temporalRange": "2016-01-01/2020-12-31",
+      "valueReference": {
+        "@type": "DefinedTerm",
+        "name": "Universe",
+        "termCode": "persons"
+      }
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "f_age17",
+      "description": "Flag - the percentage of persons aged 17 and younger is in the 90th percentile (1 = yes, 0 = no)",
+      "propertyID": "2052499366",
+      "qudt:dataType": "xsd:boolean",
+      "geocr:temporalRange": "2016-01-01/2020-12-31"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "f_theme1",
+      "description": "Sum of flags for Socioeconomic Status theme",
+      "propertyID": "2052497702",
+      "qudt:dataType": "xsd:integer",
+      "geocr:temporalRange": "2016-01-01/2020-12-31"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "m_afam",
+      "description": "Adjunct variable - Black/African American, not Hispanic or Latino persons estimate MOE, 2016-2020 ACS",
+      "propertyID": "2052499782",
+      "qudt:dataType": "xsd:float",
+      "unitText": "margin of error of estimate of Black/African American, not Hispanic or Latino persons",
+      "stato:statistic": "measurement accuracy as a percentage (moe)",
+      "measurementTechnique": "multiyear period estimation",
+      "geocr:temporalRange": "2016-01-01/2020-12-31",
+      "valueReference": {
+        "@type": "DefinedTerm",
+        "name": "Universe",
+        "termCode": "persons"
+      }
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "mp_age17",
+      "description": "Percentage of persons aged 17 and younger estimate MOE, 2016-2020 ACS",
+      "propertyID": "2052498381",
+      "qudt:dataType": "xsd:float",
+      "unitText": "moe",
+      "geocr:temporalRange": "2016-01-01/2020-12-31"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "rpl_themes",
+      "description": "Overall percentile ranking",
+      "propertyID": "2052498131",
+      "qudt:dataType": "xsd:float",
+      "unitText": "percentile",
+      "geocr:temporalRange": "2016-01-01/2020-12-31"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "spl_themes",
+      "description": "Sum of series themes",
+      "propertyID": "",
+      "qudt:dataType": "xsd:float",
+      "unitText": "svi index",
+      "geocr:temporalRange": "2016-01-01/2020-12-31"
+    }
+  ]
 }

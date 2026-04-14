@@ -68,7 +68,8 @@ The implementation follows the architecture shown in the diagrams:
 
 ### 1. End-to-End Workflow
 
-`images/catalog_workflow_v5.png`
+![Catalog workflow](./images/catalog_workflow_v5.png)
+This diagram shows the end-to-end workflow from Schema.org metadata into gaiaDB, OMOP-related workflows, and ML-ready outputs.
 
 * Schema.org metadata
   → gaiaDB
@@ -79,7 +80,9 @@ The implementation follows the architecture shown in the diagrams:
 
 ### 2. Metadata Structure
 
-`images/schemaDataset_v5.png`
+![Schema dataset model](./images/schemaDataset_v5.png)
+
+This diagram shows the internal metadata structure, including dataset-level metadata, `variableMeasured` as a table schema, the structured location component, measurement variables, provenance (`about`), and agent artifacts (`hasPart`).
 
 Defines:
 

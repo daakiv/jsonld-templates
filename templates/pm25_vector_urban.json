@@ -208,7 +208,7 @@
     "disambiguatingDescription": [
       "VectorLocation is the first column in a many column wide table where each row is a time series of PM2.5 concentrations at a unique VectorLocation around the earth",
       "Note that the location component here might be a ddi-cdi specialized structura component for wide datasets"
-    ]
+    ],
     "qudt:dataType": "http://qudt.org/schema/qudt/StructuredDataType",
     "valueReference": [
       {

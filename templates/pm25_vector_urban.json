@@ -130,29 +130,29 @@
     }
   ],
   "measurementTechnique": [
-  {
-    "@type": "DefinedTerm",
-    "name": "GIS Data Structure",
-    "description": "Vector data structure for geospatial representation.",
-    "termCode": "vector",
-    "inDefinedTermSet": {
-      "@type": "DefinedTermSet",
-      "name": "dataRepresentation",
-      "url": "https://gdsc.idsc.miami.edu/vocab/dataRepresentation" 
+    {
+      "@type": "DefinedTerm",
+      "name": "GIS Data Structure",
+      "description": "Vector data structure for geospatial representation.",
+      "termCode": "vector",
+      "inDefinedTermSet": {
+        "@type": "DefinedTermSet",
+        "name": "dataRepresentation",
+        "url": "https://gdsc.idsc.miami.edu/vocab/dataRepresentation" 
+      }
+    },
+    {
+      "@type": "DefinedTerm",
+      "name": "GIS Vector Geometry",
+      "description": "Multi-part area geometry (multipolygon).",
+      "termCode": "multipolygon",
+      "inDefinedTermSet": {
+        "@type": "DefinedTermSet",
+        "name": "vectorGeometry",
+        "url": "https://gdsc.idsc.miami.edu/vocab/vectorGeometry"
+      }
     }
-  },
-  {
-    "@type": "DefinedTerm",
-    "name": "GIS Vector Geometry",
-    "description": "Multi-part area geometry (multipolygon).",
-    "termCode": "multipolygon",
-    "inDefinedTermSet": {
-      "@type": "DefinedTermSet",
-      "name": "vectorGeometry",
-      "url": "https://gdsc.idsc.miami.edu/vocab/vectorGeometry"
-    }
-  }
-],
+  ],
   "spatialCoverage": {
     "@type": "Place",
     "name": "Global urban and country administrative coverage",
@@ -169,7 +169,7 @@
     ]
   },
   "temporalCoverage": "1998-01-01/2016-12-31",
-"distribution": [
+  "distribution": [
     {
       "@type": "DataDownload",
       "name": "GeoPackage distribution",
@@ -199,52 +199,42 @@
   ],
 
   "variableMeasured": [
-    {
-      "@type": "PropertyValue",
-      "name": "VectorLocation",
-      "propertyID": "http://www.opengis.net/def/property/OGC/0/SamplingLocation",
-      "alternateName": "Vector feature geometry and administrative attributes",
-      "description": "Structured anchor for the urban area, linking geometry to administrative identifiers.",
-      "qudt:dataType": "http://qudt.org/schema/qudt/StructuredDataType",
-      "valueReference": [
-        {
-          "@type": "PropertyValue",
-          "name": "spatial_metadata",
-          "valueReference": [
-            { "@type": "PropertyValue", "name": "geoType", "value": "polygon" },
-            { "@type": "PropertyValue", "name": "projection", "value": "https://epsg.io/4326" },
-            { 
-          "@type": "PropertyValue", 
-          "name": "resolution", 
-          "value": "0.01 degrees",
-          "description": "Original grid resolution of the source PM2.5 data."
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "geometry",
-          "value": "WKT or GeoJSON multipolygon",
-          "qudt:dataType": "xsd:string"
-        }
-          ]
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "shape_value",
-          "description": "Administrative attributes for the urban extent (gaiaDB attr_index).",
-          "valueReference": [
-            { "@type": "PropertyValue", "name": "isourbid", "description": "Unique code (ISO + URBID)", "qudt:dataType": "xsd:string" },
-            { "@type": "PropertyValue", "name": "urbid", "description": "Urban extent polygon code", "qudt:dataType": "xsd:integer" },
-            { "@type": "PropertyValue", "name": "stndrdname", "description": "Standardized name of the urban extent", "qudt:dataType": "xsd:string" },
-            { "@type": "PropertyValue", "name": "name", "description": "Settlement name", "qudt:dataType": "xsd:string" },
-            { "@type": "PropertyValue", "name": "iso3", "description": "3-letter country code", "qudt:dataType": "xsd:string" },
-            { "@type": "PropertyValue", "name": "unsdcode", "description": "UNSD numerical code", "qudt:dataType": "xsd:integer" },
-            { "@type": "PropertyValue", "name": "countryeng", "description": "English country name", "qudt:dataType": "xsd:string" },
-            { "@type": "PropertyValue", "name": "continent", "description": "Continent Name", "qudt:dataType": "xsd:string" },
-            { "@type": "PropertyValue", "name": "sqkm", "unitText": "square kilometers", "description": "Area of the urban extent", "qudt:dataType": "xsd:float" }
-          ]
-        }
-      ]
-    },
+  {
+    "@type": "PropertyValue",
+    "name": "VectorLocation",
+    "propertyID": "http://www.opengis.net/def/property/OGC/0/SamplingLocation",
+    "alternateName": "Vector feature geometry and administrative attributes",
+    "description": "Structured anchor for the urban area, linking geometry to administrative identifiers.",
+    "qudt:dataType": "http://qudt.org/schema/qudt/StructuredDataType",
+    "valueReference": [
+      {
+        "@type": "PropertyValue",
+        "name": "spatial_metadata",
+        "valueReference": [
+          { "@type": "PropertyValue", "name": "geoType", "value": "polygon" },
+          { "@type": "PropertyValue", "name": "projection", "value": "https://epsg.io/4326" },
+          { "@type": "PropertyValue", "name": "resolution", "value": "0.01 degrees", "description": "Original grid resolution of the source PM2.5 data."},
+          { "@type": "PropertyValue", "name": "geometry", "value": "WKT or GeoJSON multipolygon", "qudt:dataType": "xsd:string" }
+        ]
+      },
+      {
+        "@type": "PropertyValue",
+        "name": "shape_value",
+        "description": "Administrative attributes for the urban extent (gaiaDB attr_index).",
+        "valueReference": [
+          { "@type": "PropertyValue", "name": "isourbid", "description": "Unique code (ISO + URBID)", "qudt:dataType": "xsd:string" },
+          { "@type": "PropertyValue", "name": "urbid", "description": "Urban extent polygon code", "qudt:dataType": "xsd:integer" },
+          { "@type": "PropertyValue", "name": "stndrdname", "description": "Standardized name of the urban extent", "qudt:dataType": "xsd:string" },
+          { "@type": "PropertyValue", "name": "name", "description": "Settlement name", "qudt:dataType": "xsd:string" },
+          { "@type": "PropertyValue", "name": "iso3", "description": "3-letter country code", "qudt:dataType": "xsd:string" },
+          { "@type": "PropertyValue", "name": "unsdcode", "description": "UNSD numerical code", "qudt:dataType": "xsd:integer" },
+          { "@type": "PropertyValue", "name": "countryeng", "description": "English country name", "qudt:dataType": "xsd:string" },
+          { "@type": "PropertyValue", "name": "continent", "description": "Continent Name", "qudt:dataType": "xsd:string" },
+          { "@type": "PropertyValue", "name": "sqkm", "unitText": "square kilometers", "description": "Area of the urban extent", "qudt:dataType": "xsd:float" }
+        ]
+      }
+    ]
+  },
   {
     "@type": "PropertyValue",
     "name": "avpmu_1998",

@@ -18,7 +18,7 @@ This structure is closely aligned with LOINC. LOINC is a common language (set of
 <br /><br />
 <img width="494" height="365" alt="image" src="https://github.com/user-attachments/assets/437992c2-e90f-4341-9187-004e5e437274" />
 <br />
-In the data warehouse there are facts that corresponds to LOINC observations and measurements. And the different parts of a fully specified observation or measurement in LOINC above like "code", "component", "property", "time" and so forth largely correspond to the dimensions of the data warehouse.
+In the data warehouse there are facts that corresponds to LOINC observations and measurements. And the different parts of a fully specified observation or measurement in LOINC above like "code", "component", "property", "time" and so forth largely correspond to the dimensions (concept, person, tool, visit, etc.) of the measurement and observation facts in the data warehouse.
 <br /><br />
 INSPIRE data warehouse development is led by Dorothy Mailosi.
 

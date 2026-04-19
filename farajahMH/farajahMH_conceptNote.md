@@ -36,7 +36,7 @@ This being said, David Amadi will lead authoring and catalog entry generation ex
 
 ## OMOP CDM Instance
 
-## OHDSI Patient Pevel Prediction (PLP)
+## OHDSI Patient Level Prediction (PLP)
 
 ## Croissant Dataset
 

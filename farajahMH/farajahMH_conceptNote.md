@@ -14,8 +14,10 @@ The warehouse is structured as follows:
 
 <img width="341" height="299" alt="image" src="https://github.com/user-attachments/assets/6785d5d2-46d3-4219-8989-42d09e6e04f1" />
 <br />
-This structure is closely aligned with LOINC. LOINC is a common language (set of identifiers, names, and codes) for identifying and describing health measurements, observations, panels of measurements, panels of observations (including questionnaires) and reports.
+This structure is closely aligned with LOINC. LOINC is a common language (set of identifiers, names, and codes) for identifying and describing health measurements, observations, panels of measurements, panels of observations (including questionnaires) and reports:
 <br /><br />
+<img width="494" height="365" alt="image" src="https://github.com/user-attachments/assets/437992c2-e90f-4341-9187-004e5e437274" />
+<br />
 INSPIRE data warehouse development is led by Dorothy Mailosi.
 
 ## Mental Health Data Catalog

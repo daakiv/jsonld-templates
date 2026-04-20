@@ -2,7 +2,7 @@
 <img width="800" height="1100" alt="image" src="https://github.com/user-attachments/assets/1d0f9264-bc0a-4772-83ff-818fbd8ef80d" />
 
 ## Overview
-The chatbot is the product of a workflow that begins with the INSPIRE data warehouse which hosts and links data from EHR records, population health studies and community conversational records between patients and community health workers. Next steps are taken by a schema.org JSON-LD DataCatalog through which warehouse (meta)data is projected into machine actionable Datasets that have and use their knowhow to move these Datasets into an OMOP CDM instance. Using the OHDSI methods library (HADES), here cohorts are constructed and features are extracted through whch prediction models are discovered that relate "idioms of distress", other observations like SES and education and covariates with depression, anxiety and psychosis (DAP) health outcomes over time. These models are stored for downstream use. Downstream the OMOP CDM instance is converted into a Croissant dataset by the MIT Croissant-baker. Croissant datasets are used to fine tune a bespoke LLM in our case with mental health knowledge on the HuggingFace and PyTorch platform. Feature selection during this fine tuning is informed by the model(s) that the OHDSI methods library has built.
+The chatbot is the product of a workflow that begins with the INSPIRE data warehouse which hosts and links data from EHR records, population health studies and community conversational records between patients and community health workers. Next steps are taken by a schema.org JSON-LD DataCatalog through which warehouse (meta)data is projected into machine actionable Datasets that have the knowhow an opensource coding agent uses to move these Datasets into an OMOP CDM instance. Here, using the OHDSI methods library (HADES), cohorts are constructed and features are extracted through which prediction models are discovered that relate "idioms of distress", other observations (like SES and education) and covariates with depression, anxiety and psychosis (DAP) health outcomes over time. These models are stored for downstream use. Downstream the OMOP CDM instance is converted into a Croissant dataset by the MIT Croissant-baker. These Croissant datasets are used to fine tune a bespoke LLM with mental health knowledge on the HuggingFace and PyTorch platform. Feature selection during fine tuning is informed by the model(s) that the OHDSI methods library has built.
 
 ## INSPIRE Data Warehouse
 The warehouse hosts:
@@ -14,22 +14,26 @@ The warehouse is structured as follows:
 
 <img width="341" height="299" alt="image" src="https://github.com/user-attachments/assets/6785d5d2-46d3-4219-8989-42d09e6e04f1" />
 <br />
-This structure is closely aligned with LOINC. LOINC is a common language (set of identifiers, names, and codes) for identifying and describing health measurements, observations, panels of measurements, panels of observations (including questionnaires) and reports:
+This structure is closely aligned with LOINC (Logical Observation Identifiers Names and Codes). LOINC acts as a common language for identifying and describing health measurements ("labs"), observations NLP makes from clinical notes and patient/provider conversations, panels of measurements, panels of observations (including questionnaires) and reports:
 <br /><br />
 <img width="494" height="365" alt="image" src="https://github.com/user-attachments/assets/437992c2-e90f-4341-9187-004e5e437274" />
 <br />
-In the data warehouse there are facts that corresponds to LOINC observations and measurements. And the different parts of a fully specified observation or measurement in LOINC above like "code", "component", "property", "time" and so forth largely correspond to the dimensions (concept, person, tool, visit, etc.) of the measurement and observation facts in the data warehouse.
-<br /><br />
+The alignment goes like this: <br /><br />
+
+* In the data warehouse there are facts that corresponds to LOINC observations and measurements
+* Different parts of a fully specified observation or measurement in LOINC like code, component, system, timing, scale and method are captured across the several dimensions of the measurement and observation facts in the data warehouse
+* These dimensions include records for concept, person, tool, visit, agent, place and panel
+
 INSPIRE data warehouse development is led by Dorothy Mailosi.
 
 ## Mental Health DataCatalog
-The Mental Heaith DataCatalog has several components:
-* The catalog itself is a schema.org DataCatalog which is a collection of one or more schema.org Datasets rendered in JSON-LD format.
+The Mental Health DataCatalog has several components:
+* The catalog itself is a schema.org DataCatalog which is a collection of one or more schema.org Datasets rendered in JSON-LD format
 * The catalog has an authoring tool that generates the schema.org JSON-LD datasets that we draw from the data warehouse
-* Each dataset in the catalog includes a knowledgebase that a coding agent can use to create concepts in a OMOP CDM community vocabulary for the DAP "idioms of distress" under the direction of clinical expertise and lived experience
-* Each dataset in the catalog includes a knowledgebase that a coding agent can use to create observations, measurements and visit occurrences in an OMOP CDM instance using concepts from this community vocabulary as needed
+* Each dataset in the catalog includes a knowledgebase that an AI coding agent can use to create concepts in a OMOP CDM community vocabulary for the DAP "idioms of distress" under the direction of clinical expertise and lived experience
+* Each dataset in the catalog includes a knowledgebase that an AI coding agent can use to create observations, measurements and visit occurrences in an OMOP CDM instance using concepts from this community vocabulary
 
-A catalog with this functionality is not new. Parts of it have been developed already in another project the CODATA team is participating -- the OHDSI GIS WG. And the OHDSI GIS WG itself and its initiative called the gaiaCatalog has been guided by work started at the University of Miami. That being said, hosting a knowledgebase for AI agents is experimental and is still very much a work in progress. Success with agentic AI in these early times will take a significant effort.
+A catalog with this functionality is not new. Parts of it have been developed already in another project the CODATA team is participating -- the [OHDSI GIS WG](https://github.com/OHDSI/GIS). And the OHDSI GIS WG itself and its initiative called the gaiaCatalog has been guided by work started at the University of Miami. That being said, hosting a knowledgebase for AI agents is experimental and is still very much a work in progress. Success with agentic AI in these early times will take a significant effort.
 <br /><br />
 David Amadi will lead authoring and catalog entry generation except he will need support from the CODATA team (Doug and Letisha) when it comes to the parts of the catalog that an AI coding agent might use first to create concepts iteratively under the direction of clinical expertise and lived experience and then to populate measurements and observations in an OMOP CDM instance using these concepts.
 
@@ -37,16 +41,19 @@ David Amadi will lead authoring and catalog entry generation except he will need
 ## OMOP CDM Instance
 
 ## OHDSI Patient Level Prediction (PLP)
+PLP will be conducted in OHDSI. Three PLP outcome cohorts will be created -- one for people who test positive on the GAD-7 anxiety scale, another for people who test positive on the PHQ-9 depression scale and a third for people who test positive on the psychosis screener. The composition of the target cohort(s) is to be determined. Using the ATLAS interface, feature selection in OHDSI PLP usually comes with the choice of prediction methods and their hyperparameters. In our use case, because of the data and for the sake of Responsible AI, our plan is to conduct PLP via scripting instead.
+
+Letisha Najjemba will lead OHDSI PLP.
 
 ## Croissant Dataset
 
 <img width="328" height="468" alt="image" src="https://github.com/user-attachments/assets/1f44a0d5-806c-48a8-998d-0a07256e0bb9" />
 <br />
 
-Conversion of an OMOP CDM instance into a Croissant dataset by the MIT Croissant-baker is a work in progress. See 
+Conversion of OMOP CDM instances into Croissant datasets by the MIT Croissant-baker is a work in progress. See 
 [here](https://github.com/MIT-LCP/croissant-baker/issues/33) for the latest and greatest.
 <br /><br />
-Conversion of an OMOP CDM instance into a Croissant dataset is led by Slava Tykhonov.
+Conversion of OMOP CDM instances into Croissant datasets is led by Slava Tykhonov.
 
 ## Bespoke LLM Fine Tuning
 

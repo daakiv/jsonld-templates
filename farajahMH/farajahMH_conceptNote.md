@@ -35,7 +35,7 @@ The Mental Health DataCatalog has several components:
 
 A catalog with this functionality is not new. Parts of it have been developed already in another project the CODATA team is participating -- the [OHDSI GIS WG](https://github.com/OHDSI/GIS). And the OHDSI GIS WG itself and its initiative called the gaiaCatalog has been guided by work started at the University of Miami. That being said, hosting a knowledgebase for AI agents is experimental and is still very much a work in progress. Success with agentic AI in these early times will take a significant effort.
 <br /><br />
-David Amadi will lead authoring and catalog entry generation except he will need support from the CODATA team (Doug and Letisha) when it comes to the parts of the catalog that an AI coding agent might use first to create concepts iteratively under the direction of clinical expertise and lived experience and then to populate measurements and observations in an OMOP CDM instance using these concepts.
+David Amadi will lead authoring and catalog entry generation except he will need support from the CODATA team (Doug Fils and Letisha Najjemba) when it comes to the parts of the catalog that an AI coding agent might use first to create concepts iteratively under the direction of clinical expertise and lived experience and then to populate measurements and observations in an OMOP CDM instance using these concepts.
 
 
 ## OMOP CDM Instance

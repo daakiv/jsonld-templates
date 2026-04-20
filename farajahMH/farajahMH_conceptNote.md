@@ -1,6 +1,5 @@
 # FarajahMH Workflow
-<img width="800" height="1200" alt="image" src="https://github.com/user-attachments/assets/97bf541e-3ffa-4637-89c9-e6579c8f3bcb" />
-
+<img width="800" height="1000" alt="image" src="https://github.com/user-attachments/assets/2ec03a8e-b086-47be-8fd4-6646197dff27" />
 
 ## Overview
 The chatbot is the product of a workflow that begins with the INSPIRE data warehouse which hosts and links data from EHR records, population health studies and community conversational records between patients and community health workers. Next steps are taken by a schema.org JSON-LD DataCatalog through which warehouse (meta)data is projected into machine actionable Datasets that have the knowhow an open source AI coding agent uses to move these Datasets into an OMOP CDM instance. Here, using the OHDSI methods library (HADES), cohorts are constructed and features are extracted through which prediction models are discovered that relate "idioms of distress", other observations (like SES and education) and covariates with depression, anxiety and psychosis (DAP) health outcomes over time. These models are stored for downstream use. Downstream the OMOP CDM instance is converted into one or more Croissant datasets by the MIT Croissant-baker. These Croissant datasets are used to fine tune a bespoke LLM with mental health knowledge on the HuggingFace and PyTorch platform. Feature selection during fine tuning is informed by the model(s) that the OHDSI methods library has built.

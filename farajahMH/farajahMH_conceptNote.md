@@ -12,7 +12,7 @@ The warehouse hosts:
 
 The warehouse is structured as follows:
 
-<img width="341" height="299" alt="image" src="https://github.com/user-attachments/assets/6785d5d2-46d3-4219-8989-42d09e6e04f1" />
+<img width="344" height="345" alt="image" src="https://github.com/user-attachments/assets/d29315d0-d93c-43c0-a071-549e74959dd8" />
 <br />
 This structure is closely aligned with LOINC (Logical Observation Identifiers Names and Codes). LOINC acts as a common language for identifying and describing health measurements ("labs"), observations NLP makes from clinical notes and patient/provider conversations, panels of measurements, panels of observations (including questionnaires) and reports:
 <br /><br />
@@ -22,7 +22,7 @@ The alignment goes like this: <br /><br />
 
 * In the data warehouse there are facts that corresponds to LOINC observations and measurements
 * Different parts of a fully specified observation or measurement in LOINC like code, component, system, timing, scale and method are captured across the several dimensions of the measurement and observation facts in the data warehouse
-* These dimensions include records for concept, person, tool, visit, agent, place and panel
+* These dimensions include records for concept, person, instrument, method, sample, visit, agent, place and panel
 
 INSPIRE data warehouse development is led by Dorothy Mailosi.
 

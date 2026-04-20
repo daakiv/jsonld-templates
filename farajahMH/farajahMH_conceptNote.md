@@ -13,7 +13,8 @@ The warehouse hosts:
 
 The warehouse is structured as follows:
 
-<img width="344" height="345" alt="image" src="https://github.com/user-attachments/assets/d29315d0-d93c-43c0-a071-549e74959dd8" />
+<img width="519" height="352" alt="image" src="https://github.com/user-attachments/assets/13520193-5069-4970-9ad4-9a13d25a02b8" />
+
 <br />
 This structure is closely aligned with LOINC (Logical Observation Identifiers Names and Codes). LOINC acts as a common language for identifying and describing health measurements ("labs"), observations NLP makes from clinical notes and patient/provider conversations, panels of measurements, panels of observations (including questionnaires) and reports:
 <br /><br />

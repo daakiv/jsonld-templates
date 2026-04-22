@@ -61,7 +61,7 @@ Conversion of OMOP CDM instances into Croissant datasets by the MIT Croissant-ba
 <br /><br />
 Conversion of OMOP CDM instances into Croissant datasets is led by Slava Tykhonov.
 
-## Bespoke LLM Fine Tuning
+## Bespoke LLM Fine Tuning Using the Huggingface / PyTorch Platform
 
 ## FarajaMH
 

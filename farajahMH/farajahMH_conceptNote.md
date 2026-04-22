@@ -47,6 +47,8 @@ David Amadi will lead authoring and catalog entry generation except he will need
 ## OHDSI Patient Level Prediction (PLP)
 PLP will be conducted in OHDSI. Three PLP outcome cohorts will be created -- one for people who test positive on the GAD-7 anxiety scale, another for people who test positive on the PHQ-9 depression scale and a third for people who test positive on the psychosis screener. The composition of the target cohort(s) is to be determined. Using the ATLAS interface, feature selection in OHDSI PLP usually comes with the choice of prediction methods and their hyperparameters. In our use case, because of the data and for the sake of Responsible AI, our plan is to conduct PLP via scripting instead.
 
+Using the scripting approach we will build a fully reproducible pipeline that integrates cohort construction, feature engineering, and model development, while incorporating Responsible AI considerations such as model interpretability, fairness, and robust validation.
+
 Letisha Najjemba will lead OHDSI PLP.
 
 ## Croissant Dataset

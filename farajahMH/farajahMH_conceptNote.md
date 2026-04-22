@@ -16,7 +16,7 @@ The warehouse is structured as follows:
 <img width="519" height="352" alt="image" src="https://github.com/user-attachments/assets/13520193-5069-4970-9ad4-9a13d25a02b8" />
 
 <br />
-This structure is closely aligned with LOINC (Logical Observation Identifiers Names and Codes). LOINC acts as a common language for identifying and describing health measurements ("labs"), observations NLP makes from clinical notes and patient/provider conversations, panels of measurements, panels of observations (including questionnaires) and reports:
+This structure is closely aligned with LOINC (Logical Observation Identifiers Names and Codes). LOINC acts as a common language for identifying and describing health measurements, observations, panels of measurements and reports that list observations and/or measurements.
 <br /><br />
 <img width="494" height="365" alt="image" src="https://github.com/user-attachments/assets/437992c2-e90f-4341-9187-004e5e437274" />
 <br />
@@ -25,6 +25,8 @@ The alignment goes like this: <br /><br />
 * In the data warehouse there are facts that corresponds to LOINC observations and measurements
 * Different parts of a fully specified observation or measurement in LOINC like code, component, system, timing, scale and method are captured across the several dimensions of the measurement and observation facts in the data warehouse
 * These dimensions include records for concept, person, instrument, method, sample, visit, agent, place and panel
+
+Take, for example, the patient's side of a conversation. The patient's side can be tokenized as a set observations on a _**person**_ taken from a recorded _**sample**_ at a _**visit**_ (time). This tokenization has a _**method**_. Each of the observations that fall out of tokenization and its method occurs in a back and forth with a provider whose utterances are instrumental to each of the utterances of the patient. In a report aka _**panel**_ of observations that captures the back and forth, each patient utterance occurs in connection with a provider's utterance which is its _**instrument**_. The sample will have been recorded by an _**agent**_ at a _**place**_. Persons, samples, instruments, visits, agents and methods all have their properties. Finally, there is the _**concept**_ for each observation. Concepts come from a vocabulary of "idioms of distress" in the FarajaMH proposal. This vocabulary of idioms of distress is determined by clinicians and people with lived experience after the fact. Or, in other words, the annotation of observations is sample-driven and bottom up, not top down using a vocabulary that is already established.
 
 INSPIRE data warehouse development is led by Dorothy Mailosi.
 

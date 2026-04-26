@@ -76,7 +76,8 @@ Here is the workflow that runs across the platform:
 And here is an iconic view of the platform itself:
 <br /><br />
 <img width="400" height="475" alt="image" src="https://github.com/user-attachments/assets/7f80a2f1-8c1c-421c-b94f-2bccbbd44366" />
- 
+<br />
+It includes the "Data Creators" which in our case is the MIT Croissant-baker which creates Croissant datasets from labeled observations and measurements in our OMOP CDM instance.
 
 ## FarajaMH
 _edited 4/26/2026_

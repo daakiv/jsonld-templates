@@ -86,5 +86,12 @@ FarajahMH is exposed to community health workers and their clients at the infere
 
 Across the workflow and especially at its service / inference endpoint FarajaMH is private...
 
+More specifically, privacy depends on the region specific cloud storage data centers you can direct the Hugging Face / PyTorch platform to use. European cloud storage does privacy better than the United States because of the EU rules they operate under. But Africa is a future too:
+
+<img width="577" height="265" alt="image" src="https://github.com/user-attachments/assets/689cb583-2306-4042-993d-7e3f848239bf" />
+
+
+
+
 
 

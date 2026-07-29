@@ -51,6 +51,7 @@ AI-assisted and manually reviewed SSSOM mapping
 SSSOM-to-JSON-LD transformation
         ↓
 Schema.org / Science-on-Schema.org JSON-LD output
+   (combined @graph, or one file per dataset)
         ↓
 Gaia Catalog review and ingestion
 ```
@@ -64,11 +65,11 @@ Gaia Catalog review and ingestion
 
 | Folder / file  | Purpose                                                                                                            |
 | -------------- | ------------------------------------------------------------------------------------------------------------------ |
-| `docs/`        | Workflow notes, architecture documentation, and concept notes describing the Gaia/GDSC catalog authoring approach. |
+| `docs/`        | Workflow notes, architecture documentation, concept notes, and the [data-quality report](docs/quality_issues/Kobo_Data_Quality_Issues.xlsx) for the current pull. |
 | `forms/`       | KoboToolbox/XLSForm authoring templates and related form assets.                                                   |
 | `prompts/`     | AI prompt templates used to support SSSOM mapping generation, validation, and human review.                        |
 | `records/`     | Raw Kobo JSON records, generated JSON-LD outputs, and validation or comparison outputs.                            |
-| `scripts/`     | Python scripts for pulling Kobo records and transforming SSSOM mappings into JSON-LD.                              |
+| `scripts/`     | Python scripts for pulling all Kobo records, transforming SSSOM mappings into JSON-LD (combined or one file per dataset), and inspecting mappings. See the [scripts README](mappings/scripts/README.md). |
 | `sssom/`       | SSSOM-style TSV mapping files defining how Kobo JSON paths map to Schema.org / JSON-LD properties.                 |
 | `.env.example` | Example configuration showing required environment variables without exposing secrets.                             |
 | `README.md`    | This overview document.                                                                                            |

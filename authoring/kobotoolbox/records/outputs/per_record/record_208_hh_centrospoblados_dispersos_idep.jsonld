@@ -1,0 +1,654 @@
+{
+  "@context": {
+    "@vocab": "https://schema.org/",
+    "schema": "https://schema.org/",
+    "@language": "en",
+    "dct": "http://purl.org/dc/terms/"
+  },
+  "@graph": [
+    {
+      "@type": "schema:Dataset",
+      "@id": "https://gdsc.idsc.miami.edu/detail/hh_centrospoblados_dispersos_idep",
+      "name": "Centros Poblados Huayhuash (IDEP-INEI)",
+      "description": "Centros Poblados de Huayuhash",
+      "url": "https://www.idep.gob.pe/geoportal/rest/services/DATOS_GEOESPACIALES/CENTROS_POBLADOS_DISPERSOS/FeatureServer/0",
+      "inLanguage": "es",
+      "datePublished": "2017-01-01",
+      "dateModified": "2025-02-27",
+      "creator": [
+        {
+          "@type": "Role",
+          "roleName": "creator",
+          "creator": {
+            "@type": "Organization",
+            "name": "IDEP"
+          }
+        },
+        {
+          "@type": "Role",
+          "roleName": "creator",
+          "creator": {
+            "@type": "Organization",
+            "name": "INEI"
+          }
+        }
+      ],
+      "provider": {
+        "@type": "Organization",
+        "name": "IDEP"
+      },
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Cordillera Huayhuash",
+        "additionalProperty": [
+          {
+            "@type": "PropertyValue",
+            "name": "geonames",
+            "value": "3938961",
+            "url": "https://www.geonames.org/3938961"
+          },
+          {
+            "@type": "PropertyValue",
+            "name": "Spatial Reference System",
+            "value": "http://www.opengis.net/def/crs/EPSG/0/4326"
+          }
+        ]
+      },
+      "keywords": [
+        "Huayhuash",
+        "Perú",
+        " Centros poblados"
+      ],
+      "includedInDataCatalog": [
+        {
+          "@type": "DataCatalog",
+          "@id": "https://gdsc.idsc.miami.edu",
+          "name": "Geospatial Digital Special Collections",
+          "url": "https://gdsc.idsc.miami.edu"
+        },
+        {
+          "@type": "DataCatalog",
+          "name": "hh-conservacion",
+          "@id": "https://gdsc.idsc.miami.edu/?collection=hh-conservacion",
+          "url": "https://gdsc.idsc.miami.edu/?collection=hh-conservacion"
+        }
+      ],
+      "measurementTechnique": [
+        {
+          "@type": "DefinedTerm",
+          "name": "GIS Data Structure",
+          "termCode": "vector",
+          "inDefinedTermSet": {
+            "@type": "DefinedTermSet",
+            "name": "dataRepresentation",
+            "url": "https://gdsc.idsc.miami.edu/vocab/dataRepresentation"
+          }
+        },
+        {
+          "@type": "DefinedTerm",
+          "name": "GIS Vector Geometry",
+          "termCode": "point",
+          "inDefinedTermSet": {
+            "@type": "DefinedTermSet",
+            "name": "vectorGeometry",
+            "url": "https://gdsc.idsc.miami.edu/vocab/vectorGeometry"
+          }
+        },
+        {
+          "@type": "DefinedTerm",
+          "name": "Data Processing Level",
+          "termCode": "derived",
+          "inDefinedTermSet": {
+            "@type": "DefinedTermSet",
+            "name": "dataProcessingLevel",
+            "url": "https://gdsc.idsc.miami.edu/vocab/dataProcessingLevel"
+          }
+        }
+      ],
+      "distribution": [
+        {
+          "@type": "DataDownload",
+          "name": "Source distribution",
+          "contentUrl": "https://www.idep.gob.pe/geoportal/rest/services/DATOS_GEOESPACIALES/CENTROS_POBLADOS_DISPERSOS/FeatureServer/0/query?where=1%3D1&geometry=%22xmin%22%3A-77.33%2C%22ymin%22%3A-10.7%2C%22xmax%22%3A-76.55%2C%22ymax%22%3A-9.8&geometryType=esriGeometryEnvelope&inSR=4326&spatialRel=esriSpatialRelIntersects&outFields=*&where=1%3D1&outSR=4326&f=geojson",
+          "encodingFormat": "application/json"
+        }
+      ],
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "name": "postgis_table",
+          "value": "hh_centrospoblados_dispersos_idep"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "kobo_record_id",
+          "value": "208"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "cartography_value_field",
+          "value": "fuente"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "Spatial Reference System",
+          "value": "http://www.opengis.net/def/crs/EPSG/0/5387"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "derivatives",
+          "value": "shp geojson gpkg"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "download_method",
+          "value": "esri_recursive_ogr"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "source_file",
+          "value": "{'etl_group/file_name_group/file_name_value': 'hh_centrospoblados_dispersos_idep'}"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "extent",
+          "value": "-77.33|-10.7|-76.55|-9.8"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "serviceDefinition",
+          "value": "API|arcgis|query"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "pointOfContact",
+          "value": "{'iso_group/point_of_contact_group/contact_name': 'TBD'}"
+        }
+      ],
+      "dct:accrualPeriodicity": "as_needed",
+      "variableMeasured": [
+        {
+          "@type": "PropertyValue",
+          "name": "fuente",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "descarga",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "gid",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "cod_dpto",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "nom_dpto",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "cod_prov",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "nom_prov",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "cod_dist",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "nom_dist",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "cod_ccpp",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "nom_ccpp",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "num_viv_pa",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "num_hogare",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "pob_total",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "c5_p2_2",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "gr_edad_1",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "gr_edad_2",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "gr_edad_3",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "gr_edad_4",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "gr_edad_5",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "c5_p8_6",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "c5_p9_3",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "c5_p9_4",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "c5_p9_5",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "c5_p9_6",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "c5_p12_2",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "p_sex_m",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "p_ge_0a14",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "p_ge_15a29",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "p_ge_30a44",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "p_ge_45a64",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "p_ge_65ym",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "p_af_ning",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "p_dl_hab",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "p_dl_mov",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "p_dl_ent",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "p_dl_rel",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "p_lees_no",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "c2_p3_1",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "c2_p3_3",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "c2_p3_4",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "c2_p3_5",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "c2_p3_7",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "c2_p5_6",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "c2_p12_1",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "c3_p1_2",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "c3_p1_5",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "vs_agua_rp",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "pvs_agua_r",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "vs_sh",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "pvs_sh",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "vs_aelec",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "pvs_aelec",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "pv_ptierra",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "ph_lenna",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "hs_pclptb",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "phs_pclptb",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "hs_tcelu",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "phs_tcelu",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "hs_inter",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "phs_inter",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "pv_ladri",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "pv_adobe",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "pv_tapia",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "pv_quin",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "pv_mader",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "pv_1hab",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "ph_gasb",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "viv_pa_op",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "tipo",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "cod_tipo",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "id_ccpp",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "dpto",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "prov",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "dist",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "ccpp",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "pob_et14",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "pob_et14_p",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "pob_ocup",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "pob_ocup_p",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "epatro",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "epatro_p",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "indep",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "indep_p",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "emple",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "emple_p",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "obre",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "obre_p",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "negfam",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "negfam_p",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "thog",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "thog_p",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "cp_etiq",
+          "description": ""
+        }
+      ],
+      "isAccessibleForFree": false,
+      "dct:provenance": "INEI 2017 Censo",
+      "additionalType": "vector_dataset",
+      "funder": [
+        {
+          "@type": "Organization",
+          "name": "IDSC",
+          "url": "https://idsc.miami.edu"
+        },
+        {
+          "@type": "Organization",
+          "name": "Library",
+          "url": "https://www.library.miami.edu"
+        }
+      ],
+      "creativeWorkStatus": "draft"
+    }
+  ]
+}

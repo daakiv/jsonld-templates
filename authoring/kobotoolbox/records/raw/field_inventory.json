@@ -1,0 +1,1111 @@
+{
+  "record_count": 88,
+  "structure_counts": {
+    "vector": 59,
+    "raster": 28,
+    "raster_tiles": 1
+  },
+  "field_count": 77,
+  "fields": {
+    "_attachments": {
+      "present_in": 88,
+      "of_total": 88,
+      "kind": "scalar",
+      "subfields": [],
+      "example": "[]",
+      "dataset_types": [
+        "raster",
+        "raster_tiles",
+        "vector"
+      ],
+      "exclusive_to": null,
+      "system_field": true
+    },
+    "_geolocation": {
+      "present_in": 88,
+      "of_total": 88,
+      "kind": "scalar",
+      "subfields": [],
+      "example": "[null, null]",
+      "dataset_types": [
+        "raster",
+        "raster_tiles",
+        "vector"
+      ],
+      "exclusive_to": null,
+      "system_field": true
+    },
+    "_id": {
+      "present_in": 88,
+      "of_total": 88,
+      "kind": "scalar",
+      "subfields": [],
+      "example": "819814929",
+      "dataset_types": [
+        "raster",
+        "raster_tiles",
+        "vector"
+      ],
+      "exclusive_to": null,
+      "system_field": true
+    },
+    "_status": {
+      "present_in": 88,
+      "of_total": 88,
+      "kind": "scalar",
+      "subfields": [],
+      "example": "\"submitted_via_web\"",
+      "dataset_types": [
+        "raster",
+        "raster_tiles",
+        "vector"
+      ],
+      "exclusive_to": null,
+      "system_field": true
+    },
+    "_submission_time": {
+      "present_in": 88,
+      "of_total": 88,
+      "kind": "scalar",
+      "subfields": [],
+      "example": "\"2026-07-23T15:31:52\"",
+      "dataset_types": [
+        "raster",
+        "raster_tiles",
+        "vector"
+      ],
+      "exclusive_to": null,
+      "system_field": true
+    },
+    "_submitted_by": {
+      "present_in": 88,
+      "of_total": 88,
+      "kind": "scalar",
+      "subfields": [],
+      "example": "\"gdsc\"",
+      "dataset_types": [
+        "raster",
+        "raster_tiles",
+        "vector"
+      ],
+      "exclusive_to": null,
+      "system_field": true
+    },
+    "_uuid": {
+      "present_in": 88,
+      "of_total": 88,
+      "kind": "scalar",
+      "subfields": [],
+      "example": "\"c80aa040-8e97-4eb7-ad10-d9364403806\"",
+      "dataset_types": [
+        "raster",
+        "raster_tiles",
+        "vector"
+      ],
+      "exclusive_to": null,
+      "system_field": true
+    },
+    "_validation_status": {
+      "present_in": 88,
+      "of_total": 88,
+      "kind": "scalar",
+      "subfields": [],
+      "example": "{}",
+      "dataset_types": [
+        "raster",
+        "raster_tiles",
+        "vector"
+      ],
+      "exclusive_to": null,
+      "system_field": true
+    },
+    "_xform_id_string": {
+      "present_in": 88,
+      "of_total": 88,
+      "kind": "scalar",
+      "subfields": [],
+      "example": "\"awuNtvkbfwXZPw9LPHFvsn\"",
+      "dataset_types": [
+        "raster",
+        "raster_tiles",
+        "vector"
+      ],
+      "exclusive_to": null,
+      "system_field": true
+    },
+    "cartography_group/attributes_group": {
+      "present_in": 88,
+      "of_total": 88,
+      "kind": "repeat_group",
+      "subfields": [
+        "cartography_group/attributes_group/attribute_concept_id",
+        "cartography_group/attributes_group/attribute_description",
+        "cartography_group/attributes_group/attribute_end_date",
+        "cartography_group/attributes_group/attribute_external_id",
+        "cartography_group/attributes_group/attribute_max_value",
+        "cartography_group/attributes_group/attribute_min_value",
+        "cartography_group/attributes_group/attribute_name",
+        "cartography_group/attributes_group/attribute_source",
+        "cartography_group/attributes_group/attribute_start_date",
+        "cartography_group/attributes_group/attribute_type",
+        "cartography_group/attributes_group/attribute_unit",
+        "cartography_group/attributes_group/attribute_unit_concept_id"
+      ],
+      "example": "{\"cartography_group/attributes_group/attribute_description\": \"Code of the urban extent polygons (not unique)\", \"cartogra",
+      "dataset_types": [
+        "raster",
+        "raster_tiles",
+        "vector"
+      ],
+      "exclusive_to": null,
+      "system_field": false
+    },
+    "cartography_group/color_ramp": {
+      "present_in": 32,
+      "of_total": 88,
+      "kind": "scalar",
+      "subfields": [],
+      "example": "\"33 127 39 4 255\\n  31.20 166 54 3 255\\n  29.04 217 72 1 255\\n  26.70 241 105 19 255\\n  24.36 253 141 60 255\\n  22.02 25",
+      "dataset_types": [
+        "raster",
+        "raster_tiles",
+        "vector"
+      ],
+      "exclusive_to": null,
+      "system_field": false
+    },
+    "cartography_group/label": {
+      "present_in": 39,
+      "of_total": 88,
+      "kind": "scalar",
+      "subfields": [],
+      "example": "\"name\"",
+      "dataset_types": [
+        "vector"
+      ],
+      "exclusive_to": "vector",
+      "system_field": false
+    },
+    "cartography_group/legend": {
+      "present_in": 25,
+      "of_total": 88,
+      "kind": "scalar",
+      "subfields": [],
+      "example": "\"TBD\"",
+      "dataset_types": [
+        "raster"
+      ],
+      "exclusive_to": "raster",
+      "system_field": false
+    },
+    "cartography_group/no_data_group": {
+      "present_in": 9,
+      "of_total": 88,
+      "kind": "repeat_group",
+      "subfields": [
+        "cartography_group/no_data_group/no_data_type",
+        "cartography_group/no_data_group/no_data_value"
+      ],
+      "example": "{\"cartography_group/no_data_group/no_data_type\": \"int4\", \"cartography_group/no_data_group/no_data_value\": \"-9999\"}",
+      "dataset_types": [
+        "raster",
+        "vector"
+      ],
+      "exclusive_to": null,
+      "system_field": false
+    },
+    "cartography_group/tile_url_group": {
+      "present_in": 26,
+      "of_total": 88,
+      "kind": "repeat_group",
+      "subfields": [
+        "cartography_group/tile_url_group/tile_base_url"
+      ],
+      "example": "{\"cartography_group/tile_url_group/tile_base_url\": \"https://gdsc.idsc.miami.edu/rastertiles/mdc_2013_2022_avg_lst_30m/\"}",
+      "dataset_types": [
+        "raster",
+        "raster_tiles"
+      ],
+      "exclusive_to": null,
+      "system_field": false
+    },
+    "cartography_group/tile_zoom_group": {
+      "present_in": 28,
+      "of_total": 88,
+      "kind": "repeat_group",
+      "subfields": [
+        "cartography_group/tile_zoom_group/tile_min_zoom"
+      ],
+      "example": "{\"cartography_group/tile_zoom_group/tile_min_zoom\": \"14\"}",
+      "dataset_types": [
+        "raster",
+        "raster_tiles"
+      ],
+      "exclusive_to": null,
+      "system_field": false
+    },
+    "cartography_group/values_group": {
+      "present_in": 43,
+      "of_total": 88,
+      "kind": "repeat_group",
+      "subfields": [
+        "cartography_group/values_group",
+        "cartography_group/values_group/value_field"
+      ],
+      "example": "{\"cartography_group/values_group/value_field\": \"area_sqmi\"}",
+      "dataset_types": [
+        "vector"
+      ],
+      "exclusive_to": "vector",
+      "system_field": false
+    },
+    "collection_group/analytic_epsg": {
+      "present_in": 87,
+      "of_total": 88,
+      "kind": "scalar",
+      "subfields": [],
+      "example": "\"3857\"",
+      "dataset_types": [
+        "raster",
+        "vector"
+      ],
+      "exclusive_to": null,
+      "system_field": false
+    },
+    "collection_group/analytic_function": {
+      "present_in": 57,
+      "of_total": 88,
+      "kind": "scalar",
+      "subfields": [],
+      "example": "\"gdsc_get_attributes\"",
+      "dataset_types": [
+        "raster",
+        "vector"
+      ],
+      "exclusive_to": null,
+      "system_field": false
+    },
+    "collection_group/collections": {
+      "present_in": 88,
+      "of_total": 88,
+      "kind": "scalar",
+      "subfields": [],
+      "example": "\"mdc-health-outcomes ohdsi-gaia\"",
+      "dataset_types": [
+        "raster",
+        "raster_tiles",
+        "vector"
+      ],
+      "exclusive_to": null,
+      "system_field": false
+    },
+    "collection_group/derivative_url": {
+      "present_in": 88,
+      "of_total": 88,
+      "kind": "scalar",
+      "subfields": [],
+      "example": "\"TBD\"",
+      "dataset_types": [
+        "raster",
+        "raster_tiles",
+        "vector"
+      ],
+      "exclusive_to": null,
+      "system_field": false
+    },
+    "collection_group/derivatives": {
+      "present_in": 53,
+      "of_total": 88,
+      "kind": "scalar",
+      "subfields": [],
+      "example": "\"sql shp\"",
+      "dataset_types": [
+        "raster",
+        "vector"
+      ],
+      "exclusive_to": null,
+      "system_field": false
+    },
+    "collection_group/disclaimer": {
+      "present_in": 27,
+      "of_total": 88,
+      "kind": "scalar",
+      "subfields": [],
+      "example": "\"The Database is licensed by the Licensor “as is” and without any warranty of any kind, either express, implied, or aris",
+      "dataset_types": [
+        "raster",
+        "vector"
+      ],
+      "exclusive_to": null,
+      "system_field": false
+    },
+    "collection_group/rights_statement": {
+      "present_in": 2,
+      "of_total": 88,
+      "kind": "scalar",
+      "subfields": [],
+      "example": "\"This data is open to the public and browse images are freely available without\\n  restriction.\"",
+      "dataset_types": [
+        "raster"
+      ],
+      "exclusive_to": "raster",
+      "system_field": false
+    },
+    "collection_group/service_definition": {
+      "present_in": 53,
+      "of_total": 88,
+      "kind": "scalar",
+      "subfields": [],
+      "example": "\"API|arcgis|query\"",
+      "dataset_types": [
+        "raster",
+        "raster_tiles",
+        "vector"
+      ],
+      "exclusive_to": null,
+      "system_field": false
+    },
+    "collection_group/sponsor_group": {
+      "present_in": 72,
+      "of_total": 88,
+      "kind": "repeat_group",
+      "subfields": [
+        "collection_group/sponsor_group/sponsor_name",
+        "collection_group/sponsor_group/sponsor_url"
+      ],
+      "example": "{\"collection_group/sponsor_group/sponsor_name\": \"TuftsCTSI\", \"collection_group/sponsor_group/sponsor_url\": \"https://www.",
+      "dataset_types": [
+        "raster",
+        "raster_tiles",
+        "vector"
+      ],
+      "exclusive_to": null,
+      "system_field": false
+    },
+    "collection_group/status": {
+      "present_in": 46,
+      "of_total": 88,
+      "kind": "scalar",
+      "subfields": [],
+      "example": "\"draft\"",
+      "dataset_types": [
+        "raster",
+        "vector"
+      ],
+      "exclusive_to": null,
+      "system_field": false
+    },
+    "collection_group/thumbnail": {
+      "present_in": 5,
+      "of_total": 88,
+      "kind": "scalar",
+      "subfields": [],
+      "example": "\"published\"",
+      "dataset_types": [
+        "raster",
+        "vector"
+      ],
+      "exclusive_to": null,
+      "system_field": false
+    },
+    "control_group/external_id_group": {
+      "present_in": 3,
+      "of_total": 88,
+      "kind": "repeat_group",
+      "subfields": [
+        "control_group/external_id_group/external_id_type",
+        "control_group/external_id_group/external_id_value"
+      ],
+      "example": "{\"control_group/external_id_group/external_id_type\": \"ohdsi\", \"control_group/external_id_group/external_id_value\": \"5150",
+      "dataset_types": [
+        "vector"
+      ],
+      "exclusive_to": "vector",
+      "system_field": false
+    },
+    "control_group/id": {
+      "present_in": 88,
+      "of_total": 88,
+      "kind": "scalar",
+      "subfields": [],
+      "example": "\"136\"",
+      "dataset_types": [
+        "raster",
+        "raster_tiles",
+        "vector"
+      ],
+      "exclusive_to": null,
+      "system_field": false
+    },
+    "dublin_core_group/coverage_group": {
+      "present_in": 88,
+      "of_total": 88,
+      "kind": "repeat_group",
+      "subfields": [
+        "dublin_core_group/coverage_group/coverage_identifier",
+        "dublin_core_group/coverage_group/coverage_identifier_schema",
+        "dublin_core_group/coverage_group/coverage_identifier_schema_uri",
+        "dublin_core_group/coverage_group/coverage_name"
+      ],
+      "example": "{\"dublin_core_group/coverage_group/coverage_identifier\": \"6295630\", \"dublin_core_group/coverage_group/coverage_identifie",
+      "dataset_types": [
+        "raster",
+        "raster_tiles",
+        "vector"
+      ],
+      "exclusive_to": null,
+      "system_field": false
+    },
+    "dublin_core_group/creator_group": {
+      "present_in": 88,
+      "of_total": 88,
+      "kind": "repeat_group",
+      "subfields": [
+        "dublin_core_group/creator_group/creator_affiliation",
+        "dublin_core_group/creator_group/creator_affiliation_identifier",
+        "dublin_core_group/creator_group/creator_affiliation_schema",
+        "dublin_core_group/creator_group/creator_affiliation_schema_uri",
+        "dublin_core_group/creator_group/creator_first_name",
+        "dublin_core_group/creator_group/creator_identifier",
+        "dublin_core_group/creator_group/creator_identifier_schema",
+        "dublin_core_group/creator_group/creator_identifier_schema_uri",
+        "dublin_core_group/creator_group/creator_last_name",
+        "dublin_core_group/creator_group/creator_name",
+        "dublin_core_group/creator_group/creator_type"
+      ],
+      "example": "{\"dublin_core_group/creator_group/creator_name\": \"CIESIN - Center for International Earth Science Information Network\"}",
+      "dataset_types": [
+        "raster",
+        "raster_tiles",
+        "vector"
+      ],
+      "exclusive_to": null,
+      "system_field": false
+    },
+    "dublin_core_group/description": {
+      "present_in": 88,
+      "of_total": 88,
+      "kind": "scalar",
+      "subfields": [],
+      "example": "\"The Annual PM2.5 Concentrations for Countries and Urban Areas, 1998-2016, consists of mean concentrations of particulat",
+      "dataset_types": [
+        "raster",
+        "raster_tiles",
+        "vector"
+      ],
+      "exclusive_to": null,
+      "system_field": false
+    },
+    "dublin_core_group/doi": {
+      "present_in": 20,
+      "of_total": 88,
+      "kind": "scalar",
+      "subfields": [],
+      "example": "\"https://doi.org/10.7910/DVN/RHIFKL\"",
+      "dataset_types": [
+        "raster",
+        "vector"
+      ],
+      "exclusive_to": null,
+      "system_field": false
+    },
+    "dublin_core_group/language": {
+      "present_in": 78,
+      "of_total": 88,
+      "kind": "scalar",
+      "subfields": [],
+      "example": "\"en\"",
+      "dataset_types": [
+        "raster",
+        "raster_tiles",
+        "vector"
+      ],
+      "exclusive_to": null,
+      "system_field": false
+    },
+    "dublin_core_group/license": {
+      "present_in": 18,
+      "of_total": 88,
+      "kind": "scalar",
+      "subfields": [],
+      "example": "\"odbl\"",
+      "dataset_types": [
+        "raster",
+        "vector"
+      ],
+      "exclusive_to": null,
+      "system_field": false
+    },
+    "dublin_core_group/license_text": {
+      "present_in": 36,
+      "of_total": 88,
+      "kind": "scalar",
+      "subfields": [],
+      "example": "\"OpenStreetMap® is open data, licensed under the [Open Data Commons Open Database License](https://opendatacommons.org/l",
+      "dataset_types": [
+        "raster",
+        "vector"
+      ],
+      "exclusive_to": null,
+      "system_field": false
+    },
+    "dublin_core_group/provenance": {
+      "present_in": 70,
+      "of_total": 88,
+      "kind": "scalar",
+      "subfields": [],
+      "example": "\"Direct from source\"",
+      "dataset_types": [
+        "raster",
+        "raster_tiles",
+        "vector"
+      ],
+      "exclusive_to": null,
+      "system_field": false
+    },
+    "dublin_core_group/publication_date": {
+      "present_in": 78,
+      "of_total": 88,
+      "kind": "scalar",
+      "subfields": [],
+      "example": "\"2021-04-06\"",
+      "dataset_types": [
+        "raster",
+        "vector"
+      ],
+      "exclusive_to": null,
+      "system_field": false
+    },
+    "dublin_core_group/publisher_group": {
+      "present_in": 88,
+      "of_total": 88,
+      "kind": "repeat_group",
+      "subfields": [
+        "dublin_core_group/publisher_group/publisher_name"
+      ],
+      "example": "{\"dublin_core_group/publisher_group/publisher_name\": \"University of Miami GDSC\"}",
+      "dataset_types": [
+        "raster",
+        "raster_tiles",
+        "vector"
+      ],
+      "exclusive_to": null,
+      "system_field": false
+    },
+    "dublin_core_group/relation_group": {
+      "present_in": 13,
+      "of_total": 88,
+      "kind": "repeat_group",
+      "subfields": [
+        "dublin_core_group/relation_group/relation_title"
+      ],
+      "example": "{\"dublin_core_group/relation_group/relation_title\": \"tl_2018_25_tract\"}",
+      "dataset_types": [
+        "raster",
+        "vector"
+      ],
+      "exclusive_to": null,
+      "system_field": false
+    },
+    "dublin_core_group/resource_type": {
+      "present_in": 88,
+      "of_total": 88,
+      "kind": "scalar",
+      "subfields": [],
+      "example": "\"vector_dataset\"",
+      "dataset_types": [
+        "raster",
+        "raster_tiles",
+        "vector"
+      ],
+      "exclusive_to": null,
+      "system_field": false
+    },
+    "dublin_core_group/restrictions": {
+      "present_in": 25,
+      "of_total": 88,
+      "kind": "scalar",
+      "subfields": [],
+      "example": "\"You are free to copy, distribute, transmit and adapt our data, as long as you credit OpenStreetMap and its contributors",
+      "dataset_types": [
+        "raster",
+        "raster_tiles",
+        "vector"
+      ],
+      "exclusive_to": null,
+      "system_field": false
+    },
+    "dublin_core_group/rights": {
+      "present_in": 88,
+      "of_total": 88,
+      "kind": "scalar",
+      "subfields": [],
+      "example": "\"public_domain\"",
+      "dataset_types": [
+        "raster",
+        "raster_tiles",
+        "vector"
+      ],
+      "exclusive_to": null,
+      "system_field": false
+    },
+    "dublin_core_group/subject_group": {
+      "present_in": 88,
+      "of_total": 88,
+      "kind": "repeat_group",
+      "subfields": [
+        "dublin_core_group/subject_group/subject_term"
+      ],
+      "example": "{\"dublin_core_group/subject_group/subject_term\": \"Global\"}",
+      "dataset_types": [
+        "raster",
+        "raster_tiles",
+        "vector"
+      ],
+      "exclusive_to": null,
+      "system_field": false
+    },
+    "dublin_core_group/time_period_start/__/dublin_core_group/time_period_end": {
+      "present_in": 3,
+      "of_total": 88,
+      "kind": "scalar",
+      "subfields": [],
+      "example": "\"1984-01-01|1984-12-31\"",
+      "dataset_types": [
+        "raster",
+        "vector"
+      ],
+      "exclusive_to": null,
+      "system_field": false
+    },
+    "dublin_core_group/title": {
+      "present_in": 88,
+      "of_total": 88,
+      "kind": "scalar",
+      "subfields": [],
+      "example": "\"Annual PM2.5 Concentrations for Countries and Urban Areas, v1 (1998 – 2016)\"",
+      "dataset_types": [
+        "raster",
+        "raster_tiles",
+        "vector"
+      ],
+      "exclusive_to": null,
+      "system_field": false
+    },
+    "dublin_core_group/url": {
+      "present_in": 86,
+      "of_total": 88,
+      "kind": "scalar",
+      "subfields": [],
+      "example": "\"https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/RHIFKL\"",
+      "dataset_types": [
+        "raster",
+        "raster_tiles",
+        "vector"
+      ],
+      "exclusive_to": null,
+      "system_field": false
+    },
+    "etl_group/checksum": {
+      "present_in": 88,
+      "of_total": 88,
+      "kind": "scalar",
+      "subfields": [],
+      "example": "\"TBD\"",
+      "dataset_types": [
+        "raster",
+        "raster_tiles",
+        "vector"
+      ],
+      "exclusive_to": null,
+      "system_field": false
+    },
+    "etl_group/custom_etl": {
+      "present_in": 30,
+      "of_total": 88,
+      "kind": "scalar",
+      "subfields": [],
+      "example": "\"srtm_merge_and_crop\"",
+      "dataset_types": [
+        "raster",
+        "vector"
+      ],
+      "exclusive_to": null,
+      "system_field": false
+    },
+    "etl_group/custom_parameters": {
+      "present_in": 30,
+      "of_total": 88,
+      "kind": "scalar",
+      "subfields": [],
+      "example": "\"S10W077.SRTMGL1|S10W078.SRTMGL1|S11W077.SRTMGL1|S11W078.SRTMGL1|bbox;-77.33;-10.7;-76.55;-9.8\"",
+      "dataset_types": [
+        "raster",
+        "vector"
+      ],
+      "exclusive_to": null,
+      "system_field": false
+    },
+    "etl_group/dependency_group": {
+      "present_in": 28,
+      "of_total": 88,
+      "kind": "repeat_group",
+      "subfields": [
+        "etl_group/dependency_group/dependency_table_name"
+      ],
+      "example": "{\"etl_group/dependency_group/dependency_table_name\": \"fl_2018_svi_tract\"}",
+      "dataset_types": [
+        "raster",
+        "vector"
+      ],
+      "exclusive_to": null,
+      "system_field": false
+    },
+    "etl_group/download": {
+      "present_in": 57,
+      "of_total": 88,
+      "kind": "scalar",
+      "subfields": [],
+      "example": "\"wget\"",
+      "dataset_types": [
+        "raster",
+        "vector"
+      ],
+      "exclusive_to": null,
+      "system_field": false
+    },
+    "etl_group/etl_parameters": {
+      "present_in": 29,
+      "of_total": 88,
+      "kind": "scalar",
+      "subfields": [],
+      "example": "\"-k\"",
+      "dataset_types": [
+        "raster",
+        "vector"
+      ],
+      "exclusive_to": null,
+      "system_field": false
+    },
+    "etl_group/extension": {
+      "present_in": 73,
+      "of_total": 88,
+      "kind": "scalar",
+      "subfields": [],
+      "example": "\"zip\"",
+      "dataset_types": [
+        "raster",
+        "raster_tiles",
+        "vector"
+      ],
+      "exclusive_to": null,
+      "system_field": false
+    },
+    "etl_group/file_name_group": {
+      "present_in": 88,
+      "of_total": 88,
+      "kind": "repeat_group",
+      "subfields": [
+        "etl_group/file_name_group/file_inside_archive",
+        "etl_group/file_name_group/file_name_value"
+      ],
+      "example": "{\"etl_group/file_name_group/file_inside_archive\": \"sdei-annual-pm2-5-concentrations-countries-urban-areas-v1-1998-2016-u",
+      "dataset_types": [
+        "raster",
+        "raster_tiles",
+        "vector"
+      ],
+      "exclusive_to": null,
+      "system_field": false
+    },
+    "etl_group/format": {
+      "present_in": 88,
+      "of_total": 88,
+      "kind": "scalar",
+      "subfields": [],
+      "example": "\"shp\"",
+      "dataset_types": [
+        "raster",
+        "raster_tiles",
+        "vector"
+      ],
+      "exclusive_to": null,
+      "system_field": false
+    },
+    "etl_group/last_updated": {
+      "present_in": 81,
+      "of_total": 88,
+      "kind": "scalar",
+      "subfields": [],
+      "example": "\"2021-04-06\"",
+      "dataset_types": [
+        "raster",
+        "raster_tiles",
+        "vector"
+      ],
+      "exclusive_to": null,
+      "system_field": false
+    },
+    "etl_group/podid": {
+      "present_in": 88,
+      "of_total": 88,
+      "kind": "scalar",
+      "subfields": [],
+      "example": "\"TBD\"",
+      "dataset_types": [
+        "raster",
+        "raster_tiles",
+        "vector"
+      ],
+      "exclusive_to": null,
+      "system_field": false
+    },
+    "etl_group/source": {
+      "present_in": 88,
+      "of_total": 88,
+      "kind": "scalar",
+      "subfields": [],
+      "example": "\"https://sedac.ciesin.columbia.edu/downloads/data/sdei/sdei-annual-pm2-5-concentrations-countries-urban-areas-v1-1998-20",
+      "dataset_types": [
+        "raster",
+        "raster_tiles",
+        "vector"
+      ],
+      "exclusive_to": null,
+      "system_field": false
+    },
+    "etl_group/table_name": {
+      "present_in": 88,
+      "of_total": 88,
+      "kind": "scalar",
+      "subfields": [],
+      "example": "\"global_pm25_concentration_1998_2016\"",
+      "dataset_types": [
+        "raster",
+        "raster_tiles",
+        "vector"
+      ],
+      "exclusive_to": null,
+      "system_field": false
+    },
+    "etl_group/up": {
+      "present_in": 88,
+      "of_total": 88,
+      "kind": "scalar",
+      "subfields": [],
+      "example": "\"tbd\"",
+      "dataset_types": [
+        "raster",
+        "raster_tiles",
+        "vector"
+      ],
+      "exclusive_to": null,
+      "system_field": false
+    },
+    "etl_group/update_frequency": {
+      "present_in": 88,
+      "of_total": 88,
+      "kind": "scalar",
+      "subfields": [],
+      "example": "\"as_needed\"",
+      "dataset_types": [
+        "raster",
+        "raster_tiles",
+        "vector"
+      ],
+      "exclusive_to": null,
+      "system_field": false
+    },
+    "iso_group/band_group": {
+      "present_in": 28,
+      "of_total": 88,
+      "kind": "repeat_group",
+      "subfields": [
+        "iso_group/band_group/band_name"
+      ],
+      "example": "{\"iso_group/band_group/band_name\": \"Single Band Elevation\"}",
+      "dataset_types": [
+        "raster"
+      ],
+      "exclusive_to": "raster",
+      "system_field": false
+    },
+    "iso_group/data_level": {
+      "present_in": 72,
+      "of_total": 88,
+      "kind": "scalar",
+      "subfields": [],
+      "example": "\"derived\"",
+      "dataset_types": [
+        "raster",
+        "raster_tiles",
+        "vector"
+      ],
+      "exclusive_to": null,
+      "system_field": false
+    },
+    "iso_group/dimension_units": {
+      "present_in": 28,
+      "of_total": 88,
+      "kind": "scalar",
+      "subfields": [],
+      "example": "\"meters\"",
+      "dataset_types": [
+        "raster"
+      ],
+      "exclusive_to": "raster",
+      "system_field": false
+    },
+    "iso_group/epsg": {
+      "present_in": 88,
+      "of_total": 88,
+      "kind": "scalar",
+      "subfields": [],
+      "example": "\"4326\"",
+      "dataset_types": [
+        "raster",
+        "raster_tiles",
+        "vector"
+      ],
+      "exclusive_to": null,
+      "system_field": false
+    },
+    "iso_group/extent": {
+      "present_in": 37,
+      "of_total": 88,
+      "kind": "scalar",
+      "subfields": [],
+      "example": "\"-77.33|-10.7|-76.55|-9.8\"",
+      "dataset_types": [
+        "raster",
+        "vector"
+      ],
+      "exclusive_to": null,
+      "system_field": false
+    },
+    "iso_group/geometry": {
+      "present_in": 59,
+      "of_total": 88,
+      "kind": "scalar",
+      "subfields": [],
+      "example": "\"polygon\"",
+      "dataset_types": [
+        "vector"
+      ],
+      "exclusive_to": "vector",
+      "system_field": false
+    },
+    "iso_group/lineage": {
+      "present_in": 88,
+      "of_total": 88,
+      "kind": "scalar",
+      "subfields": [],
+      "example": "\"TBD\"",
+      "dataset_types": [
+        "raster",
+        "raster_tiles",
+        "vector"
+      ],
+      "exclusive_to": null,
+      "system_field": false
+    },
+    "iso_group/pixel_dimension": {
+      "present_in": 28,
+      "of_total": 88,
+      "kind": "scalar",
+      "subfields": [],
+      "example": "\"30.0\"",
+      "dataset_types": [
+        "raster"
+      ],
+      "exclusive_to": "raster",
+      "system_field": false
+    },
+    "iso_group/point_of_contact_group": {
+      "present_in": 78,
+      "of_total": 88,
+      "kind": "repeat_group",
+      "subfields": [
+        "iso_group/point_of_contact_group/contact_name"
+      ],
+      "example": "{\"iso_group/point_of_contact_group/contact_name\": \"TBD\"}",
+      "dataset_types": [
+        "raster",
+        "raster_tiles",
+        "vector"
+      ],
+      "exclusive_to": null,
+      "system_field": false
+    },
+    "iso_group/process_step": {
+      "present_in": 88,
+      "of_total": 88,
+      "kind": "scalar",
+      "subfields": [],
+      "example": "\"TBD\"",
+      "dataset_types": [
+        "raster",
+        "raster_tiles",
+        "vector"
+      ],
+      "exclusive_to": null,
+      "system_field": false
+    },
+    "iso_group/processor": {
+      "present_in": 88,
+      "of_total": 88,
+      "kind": "scalar",
+      "subfields": [],
+      "example": "\"TBD\"",
+      "dataset_types": [
+        "raster",
+        "raster_tiles",
+        "vector"
+      ],
+      "exclusive_to": null,
+      "system_field": false
+    },
+    "iso_group/structure": {
+      "present_in": 88,
+      "of_total": 88,
+      "kind": "scalar",
+      "subfields": [],
+      "example": "\"vector\"",
+      "dataset_types": [
+        "raster",
+        "raster_tiles",
+        "vector"
+      ],
+      "exclusive_to": null,
+      "system_field": false
+    },
+    "meta/instanceID": {
+      "present_in": 88,
+      "of_total": 88,
+      "kind": "scalar",
+      "subfields": [],
+      "example": "\"c80aa040-8e97-4eb7-ad10-d9364403806\"",
+      "dataset_types": [
+        "raster",
+        "raster_tiles",
+        "vector"
+      ],
+      "exclusive_to": null,
+      "system_field": true
+    },
+    "meta/rootUuid": {
+      "present_in": 88,
+      "of_total": 88,
+      "kind": "scalar",
+      "subfields": [],
+      "example": "\"uuid:c80aa040-8e97-4eb7-ad10-d9364403806\"",
+      "dataset_types": [
+        "raster",
+        "raster_tiles",
+        "vector"
+      ],
+      "exclusive_to": null,
+      "system_field": true
+    }
+  }
+}

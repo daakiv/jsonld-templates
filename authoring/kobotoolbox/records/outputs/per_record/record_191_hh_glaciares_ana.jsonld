@@ -1,0 +1,217 @@
+{
+  "@context": {
+    "@vocab": "https://schema.org/",
+    "schema": "https://schema.org/",
+    "@language": "en",
+    "dct": "http://purl.org/dc/terms/"
+  },
+  "@graph": [
+    {
+      "@type": "schema:Dataset",
+      "@id": "https://gdsc.idsc.miami.edu/detail/hh_glaciares_ana",
+      "name": "Glaciares Huayhuash (ANA)",
+      "description": "En la actualidad, la Unidad de Glaciología y Recursos Hídricos de la Dirección de Conservación y Planeamiento de Recursos Hídricos de la Autoridad Nacional del Agua, se encarga de la evaluación, monitoreo y cuantificación del comportamiento de los glaciares y lagunas altoandinas de las cordilleras nevadas del país, con la finalidad de conocer la evolución de los glaciares con relación al cambio climático y la prevención ante los riesgos de los desastres naturales.",
+      "url": "https://geosnirh.ana.gob.pe/server/rest/services/P%C3%BAblico/Glaciares/MapServer",
+      "inLanguage": "es",
+      "datePublished": "2021-06-03",
+      "dateModified": "2021-10-07",
+      "creator": [
+        {
+          "@type": "Role",
+          "roleName": "creator",
+          "creator": {
+            "@type": "Organization",
+            "name": "ANA"
+          }
+        }
+      ],
+      "provider": {
+        "@type": "Organization",
+        "name": "SNIRH ANA"
+      },
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Cordillera Huayhuash",
+        "additionalProperty": [
+          {
+            "@type": "PropertyValue",
+            "name": "geonames",
+            "value": "3938961",
+            "url": "https://www.geonames.org/3938961"
+          },
+          {
+            "@type": "PropertyValue",
+            "name": "Spatial Reference System",
+            "value": "http://www.opengis.net/def/crs/EPSG/0/4326"
+          }
+        ]
+      },
+      "keywords": [
+        "Perú ",
+        " Huayhuash ",
+        " Glaciares"
+      ],
+      "includedInDataCatalog": [
+        {
+          "@type": "DataCatalog",
+          "@id": "https://gdsc.idsc.miami.edu",
+          "name": "Geospatial Digital Special Collections",
+          "url": "https://gdsc.idsc.miami.edu"
+        },
+        {
+          "@type": "DataCatalog",
+          "name": "hh-conservacion",
+          "@id": "https://gdsc.idsc.miami.edu/?collection=hh-conservacion",
+          "url": "https://gdsc.idsc.miami.edu/?collection=hh-conservacion"
+        }
+      ],
+      "measurementTechnique": [
+        {
+          "@type": "DefinedTerm",
+          "name": "GIS Data Structure",
+          "termCode": "vector",
+          "inDefinedTermSet": {
+            "@type": "DefinedTermSet",
+            "name": "dataRepresentation",
+            "url": "https://gdsc.idsc.miami.edu/vocab/dataRepresentation"
+          }
+        },
+        {
+          "@type": "DefinedTerm",
+          "name": "GIS Vector Geometry",
+          "termCode": "polygon",
+          "inDefinedTermSet": {
+            "@type": "DefinedTermSet",
+            "name": "vectorGeometry",
+            "url": "https://gdsc.idsc.miami.edu/vocab/vectorGeometry"
+          }
+        }
+      ],
+      "distribution": [
+        {
+          "@type": "DataDownload",
+          "name": "Source distribution",
+          "contentUrl": "https://geosnirh.ana.gob.pe/server/rest/services/P%C3%BAblico/Glaciares/MapServer/39/query?where=1%3D1&geometry=%22xmin%22%3A-77.33%2C%22ymin%22%3A-10.7%2C%22xmax%22%3A-76.55%2C%22ymax%22%3A-9.8&geometryType=esriGeometryEnvelope&inSR=4326&spatialRel=esriSpatialRelIntersects&outFields=*&returnGeometry=true&outSR=4326&f=geojson",
+          "encodingFormat": "application/json"
+        }
+      ],
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "name": "postgis_table",
+          "value": "hh_glaciares_ana"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "kobo_record_id",
+          "value": "191"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "cartography_value_field",
+          "value": "id"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "Spatial Reference System",
+          "value": "http://www.opengis.net/def/crs/EPSG/0/5387"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "derivatives",
+          "value": "shp geojson gpkg"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "download_method",
+          "value": "esri_recursive_ogr"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "source_file",
+          "value": "{'etl_group/file_name_group/file_name_value': 'hh_glaciares_ana'}"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "pointOfContact",
+          "value": "{'iso_group/point_of_contact_group/contact_name': 'Jean Carlo Céspedes Reátegui / jcespedes@ana.gob.pe'}"
+        }
+      ],
+      "dct:accrualPeriodicity": "as_needed",
+      "variableMeasured": [
+        {
+          "@type": "PropertyValue",
+          "name": "id",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "nombre",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "area_km2",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "cordillera",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "fecha_ims",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "cod_uh1",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "cod_uh2",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "ident",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "cod_uh3",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "a_gla_uh1",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "a_gla_uh2",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "a_gla_uh3",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "nombre_uh1",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "cod_glac",
+          "description": ""
+        }
+      ],
+      "isAccessibleForFree": false,
+      "additionalType": "vector_dataset"
+    }
+  ]
+}

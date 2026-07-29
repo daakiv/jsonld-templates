@@ -1,0 +1,725 @@
+{
+  "datasets": [
+    {
+      "_id": 819812990,
+      "_submission_time": "2026-07-23T15:29:48",
+      "cartography_group/attributes_group": [
+        {
+          "cartography_group/attributes_group/attribute_name": "osm_id"
+        },
+        {
+          "cartography_group/attributes_group/attribute_name": "name"
+        },
+        {
+          "cartography_group/attributes_group/attribute_name": "destination"
+        },
+        {
+          "cartography_group/attributes_group/attribute_name": "intermittent"
+        },
+        {
+          "cartography_group/attributes_group/attribute_name": "length"
+        },
+        {
+          "cartography_group/attributes_group/attribute_name": "name:en"
+        },
+        {
+          "cartography_group/attributes_group/attribute_name": "name:qu"
+        },
+        {
+          "cartography_group/attributes_group/attribute_name": "waterway"
+        }
+      ],
+      "cartography_group/label": "name",
+      "cartography_group/values_group": [
+        {
+          "cartography_group/values_group/value_field": "osm_id"
+        },
+        {
+          "cartography_group/values_group/value_field": "name"
+        },
+        {
+          "cartography_group/values_group/value_field": "destination"
+        },
+        {
+          "cartography_group/values_group/value_field": "intermittent"
+        },
+        {
+          "cartography_group/values_group/value_field": "length"
+        },
+        {
+          "cartography_group/values_group/value_field": "name:en"
+        },
+        {
+          "cartography_group/values_group/value_field": "name:qu"
+        },
+        {
+          "cartography_group/values_group/value_field": "waterway"
+        }
+      ],
+      "collection_group/analytic_epsg": "5387",
+      "collection_group/collections": "hh-conservacion",
+      "collection_group/derivative_url": "TBD",
+      "collection_group/derivatives": "shp geojson gpkg",
+      "collection_group/disclaimer": "The Database is licensed by the Licensor “as is” and without any warranty of any kind, either express, implied, or arising by statute, custom, course of dealing, or trade usage. Licensor specifically disclaims any and all implied warranties or conditions of title, non-infringement, accuracy or completeness, the presence or absence of errors, fitness for a particular purpose, merchantability, or otherwise. Some jurisdictions do not allow the exclusion of implied warranties, so this exclusion may not apply to You.\n  \n  Subject to any liability that may not be excluded or limited by law, the Licensor is not liable for, and expressly excludes, all liability for loss or damage however and whenever caused to anyone by any use under this License, whether by You or by anyone else, and whether caused by any fault on the part of the Licensor or not. This exclusion of liability includes, but is not limited to, any special, incidental, consequential, punitive, or exemplary damages such as loss of revenue, data, anticipated profits, and lost business. This exclusion applies even if the Licensor has been advised of the possibility of such damages. \n  \n  If liability may not be excluded by law, it is limited to actual and direct financial loss to the extent it is caused by proved negligence on the part of the Licensor.",
+      "collection_group/service_definition": "api",
+      "collection_group/sponsor_group": [
+        {
+          "collection_group/sponsor_group/sponsor_name": "IDSC",
+          "collection_group/sponsor_group/sponsor_url": "https://idsc.miami.edu"
+        },
+        {
+          "collection_group/sponsor_group/sponsor_name": "Library",
+          "collection_group/sponsor_group/sponsor_url": "https://www.library.miami.edu"
+        }
+      ],
+      "control_group/id": "187",
+      "dublin_core_group/coverage_group": [
+        {
+          "dublin_core_group/coverage_group/coverage_identifier": "3938961",
+          "dublin_core_group/coverage_group/coverage_identifier_schema": "geonames",
+          "dublin_core_group/coverage_group/coverage_identifier_schema_uri": "https://www.geonames.org/",
+          "dublin_core_group/coverage_group/coverage_name": "Cordillera Huayhuash"
+        }
+      ],
+      "dublin_core_group/creator_group": [
+        {
+          "dublin_core_group/creator_group/creator_name": "OpenStreetMap contributors"
+        }
+      ],
+      "dublin_core_group/description": "A line feature set for the hydrography of the Cordillera Huayhuash sourced from OpenStreetMap with a query that includes Rivers and Streams.",
+      "dublin_core_group/license": "odbl",
+      "dublin_core_group/license_text": "OpenStreetMap® is open data, licensed under the [Open Data Commons Open Database License](https://opendatacommons.org/licenses/odbl/) (ODbL) by the [OpenStreetMap Foundation](https://osmfoundation.org/) (OSMF).",
+      "dublin_core_group/provenance": "Direct from source.",
+      "dublin_core_group/publication_date": "2025-04-23",
+      "dublin_core_group/publisher_group": [
+        {
+          "dublin_core_group/publisher_group/publisher_name": "OpenStreetMap"
+        }
+      ],
+      "dublin_core_group/resource_type": "vector_dataset",
+      "dublin_core_group/restrictions": "You are free to copy, distribute, transmit and adapt our data, as long as you credit OpenStreetMap and its contributors. If you alter or build upon our data, you may distribute the result only under the same licence.",
+      "dublin_core_group/rights": "open_data",
+      "dublin_core_group/subject_group": [
+        {
+          "dublin_core_group/subject_group/subject_term": "Perú"
+        },
+        {
+          "dublin_core_group/subject_group/subject_term": "Huayhuash"
+        },
+        {
+          "dublin_core_group/subject_group/subject_term": "Hidrografia"
+        }
+      ],
+      "dublin_core_group/title": "OSM Huayhuash Rios y Arroyos",
+      "dublin_core_group/url": "https://www.openstreetmap.org/",
+      "etl_group/checksum": "TBD",
+      "etl_group/download": "curl",
+      "etl_group/etl_parameters": "lines",
+      "etl_group/extension": "osm",
+      "etl_group/file_name_group": [
+        {
+          "etl_group/file_name_group/file_name_value": "hh_rios_arroyos_osm"
+        }
+      ],
+      "etl_group/format": "osm",
+      "etl_group/last_updated": "2025-02-24",
+      "etl_group/podid": "TBD",
+      "etl_group/source": "https://overpass-api.de/api/interpreter?data=nwr%5B%22waterway%22~%22river|stream%22%5D%28-10.7,-77.33,-9.8,-76.55%29;%28._;>;%29;out;",
+      "etl_group/table_name": "hh_rios_arroyos_osm",
+      "etl_group/up": "tbd",
+      "etl_group/update_frequency": "as_needed",
+      "iso_group/data_level": "observed",
+      "iso_group/epsg": "4326",
+      "iso_group/extent": "-77.33|-10.7|-76.55|-9.8",
+      "iso_group/geometry": "line",
+      "iso_group/lineage": "TBD",
+      "iso_group/point_of_contact_group": [
+        {
+          "iso_group/point_of_contact_group/contact_name": "TBD"
+        }
+      ],
+      "iso_group/process_step": "TBD",
+      "iso_group/processor": "TBD",
+      "iso_group/structure": "vector",
+      "meta/instanceID": "c22cbec2-bdf1-4e1d-9f76-14521450176",
+      "_xform_id_string": "awuNtvkbfwXZPw9LPHFvsn",
+      "_uuid": "c22cbec2-bdf1-4e1d-9f76-14521450176",
+      "meta/rootUuid": "uuid:c22cbec2-bdf1-4e1d-9f76-14521450176",
+      "_attachments": [],
+      "_status": "submitted_via_web",
+      "_geolocation": [
+        null,
+        null
+      ],
+      "_validation_status": {},
+      "_submitted_by": "gdsc"
+    },
+    {
+      "_id": 819918253,
+      "_submission_time": "2026-07-23T17:23:28",
+      "cartography_group/attributes_group": [
+        {
+          "cartography_group/attributes_group/attribute_description": "OpenStreetMap (OSM) ID",
+          "cartography_group/attributes_group/attribute_name": "osm_id",
+          "cartography_group/attributes_group/attribute_type": "varchar"
+        },
+        {
+          "cartography_group/attributes_group/attribute_description": "Place/settlement name",
+          "cartography_group/attributes_group/attribute_name": "\n    name",
+          "cartography_group/attributes_group/attribute_source": "varchar"
+        },
+        {
+          "cartography_group/attributes_group/attribute_description": "Kind of settlement as City, Town, Village, Hamlet, City Block, or other",
+          "cartography_group/attributes_group/attribute_name": "\n    place",
+          "cartography_group/attributes_group/attribute_source": "varchar"
+        },
+        {
+          "cartography_group/attributes_group/attribute_description": "Any other OSM tags with values",
+          "cartography_group/attributes_group/attribute_name": "\n    other_tags",
+          "cartography_group/attributes_group/attribute_source": "varchar"
+        }
+      ],
+      "cartography_group/label": "name",
+      "cartography_group/values_group": [
+        {
+          "cartography_group/values_group/value_field": "osm_id"
+        },
+        {
+          "cartography_group/values_group/value_field": "name"
+        },
+        {
+          "cartography_group/values_group/value_field": "place"
+        },
+        {
+          "cartography_group/values_group/value_field": "other_tags"
+        }
+      ],
+      "collection_group/analytic_epsg": "4326",
+      "collection_group/analytic_function": "gdsc_get_attributes",
+      "collection_group/collections": "tz-climate-change tz-health-outcomes",
+      "collection_group/derivative_url": "TBD",
+      "collection_group/derivatives": "shp",
+      "collection_group/disclaimer": "The Database is licensed by the Licensor “as is” and without any warranty of any kind, either express, implied, or arising by statute, custom, course of dealing, or trade usage. Licensor specifically disclaims any and all implied warranties or conditions of title, non-infringement, accuracy or completeness, the presence or absence of errors, fitness for a particular purpose, merchantability, or otherwise. Some jurisdictions do not allow the exclusion of implied warranties, so this exclusion may not apply to You.\n  \n  Subject to any liability that may not be excluded or limited by law, the Licensor is not liable for, and expressly excludes, all liability for loss or damage however and whenever caused to anyone by any use under this License, whether by You or by anyone else, and whether caused by any fault on the part of the Licensor or not. This exclusion of liability includes, but is not limited to, any special, incidental, consequential, punitive, or exemplary damages such as loss of revenue, data, anticipated profits, and lost business. This exclusion applies even if the Licensor has been advised of the possibility of such damages. \n  \n  If liability may not be excluded by law, it is limited to actual and direct financial loss to the extent it is caused by proved negligence on the part of the Licensor.",
+      "collection_group/service_definition": "api",
+      "collection_group/sponsor_group": [
+        {
+          "collection_group/sponsor_group/sponsor_name": "IDSC",
+          "collection_group/sponsor_group/sponsor_url": "https://idsc.miami.edu"
+        },
+        {
+          "collection_group/sponsor_group/sponsor_name": "Library",
+          "collection_group/sponsor_group/sponsor_url": "https://www.library.miami.edu"
+        }
+      ],
+      "collection_group/status": "published",
+      "control_group/id": "160.0",
+      "dublin_core_group/coverage_group": [
+        {
+          "dublin_core_group/coverage_group/coverage_identifier": "149590",
+          "dublin_core_group/coverage_group/coverage_identifier_schema": "geonames",
+          "dublin_core_group/coverage_group/coverage_identifier_schema_uri": "https://www.geonames.org/",
+          "dublin_core_group/coverage_group/coverage_name": "Tanzania"
+        }
+      ],
+      "dublin_core_group/creator_group": [
+        {
+          "dublin_core_group/creator_group/creator_name": "OpenStreetMap contributors"
+        }
+      ],
+      "dublin_core_group/description": "A point feature set for the populated places in Tanzania sourced from OpenStreetMap with a query that includes Cities, Towns, Villages, and Hamlets.",
+      "dublin_core_group/license": "odbl",
+      "dublin_core_group/license_text": "OpenStreetMap® is open data, licensed under the [Open Data Commons Open Database License](https://opendatacommons.org/licenses/odbl/) (ODbL) by the [OpenStreetMap Foundation](https://osmfoundation.org/) (OSMF).",
+      "dublin_core_group/provenance": "Direct from source.",
+      "dublin_core_group/publication_date": "2025-02-24",
+      "dublin_core_group/publisher_group": [
+        {
+          "dublin_core_group/publisher_group/publisher_name": "OpenStreetMap"
+        }
+      ],
+      "dublin_core_group/resource_type": "vector_dataset",
+      "dublin_core_group/restrictions": "You are free to copy, distribute, transmit and adapt our data, as long as you credit OpenStreetMap and its contributors. If you alter or build upon our data, you may distribute the result only under the same licence.",
+      "dublin_core_group/rights": "open_data",
+      "dublin_core_group/subject_group": [
+        {
+          "dublin_core_group/subject_group/subject_term": "Tanzania"
+        },
+        {
+          "dublin_core_group/subject_group/subject_term": "Populated Places"
+        },
+        {
+          "dublin_core_group/subject_group/subject_term": "Cities"
+        },
+        {
+          "dublin_core_group/subject_group/subject_term": "Towns"
+        },
+        {
+          "dublin_core_group/subject_group/subject_term": "Villages"
+        },
+        {
+          "dublin_core_group/subject_group/subject_term": "Hamlets"
+        }
+      ],
+      "dublin_core_group/title": "OSM Tanzania Populated Places ",
+      "dublin_core_group/url": "https://www.openstreetmap.org/",
+      "etl_group/checksum": "TBD",
+      "etl_group/download": "curl",
+      "etl_group/etl_parameters": "points",
+      "etl_group/extension": "osm",
+      "etl_group/file_name_group": [
+        {
+          "etl_group/file_name_group/file_name_value": "tz_populated_places_osm"
+        }
+      ],
+      "etl_group/format": "osm",
+      "etl_group/last_updated": "2025-02-24",
+      "etl_group/podid": "TBD",
+      "etl_group/source": "https://overpass-api.de/api/interpreter?data=area%28id:3600195270%29-%3E.searchArea;node%5B%22place%22~%22city|town|village|hamlet%22%5D%28area.searchArea%29;%28._;%3E;%29;out;",
+      "etl_group/table_name": "tz_populated_places_osm",
+      "etl_group/up": "tbd",
+      "etl_group/update_frequency": "as_needed",
+      "iso_group/data_level": "observed",
+      "iso_group/epsg": "4326",
+      "iso_group/geometry": "point",
+      "iso_group/lineage": "TBD",
+      "iso_group/point_of_contact_group": [
+        {
+          "iso_group/point_of_contact_group/contact_name": "TBD"
+        }
+      ],
+      "iso_group/process_step": "TBD",
+      "iso_group/processor": "TBD",
+      "iso_group/structure": "vector",
+      "meta/instanceID": "75e54676-a48f-410e-8c7e-c5939462215",
+      "_xform_id_string": "awuNtvkbfwXZPw9LPHFvsn",
+      "_uuid": "75e54676-a48f-410e-8c7e-c5939462215",
+      "meta/rootUuid": "uuid:75e54676-a48f-410e-8c7e-c5939462215",
+      "_attachments": [],
+      "_status": "submitted_via_web",
+      "_geolocation": [
+        null,
+        null
+      ],
+      "_validation_status": {},
+      "_submitted_by": "gdsc"
+    },
+    {
+      "_id": 819912149,
+      "_submission_time": "2026-07-23T17:17:16",
+      "cartography_group/attributes_group": [
+        {
+          "cartography_group/attributes_group/attribute_description": "Radiance as bidirectional reflectance distribution function (BRDF) in nanoWatts per square centimeter per steradian",
+          "cartography_group/attributes_group/attribute_max_value": "5086",
+          "cartography_group/attributes_group/attribute_min_value": "0",
+          "cartography_group/attributes_group/attribute_name": "Radiance",
+          "cartography_group/attributes_group/attribute_source": "VIIRS",
+          "cartography_group/attributes_group/attribute_type": "float",
+          "cartography_group/attributes_group/attribute_unit": "nW/cm^2/sr"
+        }
+      ],
+      "cartography_group/color_ramp": "nv 0 0 0 0\n  1500 252 255 164 255\n  1333 247 208 60 255\n  1166 251 154 7 255\n  1000 237 105 37 255\n  833 206 68 70 255\n  666 165 45 96 255\n  500 120 28 109 255\n  333 76 12 107 255\n  166 27 12 65 255\n  0 0 0 4 255",
+      "cartography_group/legend": "TBD",
+      "cartography_group/tile_url_group": [
+        {
+          "cartography_group/tile_url_group/tile_base_url": "https://gdsc.idsc.miami.edu/rastertiles/mdc_2012_viirs_vnp46a4/"
+        },
+        {
+          "cartography_group/tile_url_group/tile_base_url": "{z}/{x}/{y}.png"
+        },
+        {
+          "cartography_group/tile_url_group/tile_base_url": "leaflet.html"
+        }
+      ],
+      "cartography_group/tile_zoom_group": [
+        {
+          "cartography_group/tile_zoom_group/tile_min_zoom": "8"
+        },
+        {
+          "cartography_group/tile_zoom_group/tile_min_zoom": "12"
+        }
+      ],
+      "collection_group/analytic_epsg": "2236",
+      "collection_group/analytic_function": "gdsc_zonal_statistics",
+      "collection_group/collections": "mdc-health-outcomes mdc-sleep-outcomes",
+      "collection_group/derivative_url": "TBD",
+      "collection_group/service_definition": "API|metadata|download",
+      "collection_group/sponsor_group": [
+        {
+          "collection_group/sponsor_group/sponsor_name": "IDSC",
+          "collection_group/sponsor_group/sponsor_url": "https://idsc.miami.edu"
+        },
+        {
+          "collection_group/sponsor_group/sponsor_name": "Library",
+          "collection_group/sponsor_group/sponsor_url": "https://www.library.miami.edu"
+        }
+      ],
+      "collection_group/status": "draft",
+      "control_group/id": "193.0",
+      "dublin_core_group/coverage_group": [
+        {
+          "dublin_core_group/coverage_group/coverage_identifier": "4164238",
+          "dublin_core_group/coverage_group/coverage_identifier_schema": "geonames",
+          "dublin_core_group/coverage_group/coverage_identifier_schema_uri": "https://www.geonames.org/",
+          "dublin_core_group/coverage_group/coverage_name": "Miami-Dade County"
+        }
+      ],
+      "dublin_core_group/creator_group": [
+        {
+          "dublin_core_group/creator_group/creator_name": "Level-1 and Atmosphere Archive & Distribution System Distributed Active Archive Center (LAADS DAAC)"
+        },
+        {
+          "dublin_core_group/creator_group/creator_name": "NASA"
+        }
+      ],
+      "dublin_core_group/description": "VNP46A4 - VIIRS/NPP Lunar BRDF-Adjusted Nighttime Lights Yearly L3 Global 15 arc second Linear Lat Lon Grid\n  \n  The Suomi National Polar-orbiting Partnership (SNPP) Visible Infrared Imaging Radiometer Suite (VIIRS) supports a Day-Night Band (DNB) sensor that provides global daily measurements of nocturnal visible and near-infrared (NIR) light that are suitable for Earth system science and applications. The VIIRS DNB's ultra-sensitivity in lowlight conditions enable us to generate a new set of science-quality nighttime products that manifest substantial improvements in sensor resolution and calibration when compared to the previous era of Defense Meteorological Satellite Program/Operational Linescan System's (DMSP/OLS) nighttime lights image products. Such improvements allow the VIIRS DNB products to better monitor both the magnitude and signature of nighttime phenomena, and anthropogenic sources of light emissions.\n  \n  VNP46A4 is the short-name for the fourth nighttime lights (NTL) product in the Black Marble suite, which provides yearly composites generated from daily atmospherically- and lunar-BRDF-corrected NTL radiance to remove the influence of extraneous artifacts and biases. Known by its long-name, VIIRS/NPP Lunar BRDF-Adjusted Nighttime Lights Yearly L3 Global 15 arc-second Linear Lat Lon Grid, this product contains 28 layers. They provide information on the NTL composite, the number of observations, quality, and standard deviation for multi-view zenith angle categories (near-nadir, off-nadir, and all angles), their snow-covered and snow-free statuses besides land-water mask, latitude and longitude coordinate information. They also include detailed information and description of the quality flags. This SNPP VIIRS collection-1 product record, identified by its version-ID 001 in its file name, starts from January 1st 2012.",
+      "dublin_core_group/doi": "https://doi.org/10.5067/VIIRS/VNP46A4.001",
+      "dublin_core_group/language": "en",
+      "dublin_core_group/license_text": "All NASA Terra and Aqua MODIS, Suomi NPP VIIRS, and other Collections comply with NASA’s Data and Information policy, which promotes the full and open sharing of all data with research and applications communities, private industry, academia, and the public. The term data includes observation data, images, metadata, products, and documentation. All data products acquired through the Level-1 and Atmosphere Archive & Distribution System (LAADS) Distributed Active Archive Center (DAAC) are provided without any monetary charge and have no restrictions on subsequent use or redistribution.",
+      "dublin_core_group/provenance": "Direct From Source, then extracted, clipped, and reprojected",
+      "dublin_core_group/publication_date": "2024-01-20",
+      "dublin_core_group/publisher_group": [
+        {
+          "dublin_core_group/publisher_group/publisher_name": "LAADS/NASA"
+        }
+      ],
+      "dublin_core_group/resource_type": "raster_dataset",
+      "dublin_core_group/restrictions": "All data products acquired through the Level-1 and Atmosphere Archive & Distribution System (LAADS) Distributed Active Archive Center (DAAC) are provided without any monetary charge and have no restrictions on subsequent use or redistribution.",
+      "dublin_core_group/rights": "public_domain",
+      "dublin_core_group/subject_group": [
+        {
+          "dublin_core_group/subject_group/subject_term": "Miami-Dade"
+        },
+        {
+          "dublin_core_group/subject_group/subject_term": "Nighttime lights"
+        }
+      ],
+      "dublin_core_group/title": "2012 Miami-Dade VIIRS Nighttime Lights",
+      "dublin_core_group/url": "https://ladsweb.modaps.eosdis.nasa.gov/missions-and-measurements/products/VNP46A4/",
+      "etl_group/checksum": "TBD",
+      "etl_group/custom_etl": "clip_raster",
+      "etl_group/custom_parameters": "egom_2012_viirs_vnp46a4|fl_2022_tl_cousub|countyfp='086'|-srcnodata 65535 -dstnodata 65535 ",
+      "etl_group/dependency_group": [
+        {
+          "etl_group/dependency_group/dependency_table_name": "egom_2012_viirs_vnp46a4"
+        },
+        {
+          "etl_group/dependency_group/dependency_table_name": "fl_2022_tl_cousub"
+        }
+      ],
+      "etl_group/extension": "h5",
+      "etl_group/file_name_group": [
+        {
+          "etl_group/file_name_group/file_inside_archive": "VNP46A4.A2012001.h09v06.002.2025086170037",
+          "etl_group/file_name_group/file_name_value": "mdc_2012_viirs_vnp46a4"
+        }
+      ],
+      "etl_group/format": "tif",
+      "etl_group/last_updated": "2025-03-28",
+      "etl_group/podid": "TBD",
+      "etl_group/source": "https://ladsweb.modaps.eosdis.nasa.gov/api/v2/content/archives/VNP46A4.A2012001.h09v06.002.2025086170037.h5",
+      "etl_group/table_name": "mdc_2012_viirs_vnp46a4",
+      "etl_group/up": "tbd",
+      "etl_group/update_frequency": "never",
+      "iso_group/band_group": [
+        {
+          "iso_group/band_group/band_name": "SUBDATASET_15_NAME=HDF5:\"VNP46A4.A2012001.h09v06.002.2025086170037.h5\"://HDFEOS/GRIDS/VIIRS_Grid_DNB_2d/Data_Fields/NearNadir_Composite_Snow_Free\n      SUBDATASET_15_DESC=[2400x2400] //HDFEOS/GRIDS/VIIRS_Grid_DNB_2d/Data_Fields/NearNadir_Composite_Snow_Free (16-bit unsigned integer)"
+        }
+      ],
+      "iso_group/data_level": "observed",
+      "iso_group/dimension_units": "decimal_degrees",
+      "iso_group/epsg": "4326",
+      "iso_group/lineage": "TBD",
+      "iso_group/pixel_dimension": "0.00416666666666666",
+      "iso_group/point_of_contact_group": [
+        {
+          "iso_group/point_of_contact_group/contact_name": "TBD"
+        }
+      ],
+      "iso_group/process_step": "TBD",
+      "iso_group/processor": "TBD",
+      "iso_group/structure": "raster",
+      "meta/instanceID": "34e6ad6a-c5a0-46c9-b862-b7452556842",
+      "_xform_id_string": "awuNtvkbfwXZPw9LPHFvsn",
+      "_uuid": "34e6ad6a-c5a0-46c9-b862-b7452556842",
+      "meta/rootUuid": "uuid:34e6ad6a-c5a0-46c9-b862-b7452556842",
+      "_attachments": [],
+      "_status": "submitted_via_web",
+      "_geolocation": [
+        null,
+        null
+      ],
+      "_validation_status": {},
+      "_submitted_by": "gdsc"
+    },
+    {
+      "_id": 819912175,
+      "_submission_time": "2026-07-23T17:17:18",
+      "cartography_group/attributes_group": [
+        {
+          "cartography_group/attributes_group/attribute_description": "Radiance as bidirectional reflectance distribution function (BRDF) in nanoWatts per square centimeter per steradian",
+          "cartography_group/attributes_group/attribute_max_value": "5086",
+          "cartography_group/attributes_group/attribute_min_value": "0",
+          "cartography_group/attributes_group/attribute_name": "Radiance",
+          "cartography_group/attributes_group/attribute_source": "VIIRS",
+          "cartography_group/attributes_group/attribute_type": "float",
+          "cartography_group/attributes_group/attribute_unit": "nW/cm^2/sr"
+        }
+      ],
+      "cartography_group/color_ramp": "nv 0 0 0 0\n  1500 252 255 164 255\n  1333 247 208 60 255\n  1166 251 154 7 255\n  1000 237 105 37 255\n  833 206 68 70 255\n  666 165 45 96 255\n  500 120 28 109 255\n  333 76 12 107 255\n  166 27 12 65 255\n  0 0 0 4 255",
+      "cartography_group/legend": "TBD",
+      "cartography_group/tile_url_group": [
+        {
+          "cartography_group/tile_url_group/tile_base_url": "https://gdsc.idsc.miami.edu/rastertiles/mdc_2013_viirs_vnp46a4/"
+        },
+        {
+          "cartography_group/tile_url_group/tile_base_url": "{z}/{x}/{y}.png"
+        },
+        {
+          "cartography_group/tile_url_group/tile_base_url": "leaflet.html"
+        }
+      ],
+      "cartography_group/tile_zoom_group": [
+        {
+          "cartography_group/tile_zoom_group/tile_min_zoom": "8"
+        },
+        {
+          "cartography_group/tile_zoom_group/tile_min_zoom": "12"
+        }
+      ],
+      "collection_group/analytic_epsg": "2236",
+      "collection_group/analytic_function": "gdsc_zonal_statistics",
+      "collection_group/collections": "mdc-health-outcomes mdc-sleep-outcomes",
+      "collection_group/derivative_url": "TBD",
+      "collection_group/service_definition": "API|metadata|download",
+      "collection_group/sponsor_group": [
+        {
+          "collection_group/sponsor_group/sponsor_name": "IDSC",
+          "collection_group/sponsor_group/sponsor_url": "https://idsc.miami.edu"
+        },
+        {
+          "collection_group/sponsor_group/sponsor_name": "Library",
+          "collection_group/sponsor_group/sponsor_url": "https://www.library.miami.edu"
+        }
+      ],
+      "collection_group/status": "draft",
+      "control_group/id": "196.0",
+      "dublin_core_group/coverage_group": [
+        {
+          "dublin_core_group/coverage_group/coverage_identifier": "4164238",
+          "dublin_core_group/coverage_group/coverage_identifier_schema": "geonames",
+          "dublin_core_group/coverage_group/coverage_identifier_schema_uri": "https://www.geonames.org/",
+          "dublin_core_group/coverage_group/coverage_name": "Miami-Dade County"
+        }
+      ],
+      "dublin_core_group/creator_group": [
+        {
+          "dublin_core_group/creator_group/creator_name": "Level-1 and Atmosphere Archive & Distribution System Distributed Active Archive Center (LAADS DAAC)"
+        },
+        {
+          "dublin_core_group/creator_group/creator_name": "NASA"
+        }
+      ],
+      "dublin_core_group/description": "VNP46A4 - VIIRS/NPP Lunar BRDF-Adjusted Nighttime Lights Yearly L3 Global 15 arc second Linear Lat Lon Grid\n  \n  The Suomi National Polar-orbiting Partnership (SNPP) Visible Infrared Imaging Radiometer Suite (VIIRS) supports a Day-Night Band (DNB) sensor that provides global daily measurements of nocturnal visible and near-infrared (NIR) light that are suitable for Earth system science and applications. The VIIRS DNB's ultra-sensitivity in lowlight conditions enable us to generate a new set of science-quality nighttime products that manifest substantial improvements in sensor resolution and calibration when compared to the previous era of Defense Meteorological Satellite Program/Operational Linescan System's (DMSP/OLS) nighttime lights image products. Such improvements allow the VIIRS DNB products to better monitor both the magnitude and signature of nighttime phenomena, and anthropogenic sources of light emissions.\n  \n  VNP46A4 is the short-name for the fourth nighttime lights (NTL) product in the Black Marble suite, which provides yearly composites generated from daily atmospherically- and lunar-BRDF-corrected NTL radiance to remove the influence of extraneous artifacts and biases. Known by its long-name, VIIRS/NPP Lunar BRDF-Adjusted Nighttime Lights Yearly L3 Global 15 arc-second Linear Lat Lon Grid, this product contains 28 layers. They provide information on the NTL composite, the number of observations, quality, and standard deviation for multi-view zenith angle categories (near-nadir, off-nadir, and all angles), their snow-covered and snow-free statuses besides land-water mask, latitude and longitude coordinate information. They also include detailed information and description of the quality flags. This SNPP VIIRS collection-1 product record, identified by its version-ID 001 in its file name, starts from January 1st 2012.",
+      "dublin_core_group/doi": "https://doi.org/10.5067/VIIRS/VNP46A4.001",
+      "dublin_core_group/language": "en",
+      "dublin_core_group/license_text": "All NASA Terra and Aqua MODIS, Suomi NPP VIIRS, and other Collections comply with NASA’s Data and Information policy, which promotes the full and open sharing of all data with research and applications communities, private industry, academia, and the public. The term data includes observation data, images, metadata, products, and documentation. All data products acquired through the Level-1 and Atmosphere Archive & Distribution System (LAADS) Distributed Active Archive Center (DAAC) are provided without any monetary charge and have no restrictions on subsequent use or redistribution.",
+      "dublin_core_group/provenance": "Direct From Source, then extracted, clipped, and reprojected",
+      "dublin_core_group/publication_date": "2024-01-20",
+      "dublin_core_group/publisher_group": [
+        {
+          "dublin_core_group/publisher_group/publisher_name": "LAADS/NASA"
+        }
+      ],
+      "dublin_core_group/resource_type": "raster_dataset",
+      "dublin_core_group/restrictions": "All data products acquired through the Level-1 and Atmosphere Archive & Distribution System (LAADS) Distributed Active Archive Center (DAAC) are provided without any monetary charge and have no restrictions on subsequent use or redistribution.",
+      "dublin_core_group/rights": "public_domain",
+      "dublin_core_group/subject_group": [
+        {
+          "dublin_core_group/subject_group/subject_term": "Miami-Dade"
+        },
+        {
+          "dublin_core_group/subject_group/subject_term": "Nighttime lights"
+        }
+      ],
+      "dublin_core_group/title": "2013 Miami-Dade VIIRS Nighttime Lights",
+      "dublin_core_group/url": "https://ladsweb.modaps.eosdis.nasa.gov/missions-and-measurements/products/VNP46A4/",
+      "etl_group/checksum": "TBD",
+      "etl_group/custom_etl": "clip_raster",
+      "etl_group/custom_parameters": "egom_2013_viirs_vnp46a4|fl_2022_tl_cousub|countyfp='086'|-srcnodata 65535 -dstnodata 65535 ",
+      "etl_group/dependency_group": [
+        {
+          "etl_group/dependency_group/dependency_table_name": "egom_2013_viirs_vnp46a4"
+        },
+        {
+          "etl_group/dependency_group/dependency_table_name": "fl_2022_tl_cousub"
+        }
+      ],
+      "etl_group/extension": "h5",
+      "etl_group/file_name_group": [
+        {
+          "etl_group/file_name_group/file_inside_archive": "VNP46A4.A2013001.h09v06.002.2025087045108",
+          "etl_group/file_name_group/file_name_value": "mdc_2013_viirs_vnp46a4"
+        }
+      ],
+      "etl_group/format": "tif",
+      "etl_group/last_updated": "2025-03-28",
+      "etl_group/podid": "TBD",
+      "etl_group/source": "https://ladsweb.modaps.eosdis.nasa.gov/api/v2/content/archives/VNP46A4.A2013001.h09v06.002.2025087045108",
+      "etl_group/table_name": "mdc_2013_viirs_vnp46a4",
+      "etl_group/up": "tbd",
+      "etl_group/update_frequency": "never",
+      "iso_group/band_group": [
+        {
+          "iso_group/band_group/band_name": "SUBDATASET_15_NAME=HDF5:\"VNP46A4.A2013001.h00v06.002.2025087044909.h5\"://HDFEOS/GRIDS/VIIRS_Grid_DNB_2d/Data_Fields/NearNadir_Composite_Snow_Free\n      SUBDATASET_15_DESC=[2400x2400] //HDFEOS/GRIDS/VIIRS_Grid_DNB_2d/Data_Fields/NearNadir_Composite_Snow_Free (16-bit unsigned integer)"
+        }
+      ],
+      "iso_group/data_level": "observed",
+      "iso_group/dimension_units": "decimal_degrees",
+      "iso_group/epsg": "4326",
+      "iso_group/lineage": "TBD",
+      "iso_group/pixel_dimension": "0.00416666666666666",
+      "iso_group/point_of_contact_group": [
+        {
+          "iso_group/point_of_contact_group/contact_name": "TBD"
+        }
+      ],
+      "iso_group/process_step": "TBD",
+      "iso_group/processor": "TBD",
+      "iso_group/structure": "raster",
+      "meta/instanceID": "e67b4749-a8ea-4249-b844-f5714155338",
+      "_xform_id_string": "awuNtvkbfwXZPw9LPHFvsn",
+      "_uuid": "e67b4749-a8ea-4249-b844-f5714155338",
+      "meta/rootUuid": "uuid:e67b4749-a8ea-4249-b844-f5714155338",
+      "_attachments": [],
+      "_status": "submitted_via_web",
+      "_geolocation": [
+        null,
+        null
+      ],
+      "_validation_status": {},
+      "_submitted_by": "gdsc"
+    },
+    {
+      "_id": 819912469,
+      "_submission_time": "2026-07-23T17:17:36",
+      "cartography_group/attributes_group": [
+        {
+          "cartography_group/attributes_group/attribute_description": "A Soundscore™ rating is a number between 50 (very loud) and 100 (very quiet) that tells you how loud a location is due to environmental noise",
+          "cartography_group/attributes_group/attribute_name": "SoundScore™",
+          "cartography_group/attributes_group/attribute_source": "HowLoud",
+          "cartography_group/attributes_group/attribute_type": "int4",
+          "cartography_group/attributes_group/attribute_unit": "index"
+        }
+      ],
+      "cartography_group/color_ramp": "100 0 25 212 255\n  Calm 68 201 254 255\n  90 109 235 220 255\n  Active 205 255 162 255\n  80 219 247 145 255\n  Busy 246 85 84 255\n  65 249 114 113 255\n  60 255 158 158 255\n  55 254 205 205 255",
+      "cartography_group/tile_url_group": [
+        {
+          "cartography_group/tile_url_group/tile_base_url": "https://gdsc.idsc.miami.edu/rastertiles/mdc_soundscore_howloud/"
+        },
+        {
+          "cartography_group/tile_url_group/tile_base_url": "{z}/{x}/{y}.png"
+        },
+        {
+          "cartography_group/tile_url_group/tile_base_url": "leaflet.html"
+        }
+      ],
+      "cartography_group/tile_zoom_group": [
+        {
+          "cartography_group/tile_zoom_group/tile_min_zoom": "14"
+        },
+        {
+          "cartography_group/tile_zoom_group/tile_min_zoom": "18"
+        }
+      ],
+      "collection_group/collections": "mdc-health-outcomes mdc-sleep-outcomes",
+      "collection_group/derivative_url": "TBD",
+      "collection_group/service_definition": "API",
+      "collection_group/sponsor_group": [
+        {
+          "collection_group/sponsor_group/sponsor_name": "HowLoud",
+          "collection_group/sponsor_group/sponsor_url": "https://howloud.com/"
+        }
+      ],
+      "control_group/id": "234.0",
+      "dublin_core_group/coverage_group": [
+        {
+          "dublin_core_group/coverage_group/coverage_identifier": "4164238",
+          "dublin_core_group/coverage_group/coverage_identifier_schema": "geonames",
+          "dublin_core_group/coverage_group/coverage_identifier_schema_uri": "https://www.geonames.org/",
+          "dublin_core_group/coverage_group/coverage_name": "Miami-Dade County"
+        }
+      ],
+      "dublin_core_group/creator_group": [
+        {
+          "dublin_core_group/creator_group/creator_name": "HowLoud"
+        },
+        {
+          "dublin_core_group/creator_group/creator_name": "Brendan Farrell"
+        }
+      ],
+      "dublin_core_group/description": "Soundscore™ is HowLoud, Inc.’s patent-pending technology to build our noise map and deliver data to users. A Soundscore™ rating is a number between 50 (very loud) and 100 (very quiet) that tells you how loud a location is due to environmental noise. ",
+      "dublin_core_group/language": "en",
+      "dublin_core_group/provenance": "Direct from source",
+      "dublin_core_group/publisher_group": [
+        {
+          "dublin_core_group/publisher_group/publisher_name": "HowLoud"
+        }
+      ],
+      "dublin_core_group/resource_type": "raster_tiles",
+      "dublin_core_group/restrictions": "The API may make up to 100,000 requests per month. Note that the API has a rate limit of 3 requests per second.",
+      "dublin_core_group/rights": "proprietary",
+      "dublin_core_group/subject_group": [
+        {
+          "dublin_core_group/subject_group/subject_term": "SoundScore"
+        },
+        {
+          "dublin_core_group/subject_group/subject_term": "Noise Pollution"
+        },
+        {
+          "dublin_core_group/subject_group/subject_term": "Noise"
+        },
+        {
+          "dublin_core_group/subject_group/subject_term": "USA"
+        }
+      ],
+      "dublin_core_group/title": "MDC HowLoud SoundScore (Local)",
+      "dublin_core_group/url": "https://howloud.com/soundscore/",
+      "etl_group/checksum": "TBD",
+      "etl_group/extension": "png",
+      "etl_group/file_name_group": [
+        {
+          "etl_group/file_name_group/file_name_value": "mdc_soundscore_howloud"
+        }
+      ],
+      "etl_group/format": "xyz",
+      "etl_group/last_updated": "2024-05-21",
+      "etl_group/podid": "TBD",
+      "etl_group/source": "https://api.howloud.com/tiles/score/{z}/{x}/{y}.png?x-api-key=<HOWLOUD_API_KEY>",
+      "etl_group/table_name": "mdc_soundscore_howloud",
+      "etl_group/up": "tbd",
+      "etl_group/update_frequency": "never",
+      "iso_group/data_level": "derived",
+      "iso_group/epsg": "3857",
+      "iso_group/lineage": "TBD",
+      "iso_group/point_of_contact_group": [
+        {
+          "iso_group/point_of_contact_group/contact_name": "TBD"
+        }
+      ],
+      "iso_group/process_step": "TBD",
+      "iso_group/processor": "TBD",
+      "iso_group/structure": "raster_tiles",
+      "meta/instanceID": "6edae1e5-a4e8-41ed-96f5-b9327849550",
+      "_xform_id_string": "awuNtvkbfwXZPw9LPHFvsn",
+      "_uuid": "6edae1e5-a4e8-41ed-96f5-b9327849550",
+      "meta/rootUuid": "uuid:6edae1e5-a4e8-41ed-96f5-b9327849550",
+      "_attachments": [],
+      "_status": "submitted_via_web",
+      "_geolocation": [
+        null,
+        null
+      ],
+      "_validation_status": {},
+      "_submitted_by": "gdsc"
+    }
+  ]
+}

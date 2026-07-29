@@ -1,0 +1,233 @@
+{
+  "@context": {
+    "@vocab": "https://schema.org/",
+    "schema": "https://schema.org/",
+    "@language": "en",
+    "dct": "http://purl.org/dc/terms/"
+  },
+  "@graph": [
+    {
+      "@type": "schema:Dataset",
+      "@id": "https://gdsc.idsc.miami.edu/detail/hh_anpdefinitivas_sernanp",
+      "name": "Áreas Naturales Protegidas de Administración Nacional Definitiva Huayhuash (SERNANP)",
+      "description": "Representa aquellos espacios geográficos que fueron creados mediante una norma legal (Ley o Decreto Supremo), con carácter definitivo con el propósito de conservar la diversidad biológica.\n  Las áreas naturales protegidas con estatus definitivo:\n  -Parque Nacional\n  -Santuario Nacional\n  -Santuario Histórico\n  -Reserva Nacional\n  -Refugio de Vida Silvestre\n  -Bosque de Protección\n  -Reserva Paisajística\n  -Reserva Comunal\n  -Coto de Caza",
+      "url": "https://geoservicios.sernanp.gob.pe/arcgis/rest/services/base_fisica/peru_sernanp_0102/MapServer/0",
+      "inLanguage": "es",
+      "datePublished": "2025-02-20",
+      "dateModified": "2025-02-20",
+      "creator": [
+        {
+          "@type": "Role",
+          "roleName": "creator",
+          "creator": {
+            "@type": "Organization",
+            "name": "SERNANP"
+          }
+        }
+      ],
+      "provider": {
+        "@type": "Organization",
+        "name": "SERNANP"
+      },
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Perú",
+        "additionalProperty": [
+          {
+            "@type": "PropertyValue",
+            "name": "geonames",
+            "value": "3932488",
+            "url": "https://www.geonames.org/3932488"
+          },
+          {
+            "@type": "PropertyValue",
+            "name": "Spatial Reference System",
+            "value": "http://www.opengis.net/def/crs/EPSG/0/4326"
+          }
+        ]
+      },
+      "keywords": [
+        "Huayhuash",
+        "Perú",
+        " ANP de Administración Nacional Definitiva"
+      ],
+      "includedInDataCatalog": [
+        {
+          "@type": "DataCatalog",
+          "@id": "https://gdsc.idsc.miami.edu",
+          "name": "Geospatial Digital Special Collections",
+          "url": "https://gdsc.idsc.miami.edu"
+        },
+        {
+          "@type": "DataCatalog",
+          "name": "hh-conservacion",
+          "@id": "https://gdsc.idsc.miami.edu/?collection=hh-conservacion",
+          "url": "https://gdsc.idsc.miami.edu/?collection=hh-conservacion"
+        }
+      ],
+      "measurementTechnique": [
+        {
+          "@type": "DefinedTerm",
+          "name": "GIS Data Structure",
+          "termCode": "vector",
+          "inDefinedTermSet": {
+            "@type": "DefinedTermSet",
+            "name": "dataRepresentation",
+            "url": "https://gdsc.idsc.miami.edu/vocab/dataRepresentation"
+          }
+        },
+        {
+          "@type": "DefinedTerm",
+          "name": "GIS Vector Geometry",
+          "termCode": "polygon",
+          "inDefinedTermSet": {
+            "@type": "DefinedTermSet",
+            "name": "vectorGeometry",
+            "url": "https://gdsc.idsc.miami.edu/vocab/vectorGeometry"
+          }
+        }
+      ],
+      "distribution": [
+        {
+          "@type": "DataDownload",
+          "name": "Source distribution",
+          "contentUrl": "https://geoservicios.sernanp.gob.pe/arcgis/rest/services/base_fisica/peru_sernanp_0102/MapServer/0/query?where=1%3D1&geometry=%22xmin%22%3A-77.33%2C%22ymin%22%3A-10.7%2C%22xmax%22%3A-76.55%2C%22ymax%22%3A-9.8&geometryType=esriGeometryEnvelope&inSR=4326&spatialRel=esriSpatialRelIntersects&outFields=*&returnGeometry=true&outSR=4326&f=geojson",
+          "encodingFormat": "application/json"
+        }
+      ],
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "name": "postgis_table",
+          "value": "hh_anpdefinitivas_sernanp"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "kobo_record_id",
+          "value": "164"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "cartography_value_field",
+          "value": "objectid"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "Spatial Reference System",
+          "value": "http://www.opengis.net/def/crs/EPSG/0/5387"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "derivatives",
+          "value": "shp geojson gpkg"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "download_method",
+          "value": "esri_recursive_ogr"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "source_file",
+          "value": "{'etl_group/file_name_group/file_name_value': 'hh_anpdefinitivas_sernanp'}"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "extent",
+          "value": "-77.33|-10.7|-76.55|-9.8"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "serviceDefinition",
+          "value": "API|arcgis|query"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "pointOfContact",
+          "value": "{'iso_group/point_of_contact_group/contact_name': 'Ing. Jessica Oliveros Bustamante, Responsable de la temática (Dirección de Desarrollo Estratégico, joliveros@sernanp.gob.pe)'}"
+        }
+      ],
+      "dct:accrualPeriodicity": "as_needed",
+      "variableMeasured": [
+        {
+          "@type": "PropertyValue",
+          "name": "objectid",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "anp_cate",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "anp_codi",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "anp_nomb",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "anp_sect",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "anp_ubpo",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "anp_suleg",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "anp_uicn",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "anp_balec",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "anp_felec",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "anp_balem",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "anp_felem",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "shape",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "met_link",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "am_legal",
+          "description": ""
+        }
+      ],
+      "isAccessibleForFree": false,
+      "dct:provenance": "SERNANP",
+      "additionalType": "vector_dataset"
+    }
+  ]
+}

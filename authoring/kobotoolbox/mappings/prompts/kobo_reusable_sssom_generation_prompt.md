@@ -203,6 +203,17 @@ Anti-patterns to AVOID (seen in earlier drafts):
   known good targets.
 
 
+## propertyvalue_schema_objects — only for attribute groups (avoid empty entries)
+Send a repeat group through `propertyvalue_schema_objects` ONLY if its items have
+`attribute_name` / `attribute_description` sub-fields (i.e. `cartography_group/attributes_group`).
+Groups whose items use OTHER sub-field names — `band_group` (band_name),
+`etl_group/columns_group` (column_name), `etl_group/index_fields_group` (index_field),
+`etl_group/file_name_group` (file_name_value) — must NOT use this rule: they would emit empty
+PropertyValues (blank name/description). Map those to `schema:additionalProperty` via
+`property_value:name=<something>` instead. Also avoid mapping more than one row to
+`$.temporalCoverage` (raw start/end plus an attribute-derived range will stack into a list —
+keep one canonical source, send the others to additionalProperty).
+
 ## Target-path consistency (avoid a silent bug)
 `target_jsonpath` MUST correspond to the chosen `object_id`. If `object_id` is
 `schema:creativeWorkStatus`, `target_jsonpath` must be `$.creativeWorkStatus` — never a

@@ -1,0 +1,238 @@
+{
+  "@context": {
+    "@vocab": "https://schema.org/",
+    "schema": "https://schema.org/",
+    "@language": "en",
+    "dct": "http://purl.org/dc/terms/"
+  },
+  "@graph": [
+    {
+      "@type": "schema:Dataset",
+      "@id": "https://gdsc.idsc.miami.edu/detail/tz_populated_places_osm",
+      "name": "OSM Tanzania Populated Places ",
+      "description": "A point feature set for the populated places in Tanzania sourced from OpenStreetMap with a query that includes Cities, Towns, Villages, and Hamlets.",
+      "url": "https://www.openstreetmap.org/",
+      "license": "odbl",
+      "datePublished": "2025-02-24",
+      "dateModified": "2025-02-24",
+      "creator": [
+        {
+          "@type": "Role",
+          "roleName": "creator",
+          "creator": {
+            "@type": "Organization",
+            "name": "OpenStreetMap contributors"
+          }
+        }
+      ],
+      "provider": {
+        "@type": "Organization",
+        "name": "OpenStreetMap"
+      },
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Tanzania",
+        "additionalProperty": [
+          {
+            "@type": "PropertyValue",
+            "name": "geonames",
+            "value": "149590",
+            "url": "https://www.geonames.org/149590"
+          },
+          {
+            "@type": "PropertyValue",
+            "name": "Spatial Reference System",
+            "value": "http://www.opengis.net/def/crs/EPSG/0/4326"
+          }
+        ]
+      },
+      "keywords": [
+        "Tanzania",
+        "Populated Places",
+        "Cities",
+        "Towns",
+        "Villages",
+        "Hamlets"
+      ],
+      "includedInDataCatalog": [
+        {
+          "@type": "DataCatalog",
+          "@id": "https://gdsc.idsc.miami.edu",
+          "name": "Geospatial Digital Special Collections",
+          "url": "https://gdsc.idsc.miami.edu"
+        },
+        {
+          "@type": "DataCatalog",
+          "name": "tz-climate-change",
+          "@id": "https://gdsc.idsc.miami.edu/?collection=tz-climate-change",
+          "url": "https://gdsc.idsc.miami.edu/?collection=tz-climate-change"
+        },
+        {
+          "@type": "DataCatalog",
+          "name": "tz-health-outcomes",
+          "@id": "https://gdsc.idsc.miami.edu/?collection=tz-health-outcomes",
+          "url": "https://gdsc.idsc.miami.edu/?collection=tz-health-outcomes"
+        }
+      ],
+      "measurementTechnique": [
+        {
+          "@type": "DefinedTerm",
+          "name": "GIS Data Structure",
+          "termCode": "vector",
+          "inDefinedTermSet": {
+            "@type": "DefinedTermSet",
+            "name": "dataRepresentation",
+            "url": "https://gdsc.idsc.miami.edu/vocab/dataRepresentation"
+          }
+        },
+        {
+          "@type": "DefinedTerm",
+          "name": "GIS Vector Geometry",
+          "termCode": "point",
+          "inDefinedTermSet": {
+            "@type": "DefinedTermSet",
+            "name": "vectorGeometry",
+            "url": "https://gdsc.idsc.miami.edu/vocab/vectorGeometry"
+          }
+        },
+        {
+          "@type": "DefinedTerm",
+          "name": "Data Processing Level",
+          "termCode": "observed",
+          "inDefinedTermSet": {
+            "@type": "DefinedTermSet",
+            "name": "dataProcessingLevel",
+            "url": "https://gdsc.idsc.miami.edu/vocab/dataProcessingLevel"
+          }
+        }
+      ],
+      "distribution": [
+        {
+          "@type": "DataDownload",
+          "name": "Source distribution",
+          "contentUrl": "https://overpass-api.de/api/interpreter?data=area%28id:3600195270%29-%3E.searchArea;node%5B%22place%22~%22city|town|village|hamlet%22%5D%28area.searchArea%29;%28._;%3E;%29;out;",
+          "encodingFormat": "osm"
+        }
+      ],
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "name": "postgis_table",
+          "value": "tz_populated_places_osm"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "kobo_record_id",
+          "value": "160.0"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "cartography_label_field",
+          "value": "name"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "cartography_value_field",
+          "value": "osm_id"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "analytic_function",
+          "value": "gdsc_get_attributes"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "Spatial Reference System",
+          "value": "http://www.opengis.net/def/crs/EPSG/0/4326"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "derivatives",
+          "value": "shp"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "download_method",
+          "value": "curl"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "source_file",
+          "value": "{'etl_group/file_name_group/file_name_value': 'tz_populated_places_osm'}"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "serviceDefinition",
+          "value": "api"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "etlParameters",
+          "value": "points"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "pointOfContact",
+          "value": "{'iso_group/point_of_contact_group/contact_name': 'TBD'}"
+        }
+      ],
+      "dct:accrualPeriodicity": "as_needed",
+      "variableMeasured": [
+        {
+          "@type": "PropertyValue",
+          "name": "osm_id",
+          "description": "OpenStreetMap (OSM) ID",
+          "qudt:dataType": "xsd:varchar"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "\n    name",
+          "description": "Place/settlement name",
+          "sourceOrganization": {
+            "@type": "Organization",
+            "name": "varchar"
+          }
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "\n    place",
+          "description": "Kind of settlement as City, Town, Village, Hamlet, City Block, or other",
+          "sourceOrganization": {
+            "@type": "Organization",
+            "name": "varchar"
+          }
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "\n    other_tags",
+          "description": "Any other OSM tags with values",
+          "sourceOrganization": {
+            "@type": "Organization",
+            "name": "varchar"
+          }
+        }
+      ],
+      "isAccessibleForFree": false,
+      "usageInfo": [
+        "OpenStreetMap® is open data, licensed under the [Open Data Commons Open Database License](https://opendatacommons.org/licenses/odbl/) (ODbL) by the [OpenStreetMap Foundation](https://osmfoundation.org/) (OSMF).",
+        "You are free to copy, distribute, transmit and adapt our data, as long as you credit OpenStreetMap and its contributors. If you alter or build upon our data, you may distribute the result only under the same licence."
+      ],
+      "dct:provenance": "Direct from source.",
+      "additionalType": "vector_dataset",
+      "funder": [
+        {
+          "@type": "Organization",
+          "name": "IDSC",
+          "url": "https://idsc.miami.edu"
+        },
+        {
+          "@type": "Organization",
+          "name": "Library",
+          "url": "https://www.library.miami.edu"
+        }
+      ],
+      "creativeWorkStatus": "published",
+      "disambiguatingDescription": "The Database is licensed by the Licensor “as is” and without any warranty of any kind, either express, implied, or arising by statute, custom, course of dealing, or trade usage. Licensor specifically disclaims any and all implied warranties or conditions of title, non-infringement, accuracy or completeness, the presence or absence of errors, fitness for a particular purpose, merchantability, or otherwise. Some jurisdictions do not allow the exclusion of implied warranties, so this exclusion may not apply to You.\n  \n  Subject to any liability that may not be excluded or limited by law, the Licensor is not liable for, and expressly excludes, all liability for loss or damage however and whenever caused to anyone by any use under this License, whether by You or by anyone else, and whether caused by any fault on the part of the Licensor or not. This exclusion of liability includes, but is not limited to, any special, incidental, consequential, punitive, or exemplary damages such as loss of revenue, data, anticipated profits, and lost business. This exclusion applies even if the Licensor has been advised of the possibility of such damages. \n  \n  If liability may not be excluded by law, it is limited to actual and direct financial loss to the extent it is caused by proved negligence on the part of the Licensor."
+    }
+  ]
+}

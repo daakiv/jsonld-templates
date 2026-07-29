@@ -1,0 +1,348 @@
+{
+  "@context": {
+    "@vocab": "https://schema.org/",
+    "schema": "https://schema.org/",
+    "@language": "en",
+    "dct": "http://purl.org/dc/terms/"
+  },
+  "@graph": [
+    {
+      "@type": "schema:Dataset",
+      "@id": "https://gdsc.idsc.miami.edu/detail/mdc_2021_ndvi_greenness_30m",
+      "name": "2021 Miami-Dade NDVI",
+      "description": "Greenness measured as a recentered NDVI (Normalized Difference Vegetation Index) moved from -1:1 to 1-100.",
+      "identifier": {
+        "@type": "PropertyValue",
+        "propertyID": "https://registry.identifiers.org/registry/doi",
+        "value": "doi:10.17604/p318-6n41",
+        "url": "https://doi.org/10.17604/p318-6n41"
+      },
+      "url": "https://scholarship.miami.edu/esploro/outputs/991031655220702976",
+      "license": "odc_by",
+      "inLanguage": "en",
+      "datePublished": "2021-11-07",
+      "dateModified": "2021-12-06",
+      "creator": [
+        {
+          "@type": "Role",
+          "roleName": "creator",
+          "creator": {
+            "@type": "Organization",
+            "name": "Tyler Harrison",
+            "description": "School of Communication, University of Miami"
+          }
+        },
+        {
+          "@type": "Role",
+          "roleName": "creator",
+          "creator": {
+            "@type": "Organization",
+            "name": "Amy C Clement",
+            "description": "Atmospheric Sciences, Rosenstiel School, University of Miami"
+          }
+        },
+        {
+          "@type": "Role",
+          "roleName": "creator",
+          "creator": {
+            "@type": "Organization",
+            "name": "Gina L. Maranto"
+          }
+        },
+        {
+          "@type": "Role",
+          "roleName": "creator",
+          "creator": {
+            "@type": "Organization",
+            "name": "Sam Purkis"
+          }
+        },
+        {
+          "@type": "Role",
+          "roleName": "creator",
+          "creator": {
+            "@type": "Organization",
+            "name": "Joanna L. Lombard"
+          }
+        },
+        {
+          "@type": "Role",
+          "roleName": "creator",
+          "creator": {
+            "@type": "Organization",
+            "name": "Angela C. Clark-Hughes",
+            "description": "Rosenstiel School Library, University of Miami"
+          }
+        },
+        {
+          "@type": "Role",
+          "roleName": "creator",
+          "creator": {
+            "@type": "Organization",
+            "name": "Abraham K Parrish"
+          }
+        },
+        {
+          "@type": "Role",
+          "roleName": "creator",
+          "creator": {
+            "@type": "Organization",
+            "name": "Marcus B. Reamer"
+          }
+        },
+        {
+          "@type": "Role",
+          "roleName": "creator",
+          "creator": {
+            "@type": "Organization",
+            "name": "Olivia Collins"
+          }
+        },
+        {
+          "@type": "Role",
+          "roleName": "creator",
+          "creator": {
+            "@type": "Organization",
+            "name": "Caroline Lewis"
+          }
+        },
+        {
+          "@type": "Role",
+          "roleName": "creator",
+          "creator": {
+            "@type": "Organization",
+            "name": "Mayra Cruz"
+          }
+        },
+        {
+          "@type": "Role",
+          "roleName": "creator",
+          "creator": {
+            "@type": "Organization",
+            "name": "Anaruth Solace"
+          }
+        }
+      ],
+      "provider": [
+        {
+          "@type": "Organization",
+          "name": "University of Miami"
+        },
+        {
+          "@type": "Organization",
+          "name": "Otto G. Richter Library"
+        }
+      ],
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Miami-Dade County",
+        "additionalProperty": [
+          {
+            "@type": "PropertyValue",
+            "name": "geonames",
+            "value": "4164238",
+            "url": "https://www.geonames.org/4164238"
+          },
+          {
+            "@type": "PropertyValue",
+            "name": "Spatial Reference System",
+            "value": "http://www.opengis.net/def/crs/EPSG/0/3857"
+          }
+        ]
+      },
+      "keywords": [
+        "Florida",
+        "Miami-Dade County",
+        "MDC",
+        "Miami-Dade County",
+        "Environment",
+        "NDVI",
+        "Hylo",
+        "Homestead",
+        "Little River",
+        "Public-Safety"
+      ],
+      "includedInDataCatalog": [
+        {
+          "@type": "DataCatalog",
+          "@id": "https://gdsc.idsc.miami.edu",
+          "name": "Geospatial Digital Special Collections",
+          "url": "https://gdsc.idsc.miami.edu"
+        },
+        {
+          "@type": "DataCatalog",
+          "name": "climate-change",
+          "@id": "https://gdsc.idsc.miami.edu/?collection=climate-change",
+          "url": "https://gdsc.idsc.miami.edu/?collection=climate-change"
+        },
+        {
+          "@type": "DataCatalog",
+          "name": "vulnerability",
+          "@id": "https://gdsc.idsc.miami.edu/?collection=vulnerability",
+          "url": "https://gdsc.idsc.miami.edu/?collection=vulnerability"
+        },
+        {
+          "@type": "DataCatalog",
+          "name": "climate-and-equity-mapping-program",
+          "@id": "https://gdsc.idsc.miami.edu/?collection=climate-and-equity-mapping-program",
+          "url": "https://gdsc.idsc.miami.edu/?collection=climate-and-equity-mapping-program"
+        },
+        {
+          "@type": "DataCatalog",
+          "name": "miami-affordability-project",
+          "@id": "https://gdsc.idsc.miami.edu/?collection=miami-affordability-project",
+          "url": "https://gdsc.idsc.miami.edu/?collection=miami-affordability-project"
+        },
+        {
+          "@type": "DataCatalog",
+          "name": "mdc-sleep-outcomes",
+          "@id": "https://gdsc.idsc.miami.edu/?collection=mdc-sleep-outcomes",
+          "url": "https://gdsc.idsc.miami.edu/?collection=mdc-sleep-outcomes"
+        }
+      ],
+      "measurementTechnique": [
+        {
+          "@type": "DefinedTerm",
+          "name": "GIS Data Structure",
+          "termCode": "raster",
+          "inDefinedTermSet": {
+            "@type": "DefinedTermSet",
+            "name": "dataRepresentation",
+            "url": "https://gdsc.idsc.miami.edu/vocab/dataRepresentation"
+          }
+        },
+        {
+          "@type": "DefinedTerm",
+          "name": "Data Processing Level",
+          "termCode": "derived",
+          "inDefinedTermSet": {
+            "@type": "DefinedTermSet",
+            "name": "dataProcessingLevel",
+            "url": "https://gdsc.idsc.miami.edu/vocab/dataProcessingLevel"
+          }
+        }
+      ],
+      "distribution": [
+        {
+          "@type": "DataDownload",
+          "name": "Source distribution",
+          "contentUrl": "https://scholarship.miami.edu/view/fileRedirect?instCode=01UOML_INST&filePid=13395678880002976&download=true",
+          "encodingFormat": "tif"
+        }
+      ],
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "name": "postgis_table",
+          "value": "mdc_2021_ndvi_greenness_30m"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "kobo_record_id",
+          "value": "15.0"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "creator_type",
+          "value": "person"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "analytic_function",
+          "value": "gdsc_zonal_statistics"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "Spatial Reference System",
+          "value": "http://www.opengis.net/def/crs/EPSG/0/2236"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "download_method",
+          "value": "wget"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "source_file",
+          "value": "{'etl_group/file_name_group/file_inside_archive': 'GeoTIFF_Rasters/Greenness_30m_MDC', 'etl_group/file_name_group/file_name_value': 'mdc_2021_hylo'}"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "band",
+          "value": "{'iso_group/band_group/band_name': '30-meter Derived NDVI'}"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "pixelDimension",
+          "value": "30.0"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "dimensionUnits",
+          "value": "meters"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "extent",
+          "value": "2996556.365274|2892306.365274|-9002921.691244|-8918651.691244"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "colorRamp",
+          "value": "nv 0 0 0 0\n  178 0 68 27 255\n  160.2 0 109 44 255\n  142.4 29 134 65 255\n  124.6 53 159 84 255\n  106.8 85 181 103 255\n  89 123 199 124 255\n  71.2 158 215 152 255\n  53.4 187 228 181 255\n  35.6 213 239 207 255\n  17.8 233 247 229 255\n  1 247 252 245 255\n  0 0 0 0 0"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "tileBaseUrl",
+          "value": "{'cartography_group/tile_url_group/tile_base_url': 'https://gdsc.idsc.miami.edu/rastertiles/mdc_2021_ndvi_greenness_30m/'}"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "tileMinZoom",
+          "value": "{'cartography_group/tile_zoom_group/tile_min_zoom': '8'}"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "etlParameters",
+          "value": "-t 48x48"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "pointOfContact",
+          "value": "{'iso_group/point_of_contact_group/contact_name': 'TBD'}"
+        }
+      ],
+      "dct:accrualPeriodicity": "never",
+      "variableMeasured": [
+        {
+          "@type": "PropertyValue",
+          "name": "NDVI",
+          "description": "Normalized Difference Vegetation Index recentered from -1:1 to 1-200",
+          "qudt:dataType": "xsd:float",
+          "unitText": "-1:1 ~ 0-200",
+          "unitCode": "0",
+          "sourceOrganization": {
+            "@type": "Organization",
+            "name": "derived from LandSat"
+          }
+        }
+      ],
+      "isAccessibleForFree": false,
+      "usageInfo": "All data are made available under the Open Data Commons Attribution License: http://opendatacommons.org/licenses/by/1.0/ with the exception of the PhotoVoice photos in the Hylo_Photovoice_Data.pdf file which are for viewing and analysis only. They may not be altered or reproduced in any way.",
+      "dct:provenance": "Miami Dade County NDVI raster derived from USDA NAIP (National Agriculture Imagery Program). Export NAIP NDVI downsampled to 30 meter resolution from ESRI Living Atlas.",
+      "additionalType": "raster_dataset",
+      "funder": [
+        {
+          "@type": "Organization",
+          "name": "IDSC",
+          "url": "https://idsc.miami.edu"
+        },
+        {
+          "@type": "Organization",
+          "name": "Library",
+          "url": "https://www.library.miami.edu"
+        }
+      ]
+    }
+  ]
+}

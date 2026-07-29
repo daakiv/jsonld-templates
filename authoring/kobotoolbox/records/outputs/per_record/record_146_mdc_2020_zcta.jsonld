@@ -1,0 +1,329 @@
+{
+  "@context": {
+    "@vocab": "https://schema.org/",
+    "schema": "https://schema.org/",
+    "@language": "en",
+    "dct": "http://purl.org/dc/terms/"
+  },
+  "@graph": [
+    {
+      "@type": "schema:Dataset",
+      "@id": "https://gdsc.idsc.miami.edu/detail/mdc_2020_zcta",
+      "name": "Miami-Dade 2020 Zip Code Tabulation Areas",
+      "description": "A polygon representation of the Miami-Dade Zip Code Tabulation Areas (ZCTA) boundaries (derived from us_2020_zcta).",
+      "url": "https://www.census.gov/programs-surveys/geography/guidance/geo-areas/zctas.html",
+      "inLanguage": "en",
+      "datePublished": "2024-08-26",
+      "dateModified": "2024-01-19",
+      "creator": [
+        {
+          "@type": "Role",
+          "roleName": "creator",
+          "creator": {
+            "@type": "Organization",
+            "name": "U.S. Department of Commerce"
+          }
+        },
+        {
+          "@type": "Role",
+          "roleName": "creator",
+          "creator": {
+            "@type": "Organization",
+            "name": "U.S. Census Bureau"
+          }
+        },
+        {
+          "@type": "Role",
+          "roleName": "creator",
+          "creator": {
+            "@type": "Organization",
+            "name": "Geography Division"
+          }
+        },
+        {
+          "@type": "Role",
+          "roleName": "creator",
+          "creator": {
+            "@type": "Organization",
+            "name": "Spatial Data Collection and Products Branch"
+          }
+        }
+      ],
+      "provider": {
+        "@type": "Organization",
+        "name": "Census"
+      },
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Miami-Dade County",
+        "additionalProperty": [
+          {
+            "@type": "PropertyValue",
+            "name": "geonames",
+            "value": "4164238",
+            "url": "https://www.geonames.org/4164238"
+          },
+          {
+            "@type": "PropertyValue",
+            "name": "Spatial Reference System",
+            "value": "http://www.opengis.net/def/crs/EPSG/0/4269"
+          }
+        ]
+      },
+      "keywords": [
+        "Miami-Dade",
+        "Zipcode",
+        "ZCTA"
+      ],
+      "includedInDataCatalog": [
+        {
+          "@type": "DataCatalog",
+          "@id": "https://gdsc.idsc.miami.edu",
+          "name": "Geospatial Digital Special Collections",
+          "url": "https://gdsc.idsc.miami.edu"
+        },
+        {
+          "@type": "DataCatalog",
+          "name": "mdc-health-outcomes",
+          "@id": "https://gdsc.idsc.miami.edu/?collection=mdc-health-outcomes",
+          "url": "https://gdsc.idsc.miami.edu/?collection=mdc-health-outcomes"
+        },
+        {
+          "@type": "DataCatalog",
+          "name": "mdc-sleep-outcomes",
+          "@id": "https://gdsc.idsc.miami.edu/?collection=mdc-sleep-outcomes",
+          "url": "https://gdsc.idsc.miami.edu/?collection=mdc-sleep-outcomes"
+        }
+      ],
+      "measurementTechnique": [
+        {
+          "@type": "DefinedTerm",
+          "name": "GIS Data Structure",
+          "termCode": "vector",
+          "inDefinedTermSet": {
+            "@type": "DefinedTermSet",
+            "name": "dataRepresentation",
+            "url": "https://gdsc.idsc.miami.edu/vocab/dataRepresentation"
+          }
+        },
+        {
+          "@type": "DefinedTerm",
+          "name": "GIS Vector Geometry",
+          "termCode": "polygon",
+          "inDefinedTermSet": {
+            "@type": "DefinedTermSet",
+            "name": "vectorGeometry",
+            "url": "https://gdsc.idsc.miami.edu/vocab/vectorGeometry"
+          }
+        },
+        {
+          "@type": "DefinedTerm",
+          "name": "Data Processing Level",
+          "termCode": "derived",
+          "inDefinedTermSet": {
+            "@type": "DefinedTermSet",
+            "name": "dataProcessingLevel",
+            "url": "https://gdsc.idsc.miami.edu/vocab/dataProcessingLevel"
+          }
+        }
+      ],
+      "distribution": [
+        {
+          "@type": "DataDownload",
+          "name": "Source distribution",
+          "contentUrl": "ftp://ftp2.census.gov/geo/tiger/TIGER2020/ZCTA520/tl_2020_us_zcta520.zip",
+          "encodingFormat": "application/x-shapefile"
+        }
+      ],
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "name": "postgis_table",
+          "value": "mdc_2020_zcta"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "kobo_record_id",
+          "value": "146.0"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "creator_type",
+          "value": "organization"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "cartography_label_field",
+          "value": "geoid20"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "analytic_function",
+          "value": "gdsc_get_attributes"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "Spatial Reference System",
+          "value": "http://www.opengis.net/def/crs/EPSG/0/4269"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "download_method",
+          "value": "local"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "source_file",
+          "value": "{'etl_group/file_name_group/file_name_value': 'mdc_2020_zcta'}"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "dependencyTable",
+          "value": "{'etl_group/dependency_group/dependency_table_name': 'us_2020_zcta'}"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "pointOfContact",
+          "value": "{'iso_group/point_of_contact_group/contact_name': 'TBD'}"
+        }
+      ],
+      "dct:accrualPeriodicity": "never",
+      "variableMeasured": [
+        {
+          "@type": "PropertyValue",
+          "name": "ogc_fid",
+          "description": "object ID",
+          "qudt:dataType": "xsd:varchar",
+          "unitText": "id",
+          "unitCode": "2020",
+          "sourceOrganization": {
+            "@type": "Organization",
+            "name": "internal"
+          }
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "\n    geoid20",
+          "description": "Zip Code",
+          "qudt:dataType": "xsd:varchar",
+          "unitText": "zip code",
+          "unitCode": "2020",
+          "sourceOrganization": {
+            "@type": "Organization",
+            "name": "Census"
+          }
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "\n    zcta5ce20",
+          "description": "Zip Code",
+          "qudt:dataType": "xsd:varchar",
+          "unitText": "zip code",
+          "unitCode": "2020",
+          "sourceOrganization": {
+            "@type": "Organization",
+            "name": "Census"
+          }
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "\n    classfp20",
+          "description": "The class (CLASSFP) code defines the current class of a geographic entity.",
+          "qudt:dataType": "xsd:varchar",
+          "unitText": "code",
+          "unitCode": "2020",
+          "sourceOrganization": {
+            "@type": "Organization",
+            "name": "Census"
+          }
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "\n    mtfcc20",
+          "description": "5-digit code assigned by the Census Bureau intended to classify and describe geographic objects or features",
+          "qudt:dataType": "xsd:varchar",
+          "unitText": "code",
+          "unitCode": "2020",
+          "sourceOrganization": {
+            "@type": "Organization",
+            "name": "Census"
+          }
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "\n    aland20",
+          "description": "Area of land in square feet",
+          "qudt:dataType": "xsd:int4",
+          "unitText": "Square Feet",
+          "unitCode": "2020",
+          "sourceOrganization": {
+            "@type": "Organization",
+            "name": "Census"
+          }
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "\n    awater20",
+          "description": "Area of water in square feet",
+          "qudt:dataType": "xsd:int4",
+          "unitText": "Square Feet",
+          "unitCode": "2020",
+          "sourceOrganization": {
+            "@type": "Organization",
+            "name": "Census"
+          }
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "\n    funcstat20",
+          "description": "The functional status (FUNCSTAT) code defines the current functional status of a geographic entity.",
+          "qudt:dataType": "xsd:varchar",
+          "unitText": "code",
+          "unitCode": "2020",
+          "sourceOrganization": {
+            "@type": "Organization",
+            "name": "Census"
+          }
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "\n    intptlat20",
+          "description": "NAD83 Latitude",
+          "qudt:dataType": "xsd:float",
+          "unitText": "Degrees Latitude",
+          "sourceOrganization": {
+            "@type": "Organization",
+            "name": "Census"
+          }
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "\n    intptlon20",
+          "description": "NAD83 Longitude",
+          "qudt:dataType": "xsd:float",
+          "unitText": "Degrees Longitude",
+          "sourceOrganization": {
+            "@type": "Organization",
+            "name": "Census"
+          }
+        }
+      ],
+      "isAccessibleForFree": false,
+      "dct:provenance": "Census from the Post Office",
+      "additionalType": "vector_dataset",
+      "funder": [
+        {
+          "@type": "Organization",
+          "name": "IDSC",
+          "url": "https://idsc.miami.edu"
+        },
+        {
+          "@type": "Organization",
+          "name": "Library",
+          "url": "https://www.library.miami.edu"
+        }
+      ],
+      "creativeWorkStatus": "draft"
+    }
+  ]
+}

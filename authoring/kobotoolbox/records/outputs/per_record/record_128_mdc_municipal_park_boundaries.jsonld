@@ -1,0 +1,479 @@
+{
+  "@context": {
+    "@vocab": "https://schema.org/",
+    "schema": "https://schema.org/",
+    "@language": "en",
+    "dct": "http://purl.org/dc/terms/"
+  },
+  "@graph": [
+    {
+      "@type": "schema:Dataset",
+      "@id": "https://gdsc.idsc.miami.edu/detail/mdc_municipal_park_boundaries",
+      "name": "Miami-Dade County Municipal Park Boundaries",
+      "description": "A polygon feature class of Miami-Dade Municipal (Incorporated) Maintained Parks and Recreational boundary.",
+      "url": "https://gis-mdc.opendata.arcgis.com/datasets/MDC::municipal-park-boundary/about",
+      "inLanguage": "en",
+      "datePublished": "2018-06-05",
+      "dateModified": "2023-05-23",
+      "creator": [
+        {
+          "@type": "Role",
+          "roleName": "creator",
+          "creator": {
+            "@type": "Organization",
+            "name": "Miami-Dade County Open Data Hub"
+          }
+        },
+        {
+          "@type": "Role",
+          "roleName": "creator",
+          "creator": {
+            "@type": "Organization",
+            "name": "Information Technology Department"
+          }
+        }
+      ],
+      "provider": {
+        "@type": "Organization",
+        "name": "Miami-Dade County"
+      },
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Miami-Dade County",
+        "additionalProperty": [
+          {
+            "@type": "PropertyValue",
+            "name": "geonames",
+            "value": "4164238",
+            "url": "https://www.geonames.org/4164238"
+          },
+          {
+            "@type": "PropertyValue",
+            "name": "Spatial Reference System",
+            "value": "http://www.opengis.net/def/crs/EPSG/0/3857"
+          }
+        ]
+      },
+      "keywords": "Miami-Dade County",
+      "includedInDataCatalog": [
+        {
+          "@type": "DataCatalog",
+          "@id": "https://gdsc.idsc.miami.edu",
+          "name": "Geospatial Digital Special Collections",
+          "url": "https://gdsc.idsc.miami.edu"
+        },
+        {
+          "@type": "DataCatalog",
+          "name": "mdc-health-outcomes",
+          "@id": "https://gdsc.idsc.miami.edu/?collection=mdc-health-outcomes",
+          "url": "https://gdsc.idsc.miami.edu/?collection=mdc-health-outcomes"
+        },
+        {
+          "@type": "DataCatalog",
+          "name": "mdc-sleep-outcomes",
+          "@id": "https://gdsc.idsc.miami.edu/?collection=mdc-sleep-outcomes",
+          "url": "https://gdsc.idsc.miami.edu/?collection=mdc-sleep-outcomes"
+        },
+        {
+          "@type": "DataCatalog",
+          "name": "mdc-climate-resilience",
+          "@id": "https://gdsc.idsc.miami.edu/?collection=mdc-climate-resilience",
+          "url": "https://gdsc.idsc.miami.edu/?collection=mdc-climate-resilience"
+        }
+      ],
+      "measurementTechnique": [
+        {
+          "@type": "DefinedTerm",
+          "name": "GIS Data Structure",
+          "termCode": "vector",
+          "inDefinedTermSet": {
+            "@type": "DefinedTermSet",
+            "name": "dataRepresentation",
+            "url": "https://gdsc.idsc.miami.edu/vocab/dataRepresentation"
+          }
+        },
+        {
+          "@type": "DefinedTerm",
+          "name": "GIS Vector Geometry",
+          "termCode": "polygon",
+          "inDefinedTermSet": {
+            "@type": "DefinedTermSet",
+            "name": "vectorGeometry",
+            "url": "https://gdsc.idsc.miami.edu/vocab/vectorGeometry"
+          }
+        },
+        {
+          "@type": "DefinedTerm",
+          "name": "Data Processing Level",
+          "termCode": "observed",
+          "inDefinedTermSet": {
+            "@type": "DefinedTermSet",
+            "name": "dataProcessingLevel",
+            "url": "https://gdsc.idsc.miami.edu/vocab/dataProcessingLevel"
+          }
+        }
+      ],
+      "distribution": [
+        {
+          "@type": "DataDownload",
+          "name": "Source distribution",
+          "contentUrl": "https://opendata.arcgis.com/api/v3/datasets/16fe02a1defa45b28bf14a29fb5f0428_0/downloads/data?format=geojson&spatialRefId=4326&where=1%3D1",
+          "encodingFormat": "application/geo+json"
+        }
+      ],
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "name": "postgis_table",
+          "value": "mdc_municipal_park_boundaries"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "kobo_record_id",
+          "value": "128.0"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "creator_type",
+          "value": "organization"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "cartography_label_field",
+          "value": "objectid"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "analytic_function",
+          "value": "gdsc_get_attributes"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "Spatial Reference System",
+          "value": "http://www.opengis.net/def/crs/EPSG/0/2236"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "download_method",
+          "value": "wget"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "source_file",
+          "value": "{'etl_group/file_name_group/file_name_value': 'mdc_municipal_park_boundaries'}"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "serviceDefinition",
+          "value": "API|arcgis|query"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "pointOfContact",
+          "value": "{'iso_group/point_of_contact_group/contact_name': 'TBD'}"
+        }
+      ],
+      "dct:accrualPeriodicity": "six_months",
+      "variableMeasured": [
+        {
+          "@type": "PropertyValue",
+          "name": "objectid",
+          "description": "Unique object identifer",
+          "qudt:dataType": "xsd:oid",
+          "sourceOrganization": {
+            "@type": "Organization",
+            "name": "Esri"
+          },
+          "additionalProperty": [
+            {
+              "@type": "PropertyValue",
+              "name": "temporal_interval",
+              "value": "2018-06-01/2025-06-30"
+            }
+          ]
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "folio",
+          "description": "Folio identifier",
+          "qudt:dataType": "xsd:string",
+          "sourceOrganization": {
+            "@type": "Organization",
+            "name": "MDC"
+          },
+          "additionalProperty": [
+            {
+              "@type": "PropertyValue",
+              "name": "temporal_interval",
+              "value": "2018-06-01/2025-06-30"
+            }
+          ]
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "id",
+          "description": "Unique identifier",
+          "qudt:dataType": "xsd:string",
+          "sourceOrganization": {
+            "@type": "Organization",
+            "name": "MDC"
+          },
+          "additionalProperty": [
+            {
+              "@type": "PropertyValue",
+              "name": "temporal_interval",
+              "value": "2018-06-01/2025-06-30"
+            }
+          ]
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "name",
+          "description": "Name of park facility",
+          "qudt:dataType": "xsd:string",
+          "sourceOrganization": {
+            "@type": "Organization",
+            "name": "MDC"
+          },
+          "additionalProperty": [
+            {
+              "@type": "PropertyValue",
+              "name": "temporal_interval",
+              "value": "2018-06-01/2025-06-30"
+            }
+          ]
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "address",
+          "description": "Address of facility",
+          "qudt:dataType": "xsd:string",
+          "sourceOrganization": {
+            "@type": "Organization",
+            "name": "MDC"
+          },
+          "additionalProperty": [
+            {
+              "@type": "PropertyValue",
+              "name": "temporal_interval",
+              "value": "2018-06-01/2025-06-30"
+            }
+          ]
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "city",
+          "description": "City of park facility",
+          "qudt:dataType": "xsd:string",
+          "sourceOrganization": {
+            "@type": "Organization",
+            "name": "MDC"
+          },
+          "additionalProperty": [
+            {
+              "@type": "PropertyValue",
+              "name": "temporal_interval",
+              "value": "2018-06-01/2025-06-30"
+            }
+          ]
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "zipcode",
+          "description": "Zipcode of park facility",
+          "qudt:dataType": "xsd:int4",
+          "sourceOrganization": {
+            "@type": "Organization",
+            "name": "MDC"
+          },
+          "additionalProperty": [
+            {
+              "@type": "PropertyValue",
+              "name": "temporal_interval",
+              "value": "2018-06-01/2025-06-30"
+            }
+          ]
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "phone",
+          "description": "Phone number of facility",
+          "sourceOrganization": {
+            "@type": "Organization",
+            "name": "numeric"
+          }
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "contact",
+          "description": "Official contact of facility",
+          "qudt:dataType": "xsd:string",
+          "sourceOrganization": {
+            "@type": "Organization",
+            "name": "MDC"
+          },
+          "additionalProperty": [
+            {
+              "@type": "PropertyValue",
+              "name": "temporal_interval",
+              "value": "2018-06-01/2025-06-30"
+            }
+          ]
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "class",
+          "description": "classification of facility",
+          "qudt:dataType": "xsd:string",
+          "sourceOrganization": {
+            "@type": "Organization",
+            "name": "MDC"
+          },
+          "additionalProperty": [
+            {
+              "@type": "PropertyValue",
+              "name": "temporal_interval",
+              "value": "2018-06-01/2025-06-30"
+            }
+          ]
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "totacre",
+          "description": "Total acres",
+          "qudt:dataType": "xsd:float",
+          "sourceOrganization": {
+            "@type": "Organization",
+            "name": "MDC"
+          },
+          "additionalProperty": [
+            {
+              "@type": "PropertyValue",
+              "name": "temporal_interval",
+              "value": "2018-06-01/2025-06-30"
+            }
+          ]
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "type",
+          "description": "type of facility",
+          "qudt:dataType": "xsd:string",
+          "sourceOrganization": {
+            "@type": "Organization",
+            "name": "MDC"
+          },
+          "additionalProperty": [
+            {
+              "@type": "PropertyValue",
+              "name": "temporal_interval",
+              "value": "2018-06-01/2025-06-30"
+            }
+          ]
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "develop",
+          "description": "Developed or not",
+          "qudt:dataType": "xsd:boolean",
+          "sourceOrganization": {
+            "@type": "Organization",
+            "name": "MDC"
+          },
+          "additionalProperty": [
+            {
+              "@type": "PropertyValue",
+              "name": "temporal_interval",
+              "value": "2018-06-01/2025-06-30"
+            }
+          ]
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "mngtagcy",
+          "description": "Managing agency",
+          "qudt:dataType": "xsd:string",
+          "sourceOrganization": {
+            "@type": "Organization",
+            "name": "MDC"
+          },
+          "additionalProperty": [
+            {
+              "@type": "PropertyValue",
+              "name": "temporal_interval",
+              "value": "2018-06-01/2025-06-30"
+            }
+          ]
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "objectid",
+          "description": "Unique object identifer",
+          "qudt:dataType": "xsd:oid",
+          "sourceOrganization": {
+            "@type": "Organization",
+            "name": "Esri"
+          },
+          "additionalProperty": [
+            {
+              "@type": "PropertyValue",
+              "name": "temporal_interval",
+              "value": "2018-06-01/2025-06-30"
+            }
+          ]
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "shape_area",
+          "description": "Municipal park boundary",
+          "qudt:dataType": "xsd:float",
+          "sourceOrganization": {
+            "@type": "Organization",
+            "name": "Esri"
+          },
+          "additionalProperty": [
+            {
+              "@type": "PropertyValue",
+              "name": "temporal_interval",
+              "value": "2018-06-01/2025-06-30"
+            }
+          ]
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "shape_length",
+          "description": "Municipal park boundary length",
+          "qudt:dataType": "xsd:float",
+          "sourceOrganization": {
+            "@type": "Organization",
+            "name": "Esri"
+          },
+          "additionalProperty": [
+            {
+              "@type": "PropertyValue",
+              "name": "temporal_interval",
+              "value": "2018-06-01/2025-06-30"
+            }
+          ]
+        }
+      ],
+      "temporalCoverage": "2018-06-01/2025-06-30",
+      "isAccessibleForFree": false,
+      "additionalType": "vector_dataset",
+      "funder": [
+        {
+          "@type": "Organization",
+          "name": "IDSC",
+          "url": "https://idsc.miami.edu"
+        },
+        {
+          "@type": "Organization",
+          "name": "Library",
+          "url": "https://www.library.miami.edu"
+        }
+      ],
+      "creativeWorkStatus": "draft",
+      "disambiguatingDescription": "Miami-Dade County provides this data for use \"as is\". The areas depicted by this map/data are approximate, and are not accurate to surveying or engineering standards. The maps/data shown here are for illustration purposes only and are not suitable for site-specific decision making. Information found here should not be used for making financial or any other commitments. Miami-Dade County provides this information with the understanding that it is not guaranteed to be accurate, correct or complete and conclusions drawn from such information are the sole responsibility of the user. While every effort has been made to ensure the accuracy, correctness and timeliness of materials presented, Miami-Dade County assumes no responsibility for errors or omissions, even if Miami-Dade County is advised of the possibility of such damage."
+    }
+  ]
+}

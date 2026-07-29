@@ -1,0 +1,209 @@
+{
+  "@context": {
+    "@vocab": "https://schema.org/",
+    "schema": "https://schema.org/",
+    "@language": "en",
+    "dct": "http://purl.org/dc/terms/"
+  },
+  "@graph": [
+    {
+      "@type": "schema:Dataset",
+      "@id": "https://gdsc.idsc.miami.edu/detail/tz_magu_dem_srtm",
+      "name": "Magu District DEM (SRTM)",
+      "description": "An elevation raster dataset derived from the SRTM GL1 V3 dataset at 1 ARC second resolution (~30 meters). ",
+      "url": "https://lpdaac.usgs.gov/products/srtmgl1v003/",
+      "inLanguage": "en",
+      "datePublished": "2013-01-01",
+      "dateModified": "2025-02-24",
+      "creator": [
+        {
+          "@type": "Role",
+          "roleName": "creator",
+          "creator": {
+            "@type": "Organization",
+            "name": "NASA JPL"
+          }
+        }
+      ],
+      "provider": {
+        "@type": "Organization",
+        "name": "NASA EOSDIS Land Processes Distributed Active Archive Center (LPDAAC)"
+      },
+      "spatialCoverage": {
+        "additionalProperty": [
+          {
+            "@type": "PropertyValue",
+            "name": "Spatial Reference System",
+            "value": "http://www.opengis.net/def/crs/EPSG/0/4326"
+          }
+        ]
+      },
+      "keywords": [
+        "Tanzania",
+        "Magu District",
+        "Elevation",
+        "DEM"
+      ],
+      "includedInDataCatalog": [
+        {
+          "@type": "DataCatalog",
+          "@id": "https://gdsc.idsc.miami.edu",
+          "name": "Geospatial Digital Special Collections",
+          "url": "https://gdsc.idsc.miami.edu"
+        },
+        {
+          "@type": "DataCatalog",
+          "name": "tz-climate-change",
+          "@id": "https://gdsc.idsc.miami.edu/?collection=tz-climate-change",
+          "url": "https://gdsc.idsc.miami.edu/?collection=tz-climate-change"
+        },
+        {
+          "@type": "DataCatalog",
+          "name": "tz-health-outcomes",
+          "@id": "https://gdsc.idsc.miami.edu/?collection=tz-health-outcomes",
+          "url": "https://gdsc.idsc.miami.edu/?collection=tz-health-outcomes"
+        }
+      ],
+      "measurementTechnique": [
+        {
+          "@type": "DefinedTerm",
+          "name": "GIS Data Structure",
+          "termCode": "raster",
+          "inDefinedTermSet": {
+            "@type": "DefinedTermSet",
+            "name": "dataRepresentation",
+            "url": "https://gdsc.idsc.miami.edu/vocab/dataRepresentation"
+          }
+        },
+        {
+          "@type": "DefinedTerm",
+          "name": "Data Processing Level",
+          "termCode": "derived",
+          "inDefinedTermSet": {
+            "@type": "DefinedTermSet",
+            "name": "dataProcessingLevel",
+            "url": "https://gdsc.idsc.miami.edu/vocab/dataProcessingLevel"
+          }
+        }
+      ],
+      "distribution": [
+        {
+          "@type": "DataDownload",
+          "name": "Source distribution",
+          "contentUrl": "https://e4ftl01.cr.usgs.gov/MEASURES/SRTMGL1.003/2000.02.11/",
+          "encodingFormat": "tif"
+        }
+      ],
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "name": "postgis_table",
+          "value": "tz_magu_dem_srtm"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "kobo_record_id",
+          "value": "237.0"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "analytic_function",
+          "value": "gdsc_zonal_statistics"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "Spatial Reference System",
+          "value": "http://www.opengis.net/def/crs/EPSG/0/4326"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "derivatives",
+          "value": "geotiff"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "source_file",
+          "value": "{'etl_group/file_name_group/file_name_value': 'tz_magu_dem_srtm'}"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "band",
+          "value": "{'iso_group/band_group/band_name': 'Single Band Elevation'}"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "pixelDimension",
+          "value": "30.0"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "dimensionUnits",
+          "value": "meters"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "extent",
+          "value": "32.75|-3.09|34.04|-2.13"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "customParameters",
+          "value": "S02E032.SRTMGL1|S02E033.SRTMGL1|S02E034.SRTMGL1|S03E032.SRTMGL1|S03E033.SRTMGL1|S03E034.SRTMGL1|S04E032.SRTMGL1|S04E033.SRTMGL1|S04E034.SRTMGL1|bbox;32.75;-3.09;34.04;-2.13"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "tileMinZoom",
+          "value": "{'cartography_group/tile_zoom_group/tile_min_zoom': '14'}"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "rightsStatement",
+          "value": "This data is open to the public and browse images are freely available without\n  restriction."
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "customEtl",
+          "value": "srtm_merge_and_crop"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "pointOfContact",
+          "value": "{'iso_group/point_of_contact_group/contact_name': 'TBD'}"
+        }
+      ],
+      "dct:accrualPeriodicity": "as_needed",
+      "variableMeasured": [
+        {
+          "@type": "PropertyValue",
+          "name": "elevation",
+          "description": "Mean elevation above sea level",
+          "qudt:dataType": "xsd:float",
+          "unitText": "meters\n    ",
+          "sourceOrganization": {
+            "@type": "Organization",
+            "name": "NASA JPL"
+          }
+        }
+      ],
+      "isAccessibleForFree": false,
+      "usageInfo": [
+        "This data is open to the public and browse images are freely available without\n  restriction.",
+        "This data is open to the public and browse images are freely available without\n  restriction."
+      ],
+      "additionalType": "raster_dataset",
+      "funder": [
+        {
+          "@type": "Organization",
+          "name": "IDSC",
+          "url": "https://idsc.miami.edu"
+        },
+        {
+          "@type": "Organization",
+          "name": "Library",
+          "url": "https://www.library.miami.edu"
+        }
+      ],
+      "creativeWorkStatus": "published"
+    }
+  ]
+}

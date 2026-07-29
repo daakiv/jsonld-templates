@@ -1,0 +1,241 @@
+{
+  "@context": {
+    "@vocab": "https://schema.org/",
+    "schema": "https://schema.org/",
+    "@language": "en",
+    "dct": "http://purl.org/dc/terms/"
+  },
+  "@graph": [
+    {
+      "@type": "schema:Dataset",
+      "@id": "https://gdsc.idsc.miami.edu/detail/hh_centrospoblados_idep",
+      "name": "Centros Poblados Huayhuash (IDEP)",
+      "description": "Centros Poblados de Huayuhash",
+      "url": "https://www.idep.gob.pe/geoportal/rest/services/DATOS_GEOESPACIALES/CENTROS_POBLADOS/FeatureServer/3",
+      "inLanguage": "es",
+      "datePublished": "2017-01-01",
+      "dateModified": "2025-02-27",
+      "creator": [
+        {
+          "@type": "Role",
+          "roleName": "creator",
+          "creator": {
+            "@type": "Organization",
+            "name": "IDEP"
+          }
+        }
+      ],
+      "provider": {
+        "@type": "Organization",
+        "name": "IDEP"
+      },
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Cordillera Huayhuash",
+        "additionalProperty": [
+          {
+            "@type": "PropertyValue",
+            "name": "geonames",
+            "value": "3938961",
+            "url": "https://www.geonames.org/3938961"
+          },
+          {
+            "@type": "PropertyValue",
+            "name": "Spatial Reference System",
+            "value": "http://www.opengis.net/def/crs/EPSG/0/4326"
+          }
+        ]
+      },
+      "keywords": [
+        "Huayhuash",
+        "Perú",
+        " Centros poblados"
+      ],
+      "includedInDataCatalog": [
+        {
+          "@type": "DataCatalog",
+          "@id": "https://gdsc.idsc.miami.edu",
+          "name": "Geospatial Digital Special Collections",
+          "url": "https://gdsc.idsc.miami.edu"
+        },
+        {
+          "@type": "DataCatalog",
+          "name": "hh-conservacion",
+          "@id": "https://gdsc.idsc.miami.edu/?collection=hh-conservacion",
+          "url": "https://gdsc.idsc.miami.edu/?collection=hh-conservacion"
+        }
+      ],
+      "measurementTechnique": [
+        {
+          "@type": "DefinedTerm",
+          "name": "GIS Data Structure",
+          "termCode": "vector",
+          "inDefinedTermSet": {
+            "@type": "DefinedTermSet",
+            "name": "dataRepresentation",
+            "url": "https://gdsc.idsc.miami.edu/vocab/dataRepresentation"
+          }
+        },
+        {
+          "@type": "DefinedTerm",
+          "name": "GIS Vector Geometry",
+          "termCode": "point",
+          "inDefinedTermSet": {
+            "@type": "DefinedTermSet",
+            "name": "vectorGeometry",
+            "url": "https://gdsc.idsc.miami.edu/vocab/vectorGeometry"
+          }
+        },
+        {
+          "@type": "DefinedTerm",
+          "name": "Data Processing Level",
+          "termCode": "derived",
+          "inDefinedTermSet": {
+            "@type": "DefinedTermSet",
+            "name": "dataProcessingLevel",
+            "url": "https://gdsc.idsc.miami.edu/vocab/dataProcessingLevel"
+          }
+        }
+      ],
+      "distribution": [
+        {
+          "@type": "DataDownload",
+          "name": "Source distribution",
+          "contentUrl": "https://www.idep.gob.pe/geoportal/rest/services/DATOS_GEOESPACIALES/CENTROS_POBLADOS/FeatureServer/3/query?where=1%3D1&geometry=%22xmin%22%3A-77.33%2C%22ymin%22%3A-10.7%2C%22xmax%22%3A-76.55%2C%22ymax%22%3A-9.8&geometryType=esriGeometryEnvelope&inSR=4326&spatialRel=esriSpatialRelIntersects&outFields=*&where=1%3D1&outSR=4326&f=geojson",
+          "encodingFormat": "application/json"
+        }
+      ],
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "name": "postgis_table",
+          "value": "hh_centrospoblados_idep"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "kobo_record_id",
+          "value": "207"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "cartography_value_field",
+          "value": "nom_poblad"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "Spatial Reference System",
+          "value": "http://www.opengis.net/def/crs/EPSG/0/5387"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "derivatives",
+          "value": "shp geojson gpkg"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "download_method",
+          "value": "esri_recursive_ogr"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "source_file",
+          "value": "{'etl_group/file_name_group/file_name_value': 'hh_centrospoblados_idep'}"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "extent",
+          "value": "-77.33|-10.7|-76.55|-9.8"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "serviceDefinition",
+          "value": "API|arcgis|query"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "pointOfContact",
+          "value": "{'iso_group/point_of_contact_group/contact_name': 'TBD'}"
+        }
+      ],
+      "dct:accrualPeriodicity": "as_needed",
+      "variableMeasured": [
+        {
+          "@type": "PropertyValue",
+          "name": "nom_poblad",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "fuente",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "código",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "cat_poblad",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "dist",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "prov",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "dep",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "cód_int",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "categoria",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "x",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "y",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "n_busqda",
+          "description": ""
+        }
+      ],
+      "isAccessibleForFree": false,
+      "dct:provenance": "IDEP",
+      "additionalType": "vector_dataset",
+      "funder": [
+        {
+          "@type": "Organization",
+          "name": "IDSC",
+          "url": "https://idsc.miami.edu"
+        },
+        {
+          "@type": "Organization",
+          "name": "Library",
+          "url": "https://www.library.miami.edu"
+        }
+      ],
+      "creativeWorkStatus": "draft"
+    }
+  ]
+}

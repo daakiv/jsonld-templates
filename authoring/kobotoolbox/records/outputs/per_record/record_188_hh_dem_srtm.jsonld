@@ -1,0 +1,205 @@
+{
+  "@context": {
+    "@vocab": "https://schema.org/",
+    "schema": "https://schema.org/",
+    "@language": "en",
+    "dct": "http://purl.org/dc/terms/"
+  },
+  "@graph": [
+    {
+      "@type": "schema:Dataset",
+      "@id": "https://gdsc.idsc.miami.edu/detail/hh_dem_srtm",
+      "name": "Huayhuash DEM (SRTM)",
+      "description": "An elevation raster dataset derived from the SRTM GL1 V3 dataset at 1 ARC second resolution (~30 meters). ",
+      "url": "https://lpdaac.usgs.gov/products/srtmgl1v003/",
+      "inLanguage": "en",
+      "datePublished": "2013-01-01",
+      "dateModified": "2025-02-24",
+      "creator": [
+        {
+          "@type": "Role",
+          "roleName": "creator",
+          "creator": {
+            "@type": "Organization",
+            "name": "NASA JPL"
+          }
+        }
+      ],
+      "provider": {
+        "@type": "Organization",
+        "name": "NASA EOSDIS Land Processes Distributed Active Archive Center (LPDAAC)"
+      },
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Cordillera Huayhuash",
+        "additionalProperty": [
+          {
+            "@type": "PropertyValue",
+            "name": "geonames",
+            "value": "3938961",
+            "url": "https://www.geonames.org/3938961"
+          },
+          {
+            "@type": "PropertyValue",
+            "name": "Spatial Reference System",
+            "value": "http://www.opengis.net/def/crs/EPSG/0/4326"
+          }
+        ]
+      },
+      "keywords": [
+        "Peru",
+        "Huayhuash",
+        "Elevation",
+        "DEM"
+      ],
+      "includedInDataCatalog": [
+        {
+          "@type": "DataCatalog",
+          "@id": "https://gdsc.idsc.miami.edu",
+          "name": "Geospatial Digital Special Collections",
+          "url": "https://gdsc.idsc.miami.edu"
+        },
+        {
+          "@type": "DataCatalog",
+          "name": "hh-conservacion",
+          "@id": "https://gdsc.idsc.miami.edu/?collection=hh-conservacion",
+          "url": "https://gdsc.idsc.miami.edu/?collection=hh-conservacion"
+        }
+      ],
+      "measurementTechnique": [
+        {
+          "@type": "DefinedTerm",
+          "name": "GIS Data Structure",
+          "termCode": "raster",
+          "inDefinedTermSet": {
+            "@type": "DefinedTermSet",
+            "name": "dataRepresentation",
+            "url": "https://gdsc.idsc.miami.edu/vocab/dataRepresentation"
+          }
+        },
+        {
+          "@type": "DefinedTerm",
+          "name": "Data Processing Level",
+          "termCode": "derived",
+          "inDefinedTermSet": {
+            "@type": "DefinedTermSet",
+            "name": "dataProcessingLevel",
+            "url": "https://gdsc.idsc.miami.edu/vocab/dataProcessingLevel"
+          }
+        }
+      ],
+      "distribution": [
+        {
+          "@type": "DataDownload",
+          "name": "Source distribution",
+          "contentUrl": "https://e4ftl01.cr.usgs.gov/MEASURES/SRTMGL1.003/2000.02.11/",
+          "encodingFormat": "tif"
+        }
+      ],
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "name": "postgis_table",
+          "value": "hh_dem_srtm"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "kobo_record_id",
+          "value": "188"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "analytic_function",
+          "value": "gdsc_zonal_statistics"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "Spatial Reference System",
+          "value": "http://www.opengis.net/def/crs/EPSG/0/5387"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "derivatives",
+          "value": "geotiff"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "source_file",
+          "value": "{'etl_group/file_name_group/file_name_value': 'hh_dem_srtm'}"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "band",
+          "value": "{'iso_group/band_group/band_name': 'Single Band Elevation'}"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "pixelDimension",
+          "value": "30.0"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "dimensionUnits",
+          "value": "meters"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "extent",
+          "value": "-77.33|-10.7|-76.55|-9.8"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "customParameters",
+          "value": "S10W077.SRTMGL1|S10W078.SRTMGL1|S11W077.SRTMGL1|S11W078.SRTMGL1|bbox;-77.33;-10.7;-76.55;-9.8"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "tileMinZoom",
+          "value": "{'cartography_group/tile_zoom_group/tile_min_zoom': '14'}"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "rightsStatement",
+          "value": "This data is open to the public and browse images are freely available without\n  restriction."
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "customEtl",
+          "value": "srtm_merge_and_crop"
+        }
+      ],
+      "dct:accrualPeriodicity": "as_needed",
+      "variableMeasured": [
+        {
+          "@type": "PropertyValue",
+          "name": "elevation",
+          "description": "Mean elevation above sea level",
+          "qudt:dataType": "xsd:float",
+          "unitText": "meters",
+          "sourceOrganization": {
+            "@type": "Organization",
+            "name": "NASA JPL"
+          }
+        }
+      ],
+      "isAccessibleForFree": false,
+      "usageInfo": [
+        "This data is open to the public and browse images are freely available without restriction.",
+        "This data is open to the public and browse images are freely available without\n  restriction."
+      ],
+      "additionalType": "raster_dataset",
+      "funder": [
+        {
+          "@type": "Organization",
+          "name": "IDSC",
+          "url": "https://idsc.miami.edu"
+        },
+        {
+          "@type": "Organization",
+          "name": "Library",
+          "url": "https://www.library.miami.edu"
+        }
+      ]
+    }
+  ]
+}

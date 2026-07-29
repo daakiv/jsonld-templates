@@ -1,0 +1,489 @@
+{
+  "@context": {
+    "@vocab": "https://schema.org/",
+    "schema": "https://schema.org/",
+    "@language": "en",
+    "dct": "http://purl.org/dc/terms/"
+  },
+  "@graph": [
+    {
+      "@type": "schema:Dataset",
+      "@id": "https://gdsc.idsc.miami.edu/detail/mdc_state_and_national_parks",
+      "name": "MDC State and National Parks",
+      "description": "The State Parks are derived as a subset from The Florida Natural Areas Inventory. The Florida Natural Areas Inventory is the primary source for information on Florida's conservation lands. FNAI's database includes boundaries and statistics for more than 2,900 federal, state, local, and private managed areas, all provided directly by the managing agencies. National parks, state forests, wildlife management areas, local and private preserves are examples of the managed areas included. The shapefile is called FLMA for Florida Managed Areas; updated versions are published quarterly.\n  \n  FLORIDA CONSERVATION LANDS (layer name FLMA): This is a polygon data layer for public (and some private) lands that the Florida Natural Areas Inventory (FNAI) has identified as having natural resource value and that are being managed at least partially for conservation purposes. The term \"Managed Area\" refers to a managed conservation land.\n  ",
+      "url": "https://www.fnai.org/publications/gis-data",
+      "inLanguage": "en",
+      "datePublished": "2023-12-31",
+      "dateModified": "2023-12-31",
+      "creator": [
+        {
+          "@type": "Role",
+          "roleName": "creator",
+          "creator": {
+            "@type": "Organization",
+            "name": "Florida Natural Areas Inventory"
+          }
+        }
+      ],
+      "provider": {
+        "@type": "Organization",
+        "name": "University of Miami GDSC",
+        "@id": "https://ror.org/02y3ad647"
+      },
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Miami-Dade County",
+        "additionalProperty": [
+          {
+            "@type": "PropertyValue",
+            "name": "geonames",
+            "value": "4164238",
+            "url": "https://www.geonames.org/4164238"
+          },
+          {
+            "@type": "PropertyValue",
+            "name": "Spatial Reference System",
+            "value": "http://www.opengis.net/def/crs/EPSG/0/3087"
+          }
+        ]
+      },
+      "keywords": [
+        "Miami-Dade County",
+        "FNAI",
+        "Conservation Lands",
+        "FLMA",
+        "State Parks"
+      ],
+      "includedInDataCatalog": [
+        {
+          "@type": "DataCatalog",
+          "@id": "https://gdsc.idsc.miami.edu",
+          "name": "Geospatial Digital Special Collections",
+          "url": "https://gdsc.idsc.miami.edu"
+        },
+        {
+          "@type": "DataCatalog",
+          "name": "climate-and-equity-mapping-program",
+          "@id": "https://gdsc.idsc.miami.edu/?collection=climate-and-equity-mapping-program",
+          "url": "https://gdsc.idsc.miami.edu/?collection=climate-and-equity-mapping-program"
+        },
+        {
+          "@type": "DataCatalog",
+          "name": "miami-affordability-project",
+          "@id": "https://gdsc.idsc.miami.edu/?collection=miami-affordability-project",
+          "url": "https://gdsc.idsc.miami.edu/?collection=miami-affordability-project"
+        },
+        {
+          "@type": "DataCatalog",
+          "name": "mdc-climate-resilience",
+          "@id": "https://gdsc.idsc.miami.edu/?collection=mdc-climate-resilience",
+          "url": "https://gdsc.idsc.miami.edu/?collection=mdc-climate-resilience"
+        },
+        {
+          "@type": "DataCatalog",
+          "name": "mdc-sleep-outcomes",
+          "@id": "https://gdsc.idsc.miami.edu/?collection=mdc-sleep-outcomes",
+          "url": "https://gdsc.idsc.miami.edu/?collection=mdc-sleep-outcomes"
+        },
+        {
+          "@type": "DataCatalog",
+          "name": "mdc-health-outcomes",
+          "@id": "https://gdsc.idsc.miami.edu/?collection=mdc-health-outcomes",
+          "url": "https://gdsc.idsc.miami.edu/?collection=mdc-health-outcomes"
+        }
+      ],
+      "measurementTechnique": [
+        {
+          "@type": "DefinedTerm",
+          "name": "GIS Data Structure",
+          "termCode": "vector",
+          "inDefinedTermSet": {
+            "@type": "DefinedTermSet",
+            "name": "dataRepresentation",
+            "url": "https://gdsc.idsc.miami.edu/vocab/dataRepresentation"
+          }
+        },
+        {
+          "@type": "DefinedTerm",
+          "name": "GIS Vector Geometry",
+          "termCode": "polygon",
+          "inDefinedTermSet": {
+            "@type": "DefinedTermSet",
+            "name": "vectorGeometry",
+            "url": "https://gdsc.idsc.miami.edu/vocab/vectorGeometry"
+          }
+        },
+        {
+          "@type": "DefinedTerm",
+          "name": "Data Processing Level",
+          "termCode": "derived",
+          "inDefinedTermSet": {
+            "@type": "DefinedTermSet",
+            "name": "dataProcessingLevel",
+            "url": "https://gdsc.idsc.miami.edu/vocab/dataProcessingLevel"
+          }
+        }
+      ],
+      "distribution": [
+        {
+          "@type": "DataDownload",
+          "name": "Source distribution",
+          "contentUrl": "fl_2026_flma",
+          "encodingFormat": "application/x-shapefile"
+        }
+      ],
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "name": "postgis_table",
+          "value": "mdc_state_and_national_parks"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "kobo_record_id",
+          "value": "233.0"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "cartography_label_field",
+          "value": "ma_id"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "analytic_function",
+          "value": "gdsc_get_attributes gdsc_nearest_neighbor"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "Spatial Reference System",
+          "value": "http://www.opengis.net/def/crs/EPSG/0/2236"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "source_file",
+          "value": "{'etl_group/file_name_group/file_name_value': 'mdc_state_and_national_parks'}"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "extent",
+          "value": "-87.509056|24.246904\n  |-79.879813|31.030878"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "customParameters",
+          "value": "(matype;=;'FNPNP';OR;matype;=;'SRPRA');AND|county;=;'DADE'"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "customEtl",
+          "value": "subset"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "dependencyTable",
+          "value": "{'etl_group/dependency_group/dependency_table_name': 'fl_2026_flma'}"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "pointOfContact",
+          "value": "{'iso_group/point_of_contact_group/contact_name': 'TBD'}"
+        }
+      ],
+      "dct:accrualPeriodicity": "four_months",
+      "variableMeasured": [
+        {
+          "@type": "PropertyValue",
+          "name": "area",
+          "description": "Area in square meters.",
+          "qudt:dataType": "xsd:float",
+          "unitText": "square meters",
+          "sourceOrganization": {
+            "@type": "Organization",
+            "name": "FNAI"
+          }
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "\n    perimeter",
+          "description": "Perimeter in meters.",
+          "qudt:dataType": "xsd:float",
+          "unitText": "meters",
+          "sourceOrganization": {
+            "@type": "Organization",
+            "name": "FNAI"
+          }
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "\n    ma_id",
+          "description": "Managed Area ID, designed by NatureServe. Unique identifier for each Managed Area.",
+          "qudt:dataType": "xsd:float",
+          "unitText": "uniqueid",
+          "sourceOrganization": {
+            "@type": "Organization",
+            "name": "FNAI"
+          }
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "\n    macode_bcd",
+          "description": "Managed Area Code",
+          "qudt:dataType": "xsd:string",
+          "sourceOrganization": {
+            "@type": "Organization",
+            "name": "The Nature Conservancy"
+          }
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "\n    maname",
+          "description": "Official name of the Managed Area (conservation land)",
+          "qudt:dataType": "xsd:string",
+          "sourceOrganization": {
+            "@type": "Organization",
+            "name": "The managing agency of the Managed Area"
+          }
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "majorma",
+          "description": "Official name of the Major Managed Area. Major Managed Area refers to a larger Managed Area that contains the Managed Area in question.",
+          "qudt:dataType": "xsd:string",
+          "sourceOrganization": {
+            "@type": "Organization",
+            "name": "FNAI"
+          }
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "\n    matype",
+          "description": "Code for the Managed Area by lead managing agency. Each Managed Area has been coded as 1st byte = Managing Agency Category: F=Federal, S=State, L=Local, P=Private, 2nd and 3rd bytes = Managing Agency: (e.g., AF= US Air Force), 4th and 5th bytes = Managed Area Unit Type (e.g., AB= Air Force Base)",
+          "qudt:dataType": "xsd:string",
+          "sourceOrganization": {
+            "@type": "Organization",
+            "name": "The Nature Conservancy and FNAI"
+          }
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "\n    managing_a",
+          "description": "Name of the lead managing agency for the Managed Area.",
+          "qudt:dataType": "xsd:string",
+          "sourceOrganization": {
+            "@type": "Organization",
+            "name": "FNAI"
+          }
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "\n    matype2",
+          "description": "Code for Managed Area by managing agency category.",
+          "qudt:dataType": "xsd:string",
+          "sourceOrganization": {
+            "@type": "Organization",
+            "name": "FNAI"
+          }
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "\n    owner",
+          "description": "Name of the main owner of the Managed Area",
+          "qudt:dataType": "xsd:string",
+          "sourceOrganization": {
+            "@type": "Organization",
+            "name": "FNAI"
+          }
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "\n    coowners",
+          "description": "Name(s) of additional owner(s) of the managed area",
+          "qudt:dataType": "xsd:string",
+          "sourceOrganization": {
+            "@type": "Organization",
+            "name": "FNAI"
+          }
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "\n    totacres",
+          "description": "Total number of acres within the Managed Area",
+          "qudt:dataType": "xsd:float",
+          "unitText": "acres",
+          "sourceOrganization": {
+            "@type": "Organization",
+            "name": "The managing agency of the Managed Area"
+          }
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "\n    ltf_acres",
+          "description": "Number of acres within the Managed Area that are in less-than-fee ownership.",
+          "qudt:dataType": "xsd:float",
+          "unitText": "acres",
+          "sourceOrganization": {
+            "@type": "Organization",
+            "name": "The managing agency of the Managed Area"
+          }
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "\n    county",
+          "description": "Abbreviation (the first four letters of the county name) for the county",
+          "qudt:dataType": "xsd:string",
+          "sourceOrganization": {
+            "@type": "Organization",
+            "name": "FNAI"
+          }
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "\n    prostat",
+          "description": "Protection Status as 1, 2, or 3",
+          "qudt:dataType": "xsd:float",
+          "sourceOrganization": {
+            "@type": "Organization",
+            "name": "The Nature Conservancy and FNAI. Synonymous with protection categories I, II, III"
+          }
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "\n    manager",
+          "description": "Name and/or official job title of the current manager of the Managed Area.",
+          "qudt:dataType": "xsd:string",
+          "sourceOrganization": {
+            "@type": "Organization",
+            "name": "The managing agency of the Managed Area"
+          }
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "\n    mgrinst",
+          "description": "Manager Institution",
+          "qudt:dataType": "xsd:string",
+          "sourceOrganization": {
+            "@type": "Organization",
+            "name": "The managing agency of the Managed Area"
+          }
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "\n    mgrcity",
+          "description": "Manager City.",
+          "qudt:dataType": "xsd:string",
+          "sourceOrganization": {
+            "@type": "Organization",
+            "name": "The managing agency of the Managed Area"
+          }
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "\n    mgrphone",
+          "description": "Manager Phone",
+          "qudt:dataType": "xsd:float",
+          "sourceOrganization": {
+            "@type": "Organization",
+            "name": "FNAI"
+          }
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "\n    desc1",
+          "description": "General description of the Managed Area",
+          "qudt:dataType": "xsd:string",
+          "sourceOrganization": {
+            "@type": "Organization",
+            "name": "FNAI"
+          }
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "\n    desc2",
+          "description": "Description",
+          "qudt:dataType": "xsd:string",
+          "sourceOrganization": {
+            "@type": "Organization",
+            "name": "FNAI"
+          }
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "\n    comments1",
+          "description": "General comments",
+          "qudt:dataType": "xsd:string",
+          "sourceOrganization": {
+            "@type": "Organization",
+            "name": "FNAI"
+          }
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "\n    comments2",
+          "description": "Continued Description",
+          "qudt:dataType": "xsd:string",
+          "sourceOrganization": {
+            "@type": "Organization",
+            "name": "FNAI"
+          }
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "\n    maname_ab",
+          "description": "A shortened (abbreviated) name of the Managed Area",
+          "qudt:dataType": "xsd:string",
+          "sourceOrganization": {
+            "@type": "Organization",
+            "name": "FNAI"
+          }
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "\n    ma_website",
+          "description": "Managed Area Web Site",
+          "qudt:dataType": "xsd:string",
+          "sourceOrganization": {
+            "@type": "Organization",
+            "name": "FNAI"
+          }
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "\n    ownertypes",
+          "description": "Owner Types",
+          "qudt:dataType": "xsd:string",
+          "sourceOrganization": {
+            "@type": "Organization",
+            "name": "FNAI"
+          }
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "\n    esmt_hold",
+          "description": "Easement Holder",
+          "qudt:dataType": "xsd:string",
+          "sourceOrganization": {
+            "@type": "Organization",
+            "name": "FNAI"
+          }
+        }
+      ],
+      "isAccessibleForFree": false,
+      "usageInfo": "Use of this data should be accompanied by proper citation of FNAI. Available for free download at: http://www.fnai.org/gis_data.cfm",
+      "additionalType": "vector_dataset",
+      "funder": [
+        {
+          "@type": "Organization",
+          "name": "IDSC",
+          "url": "https://idsc.miami.edu"
+        },
+        {
+          "@type": "Organization",
+          "name": "Library",
+          "url": "https://www.library.miami.edu"
+        }
+      ],
+      "creativeWorkStatus": "draft",
+      "disambiguatingDescription": "Use of this data should be accompanied by proper citation of FNAI. Available for free download at: http://www.fnai.org/gis_data.cfm"
+    }
+  ]
+}

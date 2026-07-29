@@ -1,0 +1,297 @@
+{
+  "@context": {
+    "@vocab": "https://schema.org/",
+    "schema": "https://schema.org/",
+    "@language": "en",
+    "dct": "http://purl.org/dc/terms/"
+  },
+  "@graph": [
+    {
+      "@type": "schema:Dataset",
+      "@id": "https://gdsc.idsc.miami.edu/detail/hh_centrospoblados_inei",
+      "name": "Centros Poblados Huayhuash (INEI)",
+      "description": "Centros Poblados de Huayuhash",
+      "url": "https://arcgis4.inei.gob.pe:6443/arcgis/rest/services/VISOR_DE_MAPAS/VISOR_DE_INDICADOR_GEOESPACIAL_A/MapServer/0",
+      "inLanguage": "es",
+      "dateModified": "2025-02-27",
+      "creator": [
+        {
+          "@type": "Role",
+          "roleName": "creator",
+          "creator": {
+            "@type": "Organization",
+            "name": "INEI"
+          }
+        }
+      ],
+      "provider": {
+        "@type": "Organization",
+        "name": "INEI"
+      },
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Perú",
+        "additionalProperty": [
+          {
+            "@type": "PropertyValue",
+            "name": "geonames",
+            "value": "3932488",
+            "url": "https://www.geonames.org/3932488"
+          },
+          {
+            "@type": "PropertyValue",
+            "name": "Spatial Reference System",
+            "value": "http://www.opengis.net/def/crs/EPSG/0/4326"
+          }
+        ]
+      },
+      "keywords": [
+        "Huayhuash",
+        "Perú",
+        " Centros poblados"
+      ],
+      "includedInDataCatalog": [
+        {
+          "@type": "DataCatalog",
+          "@id": "https://gdsc.idsc.miami.edu",
+          "name": "Geospatial Digital Special Collections",
+          "url": "https://gdsc.idsc.miami.edu"
+        },
+        {
+          "@type": "DataCatalog",
+          "name": "hh-conservacion",
+          "@id": "https://gdsc.idsc.miami.edu/?collection=hh-conservacion",
+          "url": "https://gdsc.idsc.miami.edu/?collection=hh-conservacion"
+        }
+      ],
+      "measurementTechnique": [
+        {
+          "@type": "DefinedTerm",
+          "name": "GIS Data Structure",
+          "termCode": "vector",
+          "inDefinedTermSet": {
+            "@type": "DefinedTermSet",
+            "name": "dataRepresentation",
+            "url": "https://gdsc.idsc.miami.edu/vocab/dataRepresentation"
+          }
+        },
+        {
+          "@type": "DefinedTerm",
+          "name": "GIS Vector Geometry",
+          "termCode": "point",
+          "inDefinedTermSet": {
+            "@type": "DefinedTermSet",
+            "name": "vectorGeometry",
+            "url": "https://gdsc.idsc.miami.edu/vocab/vectorGeometry"
+          }
+        }
+      ],
+      "distribution": [
+        {
+          "@type": "DataDownload",
+          "name": "Source distribution",
+          "contentUrl": "https://maps.inei.gob.pe/T10Limites/ows?service=WFS&version=2.0.0&request=GetFeature&typeName=T10Limites:ig_cpoblado&OUTPUTFORMAT=application/json&bbox=-77.33,-10.7,-76.55,-9.8,EPSG:4326",
+          "encodingFormat": "application/json"
+        }
+      ],
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "name": "postgis_table",
+          "value": "hh_centrospoblados_inei"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "kobo_record_id",
+          "value": "162"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "cartography_value_field",
+          "value": "objectid"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "Spatial Reference System",
+          "value": "http://www.opengis.net/def/crs/EPSG/0/5387"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "derivatives",
+          "value": "shp geojson gpkg"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "download_method",
+          "value": "curl"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "source_file",
+          "value": "{'etl_group/file_name_group/file_name_value': 'hh_centrospoblados_inei'}"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "extent",
+          "value": "-77.33|-10.7|-76.55|-9.8"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "serviceDefinition",
+          "value": "API|arcgis|query"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "etlParameters",
+          "value": "-k"
+        }
+      ],
+      "dct:accrualPeriodicity": "as_needed",
+      "variableMeasured": [
+        {
+          "@type": "PropertyValue",
+          "name": "objectid",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "shape",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "ubigeo",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "codccpp",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "latitud",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "longitud",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "altitud",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "poblacion",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "idccpp",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "nombccpp",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "area",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "nombdep",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "nombprov",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "nombdist",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "totalviv",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "codvraem",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "nomdist",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "nomprov",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "nomdep",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "ceco_1001",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "ceco_1002",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "ceco_1301",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "viv_1002",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "viv_1004",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "viv_1012",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "viv_1018",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "viv_1302",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "viv_1304",
+          "description": ""
+        }
+      ],
+      "isAccessibleForFree": false,
+      "dct:provenance": "INEI",
+      "additionalType": "vector_dataset"
+    }
+  ]
+}

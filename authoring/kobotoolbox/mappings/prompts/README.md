@@ -16,6 +16,28 @@ validated against the Post-Generation Checklist before saving.
 
 ---
 
+## AI Model Used
+
+The SSSOM prompt templates in this folder were developed and tested primarily using
+**Anthropic Claude Opus 4.8** through a paid Claude account.
+
+- **Provider:** Anthropic
+- **Model:** Claude Opus 4.8
+- **Access type:** Closed / hosted model
+- **Role in the workflow:** AI-assisted generation and refinement of draft SSSOM mappings
+- **Human review:** Required before a generated mapping is accepted for use
+
+The AI model is used only to assist with drafting and reviewing semantic mappings.
+Once a reusable SSSOM mapping has been reviewed and approved, the downstream
+SSSOM-to-JSON-LD transformation runs deterministically in Python and does not require
+the AI model.
+
+Because model outputs may vary across runs or model versions, the prompt templates
+and reviewed SSSOM mappings are version-controlled in GitHub and should be treated
+as the reproducible project artifacts.
+
+---
+
 ## Quick-Start
 
 ```

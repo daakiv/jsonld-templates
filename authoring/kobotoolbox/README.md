@@ -66,16 +66,18 @@ Gaia Catalog review and ingestion
 
 | Folder / file | Purpose |
 | --- | --- |
-| [`docs/`](docs/) | Workflow notes, architecture documentation, concept notes, and the [data-quality report](docs/quality_issues/Kobo_Data_Quality_Issues.xlsx) for the current pull. |
+| [`docs/`](docs/) | Workflow notes, architecture documentation, concept notes, and the [data-quality report](docs/quality_issues/Kobo_Data_Quality_Issues.xlsx) for earlier validation work. |
 | [`forms/`](forms/) | KoboToolbox/XLSForm authoring templates and related form assets. |
 | [`mappings/prompts/`](mappings/prompts/) | AI prompt templates used to support reusable SSSOM mapping generation, validation, human review, and AI model provenance documentation. See the [prompts README](mappings/prompts/README.md). |
-| [`mappings/scripts/`](mappings/scripts/) | Python scripts for pulling Kobo records, transforming SSSOM mappings into JSON-LD, splitting outputs, and inspecting mappings. See the [scripts README](mappings/scripts/README.md). |
+| [`mappings/scripts/`](mappings/scripts/) | Python scripts for pulling Kobo records, inspecting and validating source records, transforming SSSOM mappings into JSON-LD, splitting outputs, and checking mapping quality. See the [scripts README](mappings/scripts/README.md). |
 | [`mappings/sssom/`](mappings/sssom/) | Version-controlled SSSOM-style TSV mapping files defining how Kobo JSON paths map to Schema.org / JSON-LD properties. |
-| [`records/`](records/) | Raw Kobo JSON records, generated JSON-LD outputs, and validation or comparison outputs used by the workflow. |
+| [`records/raw/`](records/raw/) | Raw Kobo JSON records, field inventories, samples, and extracted source keys generated from Kobo pulls. |
+| [`records/outputs/`](records/outputs/) | Generated Schema.org / Science-on-Schema.org JSON-LD outputs, including combined and per-record representations. |
+| [`records/validation/`](records/validation/) | Quality-control and validation outputs generated from source records and SSSOM mappings, including issue-level QC reports. See the [validation README](records/validation/README.md). |
 | [`.env.example`](.env.example) | Documents expected environment variables without exposing secrets. The current Python scripts do not automatically load this file. |
 | [`requirements.txt`](requirements.txt) | Python dependencies required to reproduce and run the KoboToolbox → SSSOM → JSON-LD pipeline. |
-| [`REPRODUCIBILITY.md`](REPRODUCIBILITY.md) | Step-by-step instructions for setting up a local environment and reproducing the committed transformation. |
-| [`README.md`](README.md) | This KoboToolbox metadata-authoring workflow overview. |                                                                                       |
+| [`REPRODUCIBILITY.md`](REPRODUCIBILITY.md) | Step-by-step instructions for setting up a local environment and reproducing the committed workflow. |
+| [`README.md`](README.md) | This KoboToolbox metadata-authoring workflow overview. |                                                                                  |
 
 
 > For Science-on-Schema.org guidance on dataset roles, see the [official Dataset guide](https://github.com/ESIPFed/science-on-schema.org/blob/main/guides/Dataset.md#roles-of-people).

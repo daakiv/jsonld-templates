@@ -1,0 +1,270 @@
+{
+  "@context": {
+    "@vocab": "https://schema.org/",
+    "schema": "https://schema.org/",
+    "@language": "en",
+    "dct": "http://purl.org/dc/terms/"
+  },
+  "@graph": [
+    {
+      "@type": "schema:Dataset",
+      "@id": "https://gdsc.idsc.miami.edu/detail/mdc_holc_redlining",
+      "name": "Miami-Dade Home Owner's Loan Corporation (HOLC) Neighborhood Redlining Grade",
+      "description": "The historical redlining grade from 143 cities across the United States. This dataset is the subset for Miami-Dade County in Florida.",
+      "identifier": [
+        {
+          "@type": "PropertyValue",
+          "name": "external_id",
+          "value": "738568660"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "externalId",
+          "value": "1"
+        }
+      ],
+      "url": "https://services.arcgis.com/jIL9msH9OI208GCb/arcgis/rest/services/HOLC_Neighborhood_Redlining/FeatureServer",
+      "license": "public_domain",
+      "inLanguage": "en",
+      "datePublished": "2020-06-24",
+      "dateModified": "2026-04-29",
+      "creator": [
+        {
+          "@type": "Role",
+          "roleName": "creator",
+          "creator": {
+            "@type": "Organization",
+            "name": "University of Richmond's Digital Scholarship Lab"
+          }
+        }
+      ],
+      "provider": {
+        "@type": "Organization",
+        "name": "University of Richmond's Digital Scholarship Lab"
+      },
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Miami-Dade County",
+        "additionalProperty": [
+          {
+            "@type": "PropertyValue",
+            "name": "geonames",
+            "value": "4164238",
+            "url": "https://www.geonames.org/4164238"
+          },
+          {
+            "@type": "PropertyValue",
+            "name": "Spatial Reference System",
+            "value": "http://www.opengis.net/def/crs/EPSG/0/4326"
+          }
+        ]
+      },
+      "keywords": "Florida|Miami-Dade County|MDC|Housing|Property|Racial Inequality|Race|Redlining History|HOLC|Social Justice",
+      "includedInDataCatalog": [
+        {
+          "@type": "DataCatalog",
+          "@id": "https://gdsc.idsc.miami.edu",
+          "name": "Geospatial Digital Special Collections",
+          "url": "https://gdsc.idsc.miami.edu"
+        },
+        {
+          "@type": "DataCatalog",
+          "name": "displacement-vulnerability-mitigation-tool",
+          "@id": "https://gdsc.idsc.miami.edu/?collection=displacement-vulnerability-mitigation-tool",
+          "url": "https://gdsc.idsc.miami.edu/?collection=displacement-vulnerability-mitigation-tool"
+        },
+        {
+          "@type": "DataCatalog",
+          "name": "displacement",
+          "@id": "https://gdsc.idsc.miami.edu/?collection=displacement",
+          "url": "https://gdsc.idsc.miami.edu/?collection=displacement"
+        },
+        {
+          "@type": "DataCatalog",
+          "name": "vulnerability",
+          "@id": "https://gdsc.idsc.miami.edu/?collection=vulnerability",
+          "url": "https://gdsc.idsc.miami.edu/?collection=vulnerability"
+        },
+        {
+          "@type": "DataCatalog",
+          "name": "climate-and-equity-mapping-program",
+          "@id": "https://gdsc.idsc.miami.edu/?collection=climate-and-equity-mapping-program",
+          "url": "https://gdsc.idsc.miami.edu/?collection=climate-and-equity-mapping-program"
+        },
+        {
+          "@type": "DataCatalog",
+          "name": "lr-climate-resilience",
+          "@id": "https://gdsc.idsc.miami.edu/?collection=lr-climate-resilience",
+          "url": "https://gdsc.idsc.miami.edu/?collection=lr-climate-resilience"
+        },
+        {
+          "@type": "DataCatalog",
+          "name": "mdc-climate-resilience",
+          "@id": "https://gdsc.idsc.miami.edu/?collection=mdc-climate-resilience",
+          "url": "https://gdsc.idsc.miami.edu/?collection=mdc-climate-resilience"
+        },
+        {
+          "@type": "DataCatalog",
+          "name": "miami-affordability-project",
+          "@id": "https://gdsc.idsc.miami.edu/?collection=miami-affordability-project",
+          "url": "https://gdsc.idsc.miami.edu/?collection=miami-affordability-project"
+        }
+      ],
+      "measurementTechnique": [
+        {
+          "@type": "DefinedTerm",
+          "name": "GIS Data Structure",
+          "termCode": "vector",
+          "inDefinedTermSet": {
+            "@type": "DefinedTermSet",
+            "name": "dataRepresentation",
+            "url": "https://gdsc.idsc.miami.edu/vocab/dataRepresentation"
+          }
+        },
+        {
+          "@type": "DefinedTerm",
+          "name": "GIS Vector Geometry",
+          "termCode": "polygon",
+          "inDefinedTermSet": {
+            "@type": "DefinedTermSet",
+            "name": "vectorGeometry",
+            "url": "https://gdsc.idsc.miami.edu/vocab/vectorGeometry"
+          }
+        },
+        {
+          "@type": "DefinedTerm",
+          "name": "Data Processing Level",
+          "termCode": "derived",
+          "inDefinedTermSet": {
+            "@type": "DefinedTermSet",
+            "name": "dataProcessingLevel",
+            "url": "https://gdsc.idsc.miami.edu/vocab/dataProcessingLevel"
+          }
+        }
+      ],
+      "distribution": [
+        {
+          "@type": "DataDownload",
+          "name": "Source distribution",
+          "contentUrl": "https://services.arcgis.com/jIL9msH9OI208GCb/ArcGIS/rest/services/HOLC_Neighborhood_Redlining/FeatureServer/0/query?where=city=%27Miami%27&outFields=*&outSR=4326&f=json",
+          "encodingFormat": "application/geo+json"
+        }
+      ],
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "name": "postgis_table",
+          "value": "mdc_holc_redlining"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "kobo_record_id",
+          "value": "1"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "creator_type",
+          "value": "organization"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "label",
+          "value": "holc_grade"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "values",
+          "value": "holc"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "analytic_function",
+          "value": "gdsc_nearest_neighbor gdsc_get_attributes"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "Spatial Reference System",
+          "value": "http://www.opengis.net/def/crs/EPSG/0/2236"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "derivatives",
+          "value": "sql"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "etl_service",
+          "value": "api arcgis query"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "etl_parameters",
+          "value": "city = 'Miami'|f=json|outSR=4326"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "download_method",
+          "value": "esri_recursive_ogr"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "source_file",
+          "value": "{'etl_group/file_name_group/file_name_value': 'mdc_holc_redlining'}"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "extent",
+          "value": "-122.767506653|25.705373207|-70.949200532|47.722514045"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "serviceDefinition",
+          "value": "mdc_holc_redlining.sd"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "pointOfContact",
+          "value": "{'iso_group/point_of_contact_group/contact_name': 'TBD'}"
+        }
+      ],
+      "dct:accrualPeriodicity": "not_applicable",
+      "variableMeasured": [
+        {
+          "@type": "PropertyValue",
+          "name": "holc_grade",
+          "description": "HOLC alphabetical system grade",
+          "qudt:dataType": "xsd:string",
+          "unitText": "city",
+          "sourceOrganization": {
+            "@type": "Organization",
+            "name": "HOLC"
+          }
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "city",
+          "description": "City of polygon",
+          "qudt:dataType": "xsd:string"
+        }
+      ],
+      "isAccessibleForFree": false,
+      "conditionsOfAccess": "Use items owned by Esri in ArcGIS Online in conjunction with Esri software or an ArcGIS or Developer subscription for",
+      "dct:provenance": "direct from source as subset",
+      "additionalType": "vector_dataset",
+      "funder": [
+        {
+          "@type": "Organization",
+          "name": "IDSC",
+          "url": "https://idsc.miami.edu"
+        },
+        {
+          "@type": "Organization",
+          "name": "Library",
+          "url": "https://www.library.miami.edu"
+        }
+      ],
+      "disambiguatingDescription": "no Disclaimer",
+      "image": "published"
+    }
+  ]
+}

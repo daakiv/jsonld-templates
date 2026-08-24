@@ -11,8 +11,13 @@
       "@id": "https://gdsc.idsc.miami.edu/detail/tz_1984_copernicus_avg_temp",
       "name": "1984 Tanzania 2m Temperature Yearly Average (Copernicus)",
       "description": "A raster dataset with yearly averages of the 2m temperature from the ERA 5 renanalysis data from Copernicus satellite sensors for Tanzania. ERA5 is the fifth generation ECMWF reanalysis for the global climate and weather for the past 8 decades. Data is available from 1940 onwards. ERA5 replaces the ERA-Interim reanalysis.",
+      "identifier": {
+        "@type": "PropertyValue",
+        "name": "external_id",
+        "value": "767382866"
+      },
       "url": "https://cds.climate.copernicus.eu/datasets/reanalysis-era5-land",
-      "license": "odc_by",
+      "license": "https://opendatacommons.org/licenses/by/1.0/",
       "inLanguage": "en",
       "datePublished": "2025-06-01",
       "dateModified": "2025-06-01",
@@ -71,28 +76,16 @@
           "url": "https://gdsc.idsc.miami.edu/?collection=tz-health-outcomes"
         }
       ],
-      "measurementTechnique": [
-        {
-          "@type": "DefinedTerm",
-          "name": "GIS Data Structure",
-          "termCode": "raster",
-          "inDefinedTermSet": {
-            "@type": "DefinedTermSet",
-            "name": "dataRepresentation",
-            "url": "https://gdsc.idsc.miami.edu/vocab/dataRepresentation"
-          }
-        },
-        {
-          "@type": "DefinedTerm",
-          "name": "Data Processing Level",
-          "termCode": "derived",
-          "inDefinedTermSet": {
-            "@type": "DefinedTermSet",
-            "name": "dataProcessingLevel",
-            "url": "https://gdsc.idsc.miami.edu/vocab/dataProcessingLevel"
-          }
+      "measurementTechnique": {
+        "@type": "DefinedTerm",
+        "name": "GIS Data Structure",
+        "termCode": "raster",
+        "inDefinedTermSet": {
+          "@type": "DefinedTermSet",
+          "name": "dataRepresentation",
+          "url": "https://gdsc.idsc.miami.edu/vocab/dataRepresentation"
         }
-      ],
+      },
       "distribution": [
         {
           "@type": "DataDownload",
@@ -110,12 +103,17 @@
         {
           "@type": "PropertyValue",
           "name": "kobo_record_id",
-          "value": "217.0"
+          "value": "217"
         },
         {
           "@type": "PropertyValue",
           "name": "creator_type",
           "value": "organization"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "label",
+          "value": "not provided"
         },
         {
           "@type": "PropertyValue",
@@ -130,7 +128,17 @@
         {
           "@type": "PropertyValue",
           "name": "derivatives",
-          "value": "geotiff"
+          "value": "tif"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "etl_service",
+          "value": "api python cdsapi"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "download_method",
+          "value": "python"
         },
         {
           "@type": "PropertyValue",
@@ -150,7 +158,17 @@
         {
           "@type": "PropertyValue",
           "name": "dimensionUnits",
-          "value": "decimal_degrees"
+          "value": "degrees"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "timePeriodStart",
+          "value": "1984-01-01"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "timePeriodEnd",
+          "value": "1984-12-31"
         },
         {
           "@type": "PropertyValue",
@@ -160,22 +178,12 @@
         {
           "@type": "PropertyValue",
           "name": "customParameters",
-          "value": "python|copernicus_aggregate.py|json;table;extension;extent;attributes;bands;format|1984"
+          "value": "python | copernicus_aggregate.py | json;table;extension;extent;attributes;bands;format | 1984"
         },
         {
           "@type": "PropertyValue",
-          "name": "serviceDefinition",
-          "value": "API|cdsapi|python"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "customEtl",
-          "value": "github_code"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "pointOfContact",
-          "value": "{'iso_group/point_of_contact_group/contact_name': 'TBD'}"
+          "name": "indexFields",
+          "value": "{'etl_group/index_fields_group/index_field': 'TBD'}"
         }
       ],
       "dct:accrualPeriodicity": "as_needed",
@@ -195,7 +203,7 @@
           "identifier": {
             "@type": "PropertyValue",
             "propertyID": "https://gdsc.idsc.miami.edu/terms/gaia-attribute-id",
-            "value": "2m_temperature@tz_1984_copernicus_avg_temp"
+            "value": "2m_temperature@tz_1984"
           },
           "additionalProperty": [
             {
@@ -208,14 +216,14 @@
       ],
       "temporalCoverage": "1984-01-01/1984-12-31",
       "isAccessibleForFree": false,
-      "usageInfo": "Open Data Commons Attribution License (ODC-By): http://opendatacommons.org/licenses/by/1.0/",
+      "conditionsOfAccess": "N/A",
       "dct:provenance": "Copernicus",
       "additionalType": "raster_dataset",
       "funder": [
         {
           "@type": "Organization",
           "name": "TuftsCTSI",
-          "url": "https://www.tuftsctsi.org/"
+          "url": "https://www.tuftsctsi.org"
         },
         {
           "@type": "Organization",
@@ -228,7 +236,8 @@
           "url": "https://www.library.miami.edu"
         }
       ],
-      "creativeWorkStatus": "published"
+      "creativeWorkStatus": "published",
+      "disambiguatingDescription": "Not specified"
     }
   ]
 }

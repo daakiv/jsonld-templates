@@ -1,0 +1,1114 @@
+{
+  "record_count": 5,
+  "structure_counts": {
+    "vector": 3,
+    "raster": 1,
+    "table": 1
+  },
+  "field_count": 79,
+  "fields": {
+    "__version__": {
+      "present_in": 5,
+      "of_total": 5,
+      "kind": "scalar",
+      "subfields": [],
+      "example": "\"v3FuRaaRVeGZ4Dk9fZGLWj\"",
+      "dataset_types": [
+        "raster",
+        "table",
+        "vector"
+      ],
+      "exclusive_to": null,
+      "system_field": true
+    },
+    "_attachments": {
+      "present_in": 5,
+      "of_total": 5,
+      "kind": "scalar",
+      "subfields": [],
+      "example": "[]",
+      "dataset_types": [
+        "raster",
+        "table",
+        "vector"
+      ],
+      "exclusive_to": null,
+      "system_field": true
+    },
+    "_geolocation": {
+      "present_in": 5,
+      "of_total": 5,
+      "kind": "scalar",
+      "subfields": [],
+      "example": "[null, null]",
+      "dataset_types": [
+        "raster",
+        "table",
+        "vector"
+      ],
+      "exclusive_to": null,
+      "system_field": true
+    },
+    "_id": {
+      "present_in": 5,
+      "of_total": 5,
+      "kind": "scalar",
+      "subfields": [],
+      "example": "738568660",
+      "dataset_types": [
+        "raster",
+        "table",
+        "vector"
+      ],
+      "exclusive_to": null,
+      "system_field": true
+    },
+    "_status": {
+      "present_in": 5,
+      "of_total": 5,
+      "kind": "scalar",
+      "subfields": [],
+      "example": "\"submitted_via_web\"",
+      "dataset_types": [
+        "raster",
+        "table",
+        "vector"
+      ],
+      "exclusive_to": null,
+      "system_field": true
+    },
+    "_submission_time": {
+      "present_in": 5,
+      "of_total": 5,
+      "kind": "scalar",
+      "subfields": [],
+      "example": "\"2026-04-29T08:06:47\"",
+      "dataset_types": [
+        "raster",
+        "table",
+        "vector"
+      ],
+      "exclusive_to": null,
+      "system_field": true
+    },
+    "_submitted_by": {
+      "present_in": 5,
+      "of_total": 5,
+      "kind": "scalar",
+      "subfields": [],
+      "example": "\"davidamadi\"",
+      "dataset_types": [
+        "raster",
+        "table",
+        "vector"
+      ],
+      "exclusive_to": null,
+      "system_field": true
+    },
+    "_uuid": {
+      "present_in": 5,
+      "of_total": 5,
+      "kind": "scalar",
+      "subfields": [],
+      "example": "\"2116b42c-5f52-4d03-9027-a8873bcba59c\"",
+      "dataset_types": [
+        "raster",
+        "table",
+        "vector"
+      ],
+      "exclusive_to": null,
+      "system_field": true
+    },
+    "_validation_status": {
+      "present_in": 5,
+      "of_total": 5,
+      "kind": "scalar",
+      "subfields": [],
+      "example": "{}",
+      "dataset_types": [
+        "raster",
+        "table",
+        "vector"
+      ],
+      "exclusive_to": null,
+      "system_field": true
+    },
+    "_xform_id_string": {
+      "present_in": 5,
+      "of_total": 5,
+      "kind": "scalar",
+      "subfields": [],
+      "example": "\"abZ7KCcdqizmhU3twbMcGF\"",
+      "dataset_types": [
+        "raster",
+        "table",
+        "vector"
+      ],
+      "exclusive_to": null,
+      "system_field": true
+    },
+    "cartography_group/attributes_group": {
+      "present_in": 5,
+      "of_total": 5,
+      "kind": "repeat_group",
+      "subfields": [
+        "cartography_group/attributes_group/attribute_concept_id",
+        "cartography_group/attributes_group/attribute_description",
+        "cartography_group/attributes_group/attribute_end_date",
+        "cartography_group/attributes_group/attribute_external_id",
+        "cartography_group/attributes_group/attribute_min_value",
+        "cartography_group/attributes_group/attribute_name",
+        "cartography_group/attributes_group/attribute_source",
+        "cartography_group/attributes_group/attribute_start_date",
+        "cartography_group/attributes_group/attribute_type",
+        "cartography_group/attributes_group/attribute_unit",
+        "cartography_group/attributes_group/attribute_unit_concept_id"
+      ],
+      "example": "{\"cartography_group/attributes_group/attribute_name\": \"holc_grade\", \"cartography_group/attributes_group/attribute_descri",
+      "dataset_types": [
+        "raster",
+        "table",
+        "vector"
+      ],
+      "exclusive_to": null,
+      "system_field": false
+    },
+    "cartography_group/label": {
+      "present_in": 5,
+      "of_total": 5,
+      "kind": "scalar",
+      "subfields": [],
+      "example": "\"holc_grade\"",
+      "dataset_types": [
+        "raster",
+        "table",
+        "vector"
+      ],
+      "exclusive_to": null,
+      "system_field": false
+    },
+    "cartography_group/no_data_group": {
+      "present_in": 1,
+      "of_total": 5,
+      "kind": "repeat_group",
+      "subfields": [
+        "cartography_group/no_data_group/no_data_type",
+        "cartography_group/no_data_group/no_data_value"
+      ],
+      "example": "{\"cartography_group/no_data_group/no_data_type\": \"int\", \"cartography_group/no_data_group/no_data_value\": \"-9999\"}",
+      "dataset_types": [
+        "vector"
+      ],
+      "exclusive_to": "vector",
+      "system_field": false
+    },
+    "cartography_group/values_group": {
+      "present_in": 2,
+      "of_total": 5,
+      "kind": "repeat_group",
+      "subfields": [
+        "cartography_group/values_group/value_field"
+      ],
+      "example": "{\"cartography_group/values_group/value_field\": \"holc\"}",
+      "dataset_types": [
+        "vector"
+      ],
+      "exclusive_to": "vector",
+      "system_field": false
+    },
+    "collection_group/analytic_epsg": {
+      "present_in": 5,
+      "of_total": 5,
+      "kind": "scalar",
+      "subfields": [],
+      "example": "\"2236\"",
+      "dataset_types": [
+        "raster",
+        "table",
+        "vector"
+      ],
+      "exclusive_to": null,
+      "system_field": false
+    },
+    "collection_group/analytic_function": {
+      "present_in": 5,
+      "of_total": 5,
+      "kind": "scalar",
+      "subfields": [],
+      "example": "\"gdsc_nearest_neighbor gdsc_get_attributes\"",
+      "dataset_types": [
+        "raster",
+        "table",
+        "vector"
+      ],
+      "exclusive_to": null,
+      "system_field": false
+    },
+    "collection_group/collections": {
+      "present_in": 5,
+      "of_total": 5,
+      "kind": "scalar",
+      "subfields": [],
+      "example": "\"displacement-vulnerability-mitigation-tool displacement vulnerability climate-and-equity-mapping-program lr-climate-res",
+      "dataset_types": [
+        "raster",
+        "table",
+        "vector"
+      ],
+      "exclusive_to": null,
+      "system_field": false
+    },
+    "collection_group/derivatives": {
+      "present_in": 4,
+      "of_total": 5,
+      "kind": "scalar",
+      "subfields": [],
+      "example": "\"sql\"",
+      "dataset_types": [
+        "raster",
+        "vector"
+      ],
+      "exclusive_to": null,
+      "system_field": false
+    },
+    "collection_group/disclaimer": {
+      "present_in": 5,
+      "of_total": 5,
+      "kind": "scalar",
+      "subfields": [],
+      "example": "\"no Disclaimer\"",
+      "dataset_types": [
+        "raster",
+        "table",
+        "vector"
+      ],
+      "exclusive_to": null,
+      "system_field": false
+    },
+    "collection_group/service_definition": {
+      "present_in": 2,
+      "of_total": 5,
+      "kind": "scalar",
+      "subfields": [],
+      "example": "\"mdc_holc_redlining.sd\"",
+      "dataset_types": [
+        "vector"
+      ],
+      "exclusive_to": "vector",
+      "system_field": false
+    },
+    "collection_group/sponsor_group": {
+      "present_in": 4,
+      "of_total": 5,
+      "kind": "repeat_group",
+      "subfields": [
+        "collection_group/sponsor_group/sponsor_name",
+        "collection_group/sponsor_group/sponsor_url"
+      ],
+      "example": "{\"collection_group/sponsor_group/sponsor_name\": \"IDSC\", \"collection_group/sponsor_group/sponsor_url\": \"https://idsc.miam",
+      "dataset_types": [
+        "raster",
+        "vector"
+      ],
+      "exclusive_to": null,
+      "system_field": false
+    },
+    "collection_group/status": {
+      "present_in": 2,
+      "of_total": 5,
+      "kind": "scalar",
+      "subfields": [],
+      "example": "\"draft\"",
+      "dataset_types": [
+        "raster",
+        "vector"
+      ],
+      "exclusive_to": null,
+      "system_field": false
+    },
+    "collection_group/thumbnail": {
+      "present_in": 2,
+      "of_total": 5,
+      "kind": "scalar",
+      "subfields": [],
+      "example": "\"published\"",
+      "dataset_types": [
+        "vector"
+      ],
+      "exclusive_to": "vector",
+      "system_field": false
+    },
+    "control_group/external_id_group": {
+      "present_in": 3,
+      "of_total": 5,
+      "kind": "repeat_group",
+      "subfields": [
+        "control_group/external_id_group/external_id_type"
+      ],
+      "example": "{\"control_group/external_id_group/external_id_type\": \"1\"}",
+      "dataset_types": [
+        "table",
+        "vector"
+      ],
+      "exclusive_to": null,
+      "system_field": false
+    },
+    "control_group/id": {
+      "present_in": 5,
+      "of_total": 5,
+      "kind": "scalar",
+      "subfields": [],
+      "example": "\"1\"",
+      "dataset_types": [
+        "raster",
+        "table",
+        "vector"
+      ],
+      "exclusive_to": null,
+      "system_field": false
+    },
+    "dublin_core_group/coverage_group": {
+      "present_in": 5,
+      "of_total": 5,
+      "kind": "repeat_group",
+      "subfields": [
+        "dublin_core_group/coverage_group/coverage_identifier",
+        "dublin_core_group/coverage_group/coverage_identifier_schema",
+        "dublin_core_group/coverage_group/coverage_identifier_schema_uri",
+        "dublin_core_group/coverage_group/coverage_name"
+      ],
+      "example": "{\"dublin_core_group/coverage_group/coverage_name\": \"Miami-Dade County\", \"dublin_core_group/coverage_group/coverage_ident",
+      "dataset_types": [
+        "raster",
+        "table",
+        "vector"
+      ],
+      "exclusive_to": null,
+      "system_field": false
+    },
+    "dublin_core_group/creator_group": {
+      "present_in": 5,
+      "of_total": 5,
+      "kind": "repeat_group",
+      "subfields": [
+        "dublin_core_group/creator_group/creator_affiliation",
+        "dublin_core_group/creator_group/creator_affiliation_identifier",
+        "dublin_core_group/creator_group/creator_affiliation_schema",
+        "dublin_core_group/creator_group/creator_affiliation_schema_uri",
+        "dublin_core_group/creator_group/creator_identifier",
+        "dublin_core_group/creator_group/creator_identifier_schema",
+        "dublin_core_group/creator_group/creator_identifier_schema_uri",
+        "dublin_core_group/creator_group/creator_name",
+        "dublin_core_group/creator_group/creator_type"
+      ],
+      "example": "{\"dublin_core_group/creator_group/creator_name\": \"University of Richmond's Digital Scholarship Lab\", \"dublin_core_group/",
+      "dataset_types": [
+        "raster",
+        "table",
+        "vector"
+      ],
+      "exclusive_to": null,
+      "system_field": false
+    },
+    "dublin_core_group/description": {
+      "present_in": 5,
+      "of_total": 5,
+      "kind": "scalar",
+      "subfields": [],
+      "example": "\"The historical redlining grade from 143 cities across the United States. This dataset is the subset for Miami-Dade Coun",
+      "dataset_types": [
+        "raster",
+        "table",
+        "vector"
+      ],
+      "exclusive_to": null,
+      "system_field": false
+    },
+    "dublin_core_group/doi": {
+      "present_in": 1,
+      "of_total": 5,
+      "kind": "scalar",
+      "subfields": [],
+      "example": "\"10.7910/DVN/RHIFKL\"",
+      "dataset_types": [
+        "vector"
+      ],
+      "exclusive_to": "vector",
+      "system_field": false
+    },
+    "dublin_core_group/language": {
+      "present_in": 5,
+      "of_total": 5,
+      "kind": "scalar",
+      "subfields": [],
+      "example": "\"en\"",
+      "dataset_types": [
+        "raster",
+        "table",
+        "vector"
+      ],
+      "exclusive_to": null,
+      "system_field": false
+    },
+    "dublin_core_group/license": {
+      "present_in": 5,
+      "of_total": 5,
+      "kind": "scalar",
+      "subfields": [],
+      "example": "\"public_domain\"",
+      "dataset_types": [
+        "raster",
+        "table",
+        "vector"
+      ],
+      "exclusive_to": null,
+      "system_field": false
+    },
+    "dublin_core_group/license_text": {
+      "present_in": 3,
+      "of_total": 5,
+      "kind": "scalar",
+      "subfields": [],
+      "example": "\"Miami-Dade County provides this data for use \\\"as is\\\". The areas depicted by this map/data are approximate, and are no",
+      "dataset_types": [
+        "table",
+        "vector"
+      ],
+      "exclusive_to": null,
+      "system_field": false
+    },
+    "dublin_core_group/provenance": {
+      "present_in": 4,
+      "of_total": 5,
+      "kind": "scalar",
+      "subfields": [],
+      "example": "\"direct from source as subset\"",
+      "dataset_types": [
+        "raster",
+        "vector"
+      ],
+      "exclusive_to": null,
+      "system_field": false
+    },
+    "dublin_core_group/publication_date": {
+      "present_in": 5,
+      "of_total": 5,
+      "kind": "scalar",
+      "subfields": [],
+      "example": "\"2020-06-24\"",
+      "dataset_types": [
+        "raster",
+        "table",
+        "vector"
+      ],
+      "exclusive_to": null,
+      "system_field": false
+    },
+    "dublin_core_group/publisher_group": {
+      "present_in": 5,
+      "of_total": 5,
+      "kind": "repeat_group",
+      "subfields": [
+        "dublin_core_group/publisher_group/publisher_name"
+      ],
+      "example": "{\"dublin_core_group/publisher_group/publisher_name\": \"University of Richmond's Digital Scholarship Lab\"}",
+      "dataset_types": [
+        "raster",
+        "table",
+        "vector"
+      ],
+      "exclusive_to": null,
+      "system_field": false
+    },
+    "dublin_core_group/relation_group": {
+      "present_in": 5,
+      "of_total": 5,
+      "kind": "repeat_group",
+      "subfields": [
+        "dublin_core_group/relation_group/relation_title"
+      ],
+      "example": "{\"dublin_core_group/relation_group/relation_title\": \"--\"}",
+      "dataset_types": [
+        "raster",
+        "table",
+        "vector"
+      ],
+      "exclusive_to": null,
+      "system_field": false
+    },
+    "dublin_core_group/resource_type": {
+      "present_in": 5,
+      "of_total": 5,
+      "kind": "scalar",
+      "subfields": [],
+      "example": "\"vector_dataset\"",
+      "dataset_types": [
+        "raster",
+        "table",
+        "vector"
+      ],
+      "exclusive_to": null,
+      "system_field": false
+    },
+    "dublin_core_group/restrictions": {
+      "present_in": 5,
+      "of_total": 5,
+      "kind": "scalar",
+      "subfields": [],
+      "example": "\"Use items owned by Esri in ArcGIS Online in conjunction with Esri software or an ArcGIS or Developer subscription for\"",
+      "dataset_types": [
+        "raster",
+        "table",
+        "vector"
+      ],
+      "exclusive_to": null,
+      "system_field": false
+    },
+    "dublin_core_group/rights": {
+      "present_in": 5,
+      "of_total": 5,
+      "kind": "scalar",
+      "subfields": [],
+      "example": "\"Public Domain\"",
+      "dataset_types": [
+        "raster",
+        "table",
+        "vector"
+      ],
+      "exclusive_to": null,
+      "system_field": false
+    },
+    "dublin_core_group/subject_group": {
+      "present_in": 5,
+      "of_total": 5,
+      "kind": "repeat_group",
+      "subfields": [
+        "dublin_core_group/subject_group/subject_term"
+      ],
+      "example": "{\"dublin_core_group/subject_group/subject_term\": \"Florida|Miami-Dade County|MDC|Housing|Property|Racial Inequality|Race|",
+      "dataset_types": [
+        "raster",
+        "table",
+        "vector"
+      ],
+      "exclusive_to": null,
+      "system_field": false
+    },
+    "dublin_core_group/time_period_end": {
+      "present_in": 2,
+      "of_total": 5,
+      "kind": "scalar",
+      "subfields": [],
+      "example": "\"1984-12-31\"",
+      "dataset_types": [
+        "raster",
+        "table"
+      ],
+      "exclusive_to": null,
+      "system_field": false
+    },
+    "dublin_core_group/time_period_start": {
+      "present_in": 2,
+      "of_total": 5,
+      "kind": "scalar",
+      "subfields": [],
+      "example": "\"1984-01-01\"",
+      "dataset_types": [
+        "raster",
+        "table"
+      ],
+      "exclusive_to": null,
+      "system_field": false
+    },
+    "dublin_core_group/title": {
+      "present_in": 5,
+      "of_total": 5,
+      "kind": "scalar",
+      "subfields": [],
+      "example": "\"Miami-Dade Home Owner's Loan Corporation (HOLC) Neighborhood Redlining Grade\"",
+      "dataset_types": [
+        "raster",
+        "table",
+        "vector"
+      ],
+      "exclusive_to": null,
+      "system_field": false
+    },
+    "dublin_core_group/url": {
+      "present_in": 5,
+      "of_total": 5,
+      "kind": "scalar",
+      "subfields": [],
+      "example": "\"https://services.arcgis.com/jIL9msH9OI208GCb/arcgis/rest/services/HOLC_Neighborhood_Redlining/FeatureServer\"",
+      "dataset_types": [
+        "raster",
+        "table",
+        "vector"
+      ],
+      "exclusive_to": null,
+      "system_field": false
+    },
+    "etl_group/bash_etl": {
+      "present_in": 1,
+      "of_total": 5,
+      "kind": "scalar",
+      "subfields": [],
+      "example": "\"TBD\"",
+      "dataset_types": [
+        "vector"
+      ],
+      "exclusive_to": "vector",
+      "system_field": false
+    },
+    "etl_group/checksum": {
+      "present_in": 1,
+      "of_total": 5,
+      "kind": "scalar",
+      "subfields": [],
+      "example": "\"TBD\"",
+      "dataset_types": [
+        "raster"
+      ],
+      "exclusive_to": "raster",
+      "system_field": false
+    },
+    "etl_group/columns_group": {
+      "present_in": 1,
+      "of_total": 5,
+      "kind": "repeat_group",
+      "subfields": [
+        "etl_group/columns_group/column_name"
+      ],
+      "example": "{\"etl_group/columns_group/column_name\": \"OBJECTID\"}",
+      "dataset_types": [
+        "vector"
+      ],
+      "exclusive_to": "vector",
+      "system_field": false
+    },
+    "etl_group/custom_etl": {
+      "present_in": 1,
+      "of_total": 5,
+      "kind": "scalar",
+      "subfields": [],
+      "example": "\"not_applicable\"",
+      "dataset_types": [
+        "vector"
+      ],
+      "exclusive_to": "vector",
+      "system_field": false
+    },
+    "etl_group/custom_parameters": {
+      "present_in": 1,
+      "of_total": 5,
+      "kind": "scalar",
+      "subfields": [],
+      "example": "\"python | copernicus_aggregate.py | json;table;extension;extent;attributes;bands;format | 1984\"",
+      "dataset_types": [
+        "raster"
+      ],
+      "exclusive_to": "raster",
+      "system_field": false
+    },
+    "etl_group/download": {
+      "present_in": 5,
+      "of_total": 5,
+      "kind": "scalar",
+      "subfields": [],
+      "example": "\"esri_recursive_ogr\"",
+      "dataset_types": [
+        "raster",
+        "table",
+        "vector"
+      ],
+      "exclusive_to": null,
+      "system_field": false
+    },
+    "etl_group/extension": {
+      "present_in": 5,
+      "of_total": 5,
+      "kind": "scalar",
+      "subfields": [],
+      "example": "\"geojson\"",
+      "dataset_types": [
+        "raster",
+        "table",
+        "vector"
+      ],
+      "exclusive_to": null,
+      "system_field": false
+    },
+    "etl_group/file_name_group": {
+      "present_in": 5,
+      "of_total": 5,
+      "kind": "repeat_group",
+      "subfields": [
+        "etl_group/file_name_group/file_inside_archive",
+        "etl_group/file_name_group/file_name_value"
+      ],
+      "example": "{\"etl_group/file_name_group/file_name_value\": \"mdc_holc_redlining\"}",
+      "dataset_types": [
+        "raster",
+        "table",
+        "vector"
+      ],
+      "exclusive_to": null,
+      "system_field": false
+    },
+    "etl_group/format": {
+      "present_in": 5,
+      "of_total": 5,
+      "kind": "scalar",
+      "subfields": [],
+      "example": "\"geojson\"",
+      "dataset_types": [
+        "raster",
+        "table",
+        "vector"
+      ],
+      "exclusive_to": null,
+      "system_field": false
+    },
+    "etl_group/index_fields_group": {
+      "present_in": 1,
+      "of_total": 5,
+      "kind": "repeat_group",
+      "subfields": [
+        "etl_group/index_fields_group/index_field"
+      ],
+      "example": "{\"etl_group/index_fields_group/index_field\": \"TBD\"}",
+      "dataset_types": [
+        "raster"
+      ],
+      "exclusive_to": "raster",
+      "system_field": false
+    },
+    "etl_group/last_updated": {
+      "present_in": 5,
+      "of_total": 5,
+      "kind": "scalar",
+      "subfields": [],
+      "example": "\"2026-04-29\"",
+      "dataset_types": [
+        "raster",
+        "table",
+        "vector"
+      ],
+      "exclusive_to": null,
+      "system_field": false
+    },
+    "etl_group/parameters": {
+      "present_in": 5,
+      "of_total": 5,
+      "kind": "scalar",
+      "subfields": [],
+      "example": "\"city = 'Miami'|f=json|outSR=4326\"",
+      "dataset_types": [
+        "raster",
+        "table",
+        "vector"
+      ],
+      "exclusive_to": null,
+      "system_field": false
+    },
+    "etl_group/podid": {
+      "present_in": 1,
+      "of_total": 5,
+      "kind": "scalar",
+      "subfields": [],
+      "example": "\"TBD\"",
+      "dataset_types": [
+        "raster"
+      ],
+      "exclusive_to": "raster",
+      "system_field": false
+    },
+    "etl_group/service": {
+      "present_in": 5,
+      "of_total": 5,
+      "kind": "scalar",
+      "subfields": [],
+      "example": "\"api arcgis query\"",
+      "dataset_types": [
+        "raster",
+        "table",
+        "vector"
+      ],
+      "exclusive_to": null,
+      "system_field": false
+    },
+    "etl_group/source": {
+      "present_in": 5,
+      "of_total": 5,
+      "kind": "scalar",
+      "subfields": [],
+      "example": "\"https://services.arcgis.com/jIL9msH9OI208GCb/ArcGIS/rest/services/HOLC_Neighborhood_Redlining/FeatureServer/0/query?whe",
+      "dataset_types": [
+        "raster",
+        "table",
+        "vector"
+      ],
+      "exclusive_to": null,
+      "system_field": false
+    },
+    "etl_group/sql_transform": {
+      "present_in": 1,
+      "of_total": 5,
+      "kind": "scalar",
+      "subfields": [],
+      "example": "\"TBD\"",
+      "dataset_types": [
+        "vector"
+      ],
+      "exclusive_to": "vector",
+      "system_field": false
+    },
+    "etl_group/table_name": {
+      "present_in": 5,
+      "of_total": 5,
+      "kind": "scalar",
+      "subfields": [],
+      "example": "\"mdc_holc_redlining\"",
+      "dataset_types": [
+        "raster",
+        "table",
+        "vector"
+      ],
+      "exclusive_to": null,
+      "system_field": false
+    },
+    "etl_group/up": {
+      "present_in": 1,
+      "of_total": 5,
+      "kind": "scalar",
+      "subfields": [],
+      "example": "\"unknown\"",
+      "dataset_types": [
+        "raster"
+      ],
+      "exclusive_to": "raster",
+      "system_field": false
+    },
+    "etl_group/update_frequency": {
+      "present_in": 5,
+      "of_total": 5,
+      "kind": "scalar",
+      "subfields": [],
+      "example": "\"not_applicable\"",
+      "dataset_types": [
+        "raster",
+        "table",
+        "vector"
+      ],
+      "exclusive_to": null,
+      "system_field": false
+    },
+    "formhub/uuid": {
+      "present_in": 5,
+      "of_total": 5,
+      "kind": "scalar",
+      "subfields": [],
+      "example": "\"e58f3baa8dbb4c7b9947756c1d1528bb\"",
+      "dataset_types": [
+        "raster",
+        "table",
+        "vector"
+      ],
+      "exclusive_to": null,
+      "system_field": true
+    },
+    "iso_group/band_group": {
+      "present_in": 1,
+      "of_total": 5,
+      "kind": "repeat_group",
+      "subfields": [
+        "iso_group/band_group/band_name"
+      ],
+      "example": "{\"iso_group/band_group/band_name\": \"t2m\"}",
+      "dataset_types": [
+        "raster"
+      ],
+      "exclusive_to": "raster",
+      "system_field": false
+    },
+    "iso_group/data_level": {
+      "present_in": 3,
+      "of_total": 5,
+      "kind": "scalar",
+      "subfields": [],
+      "example": "\"derived\"",
+      "dataset_types": [
+        "vector"
+      ],
+      "exclusive_to": "vector",
+      "system_field": false
+    },
+    "iso_group/dimension_units": {
+      "present_in": 1,
+      "of_total": 5,
+      "kind": "scalar",
+      "subfields": [],
+      "example": "\"degrees\"",
+      "dataset_types": [
+        "raster"
+      ],
+      "exclusive_to": "raster",
+      "system_field": false
+    },
+    "iso_group/epsg": {
+      "present_in": 5,
+      "of_total": 5,
+      "kind": "scalar",
+      "subfields": [],
+      "example": "\"4326\"",
+      "dataset_types": [
+        "raster",
+        "table",
+        "vector"
+      ],
+      "exclusive_to": null,
+      "system_field": false
+    },
+    "iso_group/extent": {
+      "present_in": 3,
+      "of_total": 5,
+      "kind": "scalar",
+      "subfields": [],
+      "example": "\"-122.767506653|25.705373207|-70.949200532|47.722514045\"",
+      "dataset_types": [
+        "raster",
+        "vector"
+      ],
+      "exclusive_to": null,
+      "system_field": false
+    },
+    "iso_group/geometry": {
+      "present_in": 3,
+      "of_total": 5,
+      "kind": "scalar",
+      "subfields": [],
+      "example": "\"polygon\"",
+      "dataset_types": [
+        "vector"
+      ],
+      "exclusive_to": "vector",
+      "system_field": false
+    },
+    "iso_group/lineage": {
+      "present_in": 2,
+      "of_total": 5,
+      "kind": "scalar",
+      "subfields": [],
+      "example": "\"TBD\"",
+      "dataset_types": [
+        "vector"
+      ],
+      "exclusive_to": "vector",
+      "system_field": false
+    },
+    "iso_group/pixel_dimension": {
+      "present_in": 1,
+      "of_total": 5,
+      "kind": "scalar",
+      "subfields": [],
+      "example": "\"0.25\"",
+      "dataset_types": [
+        "raster"
+      ],
+      "exclusive_to": "raster",
+      "system_field": false
+    },
+    "iso_group/point_of_contact_group": {
+      "present_in": 1,
+      "of_total": 5,
+      "kind": "repeat_group",
+      "subfields": [
+        "iso_group/point_of_contact_group/contact_name"
+      ],
+      "example": "{\"iso_group/point_of_contact_group/contact_name\": \"TBD\"}",
+      "dataset_types": [
+        "vector"
+      ],
+      "exclusive_to": "vector",
+      "system_field": false
+    },
+    "iso_group/process_step": {
+      "present_in": 2,
+      "of_total": 5,
+      "kind": "scalar",
+      "subfields": [],
+      "example": "\"TBD\"",
+      "dataset_types": [
+        "vector"
+      ],
+      "exclusive_to": "vector",
+      "system_field": false
+    },
+    "iso_group/processor": {
+      "present_in": 2,
+      "of_total": 5,
+      "kind": "scalar",
+      "subfields": [],
+      "example": "\"TBD\"",
+      "dataset_types": [
+        "vector"
+      ],
+      "exclusive_to": "vector",
+      "system_field": false
+    },
+    "iso_group/structure": {
+      "present_in": 5,
+      "of_total": 5,
+      "kind": "scalar",
+      "subfields": [],
+      "example": "\"vector\"",
+      "dataset_types": [
+        "raster",
+        "table",
+        "vector"
+      ],
+      "exclusive_to": null,
+      "system_field": false
+    },
+    "iso_group/temporal_resolution": {
+      "present_in": 1,
+      "of_total": 5,
+      "kind": "scalar",
+      "subfields": [],
+      "example": "\"not_applicable\"",
+      "dataset_types": [
+        "vector"
+      ],
+      "exclusive_to": "vector",
+      "system_field": false
+    },
+    "meta/instanceID": {
+      "present_in": 5,
+      "of_total": 5,
+      "kind": "scalar",
+      "subfields": [],
+      "example": "\"uuid:2116b42c-5f52-4d03-9027-a8873bcba59c\"",
+      "dataset_types": [
+        "raster",
+        "table",
+        "vector"
+      ],
+      "exclusive_to": null,
+      "system_field": true
+    },
+    "meta/rootUuid": {
+      "present_in": 5,
+      "of_total": 5,
+      "kind": "scalar",
+      "subfields": [],
+      "example": "\"uuid:2116b42c-5f52-4d03-9027-a8873bcba59c\"",
+      "dataset_types": [
+        "raster",
+        "table",
+        "vector"
+      ],
+      "exclusive_to": null,
+      "system_field": true
+    }
+  }
+}

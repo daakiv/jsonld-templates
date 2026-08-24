@@ -61,18 +61,21 @@ Gaia Catalog review and ingestion
 ## Main assets
 
 > [!NOTE]
-> Each subfolder listed below contains its own `README.md` with more detailed technical notes, file conventions, and usage instructions.
+> Each major subfolder contains its own documentation or supporting files with
+> more detailed technical notes, conventions, and usage instructions.
 
-| Folder / file  | Purpose                                                                                                            |
-| -------------- | ------------------------------------------------------------------------------------------------------------------ |
-| `docs/`        | Workflow notes, architecture documentation, concept notes, and the [data-quality report](docs/quality_issues/Kobo_Data_Quality_Issues.xlsx) for the current pull. |
-| `forms/`       | KoboToolbox/XLSForm authoring templates and related form assets.                                                   |
-| `prompts/`     | AI prompt templates used to support SSSOM mapping generation, validation, and human review.                        |
-| `records/`     | Raw Kobo JSON records, generated JSON-LD outputs, and validation or comparison outputs.                            |
-| `scripts/`     | Python scripts for pulling all Kobo records, transforming SSSOM mappings into JSON-LD (combined or one file per dataset), and inspecting mappings. See the [scripts README](mappings/scripts/README.md). |
-| `sssom/`       | SSSOM-style TSV mapping files defining how Kobo JSON paths map to Schema.org / JSON-LD properties.                 |
-| `.env.example` | Example configuration showing required environment variables without exposing secrets.                             |
-| `README.md`    | This overview document.                                                                                            |
+| Folder / file | Purpose |
+| --- | --- |
+| [`docs/`](docs/) | Workflow notes, architecture documentation, concept notes, and the [data-quality report](docs/quality_issues/Kobo_Data_Quality_Issues.xlsx) for the current pull. |
+| [`forms/`](forms/) | KoboToolbox/XLSForm authoring templates and related form assets. |
+| [`mappings/prompts/`](mappings/prompts/) | AI prompt templates used to support reusable SSSOM mapping generation, validation, human review, and AI model provenance documentation. See the [prompts README](mappings/prompts/README.md). |
+| [`mappings/scripts/`](mappings/scripts/) | Python scripts for pulling Kobo records, transforming SSSOM mappings into JSON-LD, splitting outputs, and inspecting mappings. See the [scripts README](mappings/scripts/README.md). |
+| [`mappings/sssom/`](mappings/sssom/) | Version-controlled SSSOM-style TSV mapping files defining how Kobo JSON paths map to Schema.org / JSON-LD properties. |
+| [`records/`](records/) | Raw Kobo JSON records, generated JSON-LD outputs, and validation or comparison outputs used by the workflow. |
+| [`.env.example`](.env.example) | Documents expected environment variables without exposing secrets. The current Python scripts do not automatically load this file. |
+| [`requirements.txt`](requirements.txt) | Python dependencies required to reproduce and run the KoboToolbox → SSSOM → JSON-LD pipeline. |
+| [`REPRODUCIBILITY.md`](REPRODUCIBILITY.md) | Step-by-step instructions for setting up a local environment and reproducing the committed transformation. |
+| [`README.md`](README.md) | This KoboToolbox metadata-authoring workflow overview. |                                                                                       |
 
 
 > For Science-on-Schema.org guidance on dataset roles, see the [official Dataset guide](https://github.com/ESIPFed/science-on-schema.org/blob/main/guides/Dataset.md#roles-of-people).

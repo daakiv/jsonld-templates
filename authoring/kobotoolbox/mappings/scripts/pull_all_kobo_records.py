@@ -289,7 +289,7 @@ def main() -> None:
         description="Pull all KoboToolbox submissions into one wrapped JSON file, "
                     "plus a prompt-sized sample and a field inventory."
     )
-    parser.add_argument("--form-name", default="GDSC",
+    parser.add_argument("--form-name", default="GDSC",    # Change "GDSC" to your actual Kobo form name #
                         help="Kobo form name to search for.")
     parser.add_argument("--asset-uid", default=None,
                         help="Kobo asset UID. Skips the form-name lookup when supplied.")

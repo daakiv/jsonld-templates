@@ -40,10 +40,13 @@ cd authoring/kobotoolbox/mappings/scripts
 ## Step 1 — Pull all Kobo records
 
 ```bash
-export KOBO_API_TOKEN=...        # or paste when prompted
+unset KOBO_API_TOKEN
 python3 pull_all_kobo_records.py --form-name gaia_metadata_authoring_form_v2
 ```
-
+You should then see:
+```bash
+Paste Kobo API token:
+```
 Writes into `records/raw/`:
 
 ```text

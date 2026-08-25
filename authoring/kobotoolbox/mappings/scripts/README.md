@@ -104,10 +104,51 @@ will not match `GDSC_TESTING`/`GDSC_Authoring`. More robust: `--asset-uid <uid>`
 
 ## Step 2 — Author or update the mapping
 
-Attach **`field_inventory.md`** and **`sample_records_raw.json`** to the prompt at
-`../prompts/kobo_reusable_sssom_generation_prompt.md`. AI output **must be
-human-reviewed** before use, then saved as `../sssom/kobo_form.sssom.tsv`.
-Skip this step entirely if you are reusing the committed mapping.
+This step is required only when creating a new SSSOM mapping or when changes to
+the Kobo form require the existing mapping to be updated. **Skip this step
+entirely if you are reusing the committed mapping.**
+
+Use the AI-assisted mapping prompt:
+[`../prompts/kobo_reusable_sssom_generation_prompt.md`](../prompts/kobo_reusable_sssom_generation_prompt.md)
+
+Whichever option you choose below, regenerate the pull first so the inputs
+reflect the current form — authoring from a stale export is how fields get
+missed (e.g. `size_group`, the `odbl` license).
+
+### Option A — Compact / sample input (recommended for routine mapping)
+
+Attach both:
+- [`field_inventory.md`](../../records/raw/field_inventory.md) — the union of
+  fields found across all pulled records.
+- [`sample_records_raw.json`](../../records/raw/sample_records_raw.json) —
+  representative records showing real values and structure.
+
+This is the more compact approach and avoids sending the complete Kobo export
+to the model while still providing field coverage and representative examples.
+
+### Option B — Full-record input
+
+Attach:
+- [`all_records_raw.json`](../../records/raw/all_records_raw.json) — the complete
+  Kobo export containing all records and fields.
+
+When using the full-record input, `field_inventory.md` is **optional**, because
+`all_records_raw.json` already contains the complete source records from which
+the fields can be inspected. The inventory may still be included as a
+human-readable summary if useful.
+
+### Review and save the mapping
+
+The AI-generated SSSOM is a **drafting aid, not the final authority**. Review
+the generated mapping against the source fields, target Schema.org properties,
+mapping predicates, transformation rules, and validation notes before use.
+
+After human review, save the approved reusable mapping as:
+
+```bash
+../sssom/kobo_form.sssom.tsv
+```
+
 
 ---
 

@@ -1,0 +1,182 @@
+{
+  "@context": {
+    "@vocab": "https://schema.org/",
+    "schema": "https://schema.org/",
+    "@language": "en",
+    "dct": "http://purl.org/dc/terms/"
+  },
+  "@graph": [
+    {
+      "@type": "schema:Dataset",
+      "@id": "https://gdsc.idsc.miami.edu/detail/mdc_cce_land_exclude_dor_codes",
+      "name": "CCE Miami-Dade County LAND Exclude DOR Codes ",
+      "description": "Department of Revenue (DOR) Code list for exclusion in the CAMP application.",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "name": "size",
+          "value": "8.6K"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "postgis_table",
+          "value": "mdc_cce_land_exclude_dor_codes"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "kobo_record_id",
+          "value": "211"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "process_step",
+          "value": "#########\n  # GDSC ETL is performed in two steps: shell script to ETL data into postgres\n  # and then additional transformations with SQL in postGIS (if needed).\n  ####\n  \n  #########\n  # Step 1 - bash script (pseudo code)\n  ####\n  \n  # create directory structure and move into it\n  mkdir -p /data/mdc_cce_land_exclude_dor_codes/download -p /data/mdc_cce_land_exclude_dor_codes/etl\n  chmod 777 /data/mdc_cce_land_exclude_dor_codes/download\n  cd /data/mdc_cce_land_exclude_dor_codes\n  \n  # set update flag based on last update and update frequency\n  do_update=0 if date() < last_update + update_frequency else do_update = 1\n  \n  # remove spaces for all column headers in csv\n    sed -i '1 s/ /_/g' download/mdc_cce_land_exclude_dor_codes.csv\n  \n  # load into postGIS with:\n    ogr2ogr -lco GEOMETRY_NAME=geom -f PostgreSQL PG:\"<postgres connection>\" download/mdc_cce_land_exclude_dor_codes.csv -nln mdc_cce_land_exclude_dor_codes"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "processor",
+          "value": "GDSC automation (see Process Step)"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "values",
+          "value": "cce_land_use_exclude"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "download_method",
+          "value": "local"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "source_file",
+          "value": "{'etl_group/file_name_group/file_name_value': 'mdc_cce_land_exclude_dor_codes'}"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "podid",
+          "value": "gdsc-postgis-node-kpmpsxwnna0cr4ka"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "up",
+          "value": "false"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "derivativeUrl",
+          "value": "/data/mdc_cce_land_exclude_dor_codes/"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "pointOfContact",
+          "value": "{'iso_group/point_of_contact_group/contact_affiliation': 'University of Miami Libraries, Frost Institute for Data Science and Computing', 'iso_group/point_of_contact_group/contact_affiliation_identifier': 'https://ror.org/02dgjyy92', 'iso_group/point_of_contact_group/contact_affiliation_schema': 'ror', 'iso_group/point_of_contact_group/contact_affiliation_schema_uri': 'https://ror.org/', 'iso_group/point_of_contact_group/contact_email': 'tnorris@miami.edu', 'iso_group/point_of_contact_group/contact_first_name': 'Timothy', 'iso_group/point_of_contact_group/contact_identifier': 'https://orcid.org/0000-0002-0898-3027', 'iso_group/point_of_contact_group/contact_identifier_schema': 'orcid', 'iso_group/point_of_contact_group/contact_identifier_schema_uri': 'https://orcid.org/', 'iso_group/point_of_contact_group/contact_last_name': 'Norris', 'iso_group/point_of_contact_group/contact_name': 'Timothy B. Norris'}"
+        }
+      ],
+      "identifier": {
+        "@type": "PropertyValue",
+        "name": "external_id",
+        "value": "842276336"
+      },
+      "url": "https://civic.miami.edu/",
+      "inLanguage": "en",
+      "datePublished": "2025-03-26",
+      "dateModified": "2025-07-01 16:00:47",
+      "creator": [
+        {
+          "@type": "Role",
+          "roleName": "creator",
+          "creator": {
+            "@type": "Organization",
+            "name": "CCE"
+          }
+        }
+      ],
+      "provider": {
+        "@type": "Organization",
+        "name": "CCE"
+      },
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Miami-Dade County",
+        "additionalProperty": [
+          {
+            "@type": "PropertyValue",
+            "name": "geonames",
+            "value": "4164238",
+            "url": "https://www.geonames.org/4164238"
+          }
+        ]
+      },
+      "keywords": [
+        "Miami-Dade County",
+        "DOR Codes"
+      ],
+      "includedInDataCatalog": [
+        {
+          "@type": "DataCatalog",
+          "@id": "https://gdsc.idsc.miami.edu",
+          "name": "Geospatial Digital Special Collections",
+          "url": "https://gdsc.idsc.miami.edu"
+        },
+        {
+          "@type": "DataCatalog",
+          "name": "land-access-neighborhood-development",
+          "@id": "https://gdsc.idsc.miami.edu/?collection=land-access-neighborhood-development",
+          "url": "https://gdsc.idsc.miami.edu/?collection=land-access-neighborhood-development"
+        }
+      ],
+      "measurementTechnique": [
+        {
+          "@type": "DefinedTerm",
+          "name": "GIS Data Structure",
+          "termCode": "table",
+          "inDefinedTermSet": {
+            "@type": "DefinedTermSet",
+            "name": "dataRepresentation",
+            "url": "https://gdsc.idsc.miami.edu/vocab/dataRepresentation"
+          }
+        },
+        {
+          "@type": "DefinedTerm",
+          "name": "Data Processing Level",
+          "termCode": "derived",
+          "inDefinedTermSet": {
+            "@type": "DefinedTermSet",
+            "name": "dataProcessingLevel",
+            "url": "https://gdsc.idsc.miami.edu/vocab/dataProcessingLevel"
+          }
+        }
+      ],
+      "distribution": [
+        {
+          "@type": "DataDownload",
+          "name": "Source distribution",
+          "contentUrl": "file:///download/mdc_land_exclude_dor_codes.csv",
+          "encodingFormat": "text/csv"
+        }
+      ],
+      "dct:accrualPeriodicity": "as_needed",
+      "variableMeasured": [
+        {
+          "@type": "PropertyValue",
+          "name": "cce_land_use_exclude",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "dor_code_cur",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "dor_desc",
+          "description": ""
+        }
+      ],
+      "isAccessibleForFree": false,
+      "dct:provenance": "CCE",
+      "additionalType": "table"
+    }
+  ]
+}

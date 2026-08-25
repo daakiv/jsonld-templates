@@ -11,10 +11,102 @@
       "@id": "https://gdsc.idsc.miami.edu/detail/mdc_2020_zcta",
       "name": "Miami-Dade 2020 Zip Code Tabulation Areas",
       "description": "A polygon representation of the Miami-Dade Zip Code Tabulation Areas (ZCTA) boundaries (derived from us_2020_zcta).",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "name": "size",
+          "value": "1.7M"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "postgis_table",
+          "value": "mdc_2020_zcta"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "kobo_record_id",
+          "value": "146"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "creator_type",
+          "value": "organization"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "process_step",
+          "value": "#########\n  # GDSC ETL is performed in two steps: shell script to ETL data into postgres\n  # and then additional transformations with SQL in postGIS (if needed).\n  ####\n  \n  #########\n  # Step 1 - bash script (pseudo code)\n  ####\n  \n  # create directory structure and move into it\n  mkdir -p /data/mdc_2020_zcta/download -p /data/mdc_2020_zcta/etl\n  chmod 777 /data/mdc_2020_zcta/download\n  cd /data/mdc_2020_zcta\n  \n  # set update flag based on last update and update frequency\n  do_update=0 if date() < last_update + update_frequency else do_update = 1\n  \n  # load us_2020_zcta as dependency (see us_2020_zcta for details).\n  \n  # load into postGIS with:\n    ogr2ogr -lco GEOMETRY_NAME=geom -f PostgreSQL PG:\"<postgres connection>\" download/mdc_2020_zcta.shp -nlt multipolygon -nln mdc_2020_zcta\n  \n  #########\n  # Step 2 - SQL script (pseudo code):\n  ####\n  \n  # remove duplicate points and make geometries valid:\n  UPDATE mdc_2020_zcta\n    SET geom=ST_MakeValid(ST_RemoveRepeatedPoints(geom));\n  \n  # add local geometry column and reproject existing geometries into local EPSG:\n  SELECT AddGeometryColumn (\n    'mdc_2020_zcta',\n    'geom_local', 4269, 'multipolygon', 2\n  );\n  UPDATE mdc_2020_zcta\n    SET geom_local=ST_MakeValid(ST_RemoveRepeatedPoints(ST_Transform(ST_Multi(geom),4269)));\n  CREATE INDEX mdc_2020_zcta_geom_local_idx\n    ON mdc_2020_zcta\n    USING GIST (geom_local);\n  NOTIFY pgrst, 'reload schema';"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "processor",
+          "value": "GDSC automation (see Process Step)"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "label",
+          "value": "geoid20"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "analytic_function",
+          "value": "gdsc_get_attributes"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "Spatial Reference System",
+          "value": "http://www.opengis.net/def/crs/EPSG/0/4269"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "download_method",
+          "value": "local"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "source_file",
+          "value": "{'etl_group/file_name_group/file_name_value': 'mdc_2020_zcta'}"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "extent",
+          "value": "POLYGON((-81.384491 25.034431, -80.110190 25.034431, -80.110190 26.172880, -81.384491 26.172880, -81.384491 25.034431))"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "podid",
+          "value": "gdsc-postgis-node-n5jg6snexoyi8j6x"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "up",
+          "value": "false"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "derivativeUrl",
+          "value": "/data/mdc_2020_zcta/"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "dependencyTable",
+          "value": "{'etl_group/dependency_group/dependency_table_name': 'us_2020_zcta'}"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "pointOfContact",
+          "value": "{'iso_group/point_of_contact_group/contact_affiliation': 'University of Miami Libraries, Frost Institute for Data Science and Computing', 'iso_group/point_of_contact_group/contact_affiliation_identifier': 'https://ror.org/02dgjyy92', 'iso_group/point_of_contact_group/contact_affiliation_schema': 'ror', 'iso_group/point_of_contact_group/contact_affiliation_schema_uri': 'https://ror.org/', 'iso_group/point_of_contact_group/contact_email': 'tnorris@miami.edu', 'iso_group/point_of_contact_group/contact_first_name': 'Timothy', 'iso_group/point_of_contact_group/contact_identifier': 'https://orcid.org/0000-0002-0898-3027', 'iso_group/point_of_contact_group/contact_identifier_schema': 'orcid', 'iso_group/point_of_contact_group/contact_identifier_schema_uri': 'https://orcid.org/', 'iso_group/point_of_contact_group/contact_last_name': 'Norris', 'iso_group/point_of_contact_group/contact_name': 'Timothy B. Norris'}"
+        }
+      ],
+      "identifier": {
+        "@type": "PropertyValue",
+        "name": "external_id",
+        "value": "842264981"
+      },
       "url": "https://www.census.gov/programs-surveys/geography/guidance/geo-areas/zctas.html",
       "inLanguage": "en",
       "datePublished": "2024-08-26",
-      "dateModified": "2024-01-19",
+      "dateModified": "2024-12-10 10:01:02",
       "creator": [
         {
           "@type": "Role",
@@ -133,58 +225,6 @@
           "name": "Source distribution",
           "contentUrl": "ftp://ftp2.census.gov/geo/tiger/TIGER2020/ZCTA520/tl_2020_us_zcta520.zip",
           "encodingFormat": "application/x-shapefile"
-        }
-      ],
-      "additionalProperty": [
-        {
-          "@type": "PropertyValue",
-          "name": "postgis_table",
-          "value": "mdc_2020_zcta"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "kobo_record_id",
-          "value": "146.0"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "creator_type",
-          "value": "organization"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "cartography_label_field",
-          "value": "geoid20"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "analytic_function",
-          "value": "gdsc_get_attributes"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "Spatial Reference System",
-          "value": "http://www.opengis.net/def/crs/EPSG/0/4269"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "download_method",
-          "value": "local"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "source_file",
-          "value": "{'etl_group/file_name_group/file_name_value': 'mdc_2020_zcta'}"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "dependencyTable",
-          "value": "{'etl_group/dependency_group/dependency_table_name': 'us_2020_zcta'}"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "pointOfContact",
-          "value": "{'iso_group/point_of_contact_group/contact_name': 'TBD'}"
         }
       ],
       "dct:accrualPeriodicity": "never",

@@ -11,10 +11,122 @@
       "@id": "https://gdsc.idsc.miami.edu/detail/mdc_2018_svi_tract",
       "name": "2018 Miami-Dade CDC Social Vulnerability Index (tracts)",
       "description": "Social vulnerability refers to the potential negative effects on communities caused by external stresses on human health. Such stresses include natural or human-caused disasters, or disease outbreaks. Reducing social vulnerability can decrease both human suffering and economic loss.\n  \n  The CDC/ATSDR Social Vulnerability Index (CDC/ATSDR SVI) uses 16 U.S. census variables to help local officials identify communities that may need support before, during, or after disasters.",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "name": "size",
+          "value": "0"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "postgis_table",
+          "value": "mdc_2018_svi_tract"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "kobo_record_id",
+          "value": "141"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "creator_type",
+          "value": "organization"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "process_step",
+          "value": "#########\n  # GDSC ETL is performed in two steps: shell script to ETL data into postgres\n  # and then additional transformations with SQL in postGIS (if needed).\n  ####\n  \n  #########\n  # Step 1 - bash script (pseudo code)\n  ####\n  \n  # create directory structure and move into it\n  mkdir -p /data/mdc_2018_svi_tract/download -p /data/mdc_2018_svi_tract/etl\n  chmod 777 /data/mdc_2018_svi_tract/download\n  cd /data/mdc_2018_svi_tract\n  \n  # set update flag based on last update and update frequency\n  do_update=0 if date() < last_update + update_frequency else do_update = 1\n  \n  # load fl_2018_svi_tract as dependency (see fl_2018_svi_tract for details).\n  \n  # Create copy of geom dependency\n  pg_dump -d $POSTGRES_DB -U $POSTGRES_USER -p $POSTGRES_PORT -h gdsc-postgis-node-z0ff07cfh5p3oelp -t fl_2018_svi_tract | sed 's/fl_2018_svi_tract/mdc_2018_svi_tract/g' | psql -d $POSTGRES_DB -U $POSTGRES_USER -p $POSTGRES_PORT -h gdsc-postgis-node-znz3el2j3tabpm5q \n  \n  # drop geom_local and subset as per custom parameters\n  psql -d $POSTGRES_DB -U $POSTGRES_USER -p $POSTGRES_PORT -h gdsc-postgis-node-znz3el2j3tabpm5q -c \"\n  ALTER TABLE mdc_2018_svi_tract DROP COLUMN IF EXISTS geom_local;\n  DELETE FROM mdc_2018_svi_tract\n    WHERE NOT (stcnty = '12086');\n  COMMIT;\"\n  # add local geometry column and reproject existing geometries into local EPSG:\n  SELECT AddGeometryColumn (\n    'mdc_2018_svi_tract',\n    'geom_local', 2236, 'multipolygon', 2\n  );\n  UPDATE mdc_2018_svi_tract\n    SET geom_local=ST_MakeValid(ST_RemoveRepeatedPoints(ST_Transform(ST_Multi(geom),2236)));\n  CREATE INDEX mdc_2018_svi_tract_geom_local_idx\n    ON mdc_2018_svi_tract\n    USING GIST (geom_local);\n  NOTIFY pgrst, 'reload schema';\n  # add local geometry column and reproject existing geometries into local EPSG:\n  SELECT AddGeometryColumn (\n    'mdc_2018_svi_tract',\n    'geom_local', 2236, 'multipolygon', 2\n  );\n  UPDATE mdc_2018_svi_tract\n    SET geom_local=ST_MakeValid(ST_RemoveRepeatedPoints(ST_Transform(ST_Multi(geom),2236)));\n  CREATE INDEX mdc_2018_svi_tract_geom_local_idx\n    ON mdc_2018_svi_tract\n    USING GIST (geom_local);\n  NOTIFY pgrst, 'reload schema';"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "processor",
+          "value": "GDSC automation (see Process Step)"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "label",
+          "value": "location"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "values",
+          "value": "area_sqmi"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "analytic_function",
+          "value": "gdsc_get_attributes"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "Spatial Reference System",
+          "value": "http://www.opengis.net/def/crs/EPSG/0/2236"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "source_file",
+          "value": "{'etl_group/file_name_group/file_inside_archive': 'SVI2018_FLORIDA_tract', 'etl_group/file_name_group/file_name_value': 'mdc_2018_svi_tract'}"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "extent",
+          "value": "POLYGON((-87.634938 24.523096, -80.031360 24.523096, -80.031360 31.000888, -87.634938 31.000888, -87.634938 24.523096))"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "podid",
+          "value": "gdsc-postgis-node-znz3el2j3tabpm5q"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "up",
+          "value": "false"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "customParameters",
+          "value": "stcnty;=;'12086'"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "serviceDefinition",
+          "value": "SVI2018_FLORIDA_tract.sd"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "colorRamp",
+          "value": "spl_theme1;5;GnBu;#f0f9e8;#bae4bc;#7bccc4;#43a2ca;#0868ac|e_pov;5;GnBu;#f0f9e8;#bae4bc;#7bccc4;#43a2ca;#0868ac|ep_pov;5;GnBu;#f0f9e8;#bae4bc;#7bccc4;#43a2ca;#0868ac|e_unemp;5;GnBu;#f0f9e8;#bae4bc;#7bccc4;#43a2ca;#0868ac|ep_unemp;5;GnBu;#f0f9e8;#bae4bc;#7bccc4;#43a2ca;#0868ac|e_hburd;5;GnBu;#f0f9e8;#bae4bc;#7bccc4;#43a2ca;#0868ac|ep_hburd;5;GnBu;#f0f9e8;#bae4bc;#7bccc4;#43a2ca;#0868ac|e_nohsdp;5;GnBu;#f0f9e8;#bae4bc;#7bccc4;#43a2ca;#0868ac|ep_nohsdp;5;GnBu;#f0f9e8;#bae4bc;#7bccc4;#43a2ca;#0868ac|spl_theme3;5;YlOrBr;#ffffd4;#fed98e;#fe9929;#d95f0e;#993404|e_minrty;5;YlOrBr;#ffffd4;#fed98e;#fe9929;#d95f0e;#993405|ep_minrty;5;YlOrBr;#ffffd4;#fed98e;#fe9929;#d95f0e;#993406|e_limeng;5;YlOrBr;#ffffd4;#fed98e;#fe9929;#d95f0e;#993407|ep_limeng;5;YlOrBr;#ffffd4;#fed98e;#fe9929;#d95f0e;#993408|spl_theme2;5;YlGn;#ffffcc;#c2e699;#78c679;#31a354;#006837|e_age17;5;YlGn;#ffffcc;#c2e699;#78c679;#31a354;#006838|ep_age17;5;YlGn;#ffffcc;#c2e699;#78c679;#31a354;#006839|e_age65;5;YlGn;#ffffcc;#c2e699;#78c679;#31a354;#006840|ep_age65;5;YlGn;#ffffcc;#c2e699;#78c679;#31a354;#006841|e_disabl;5;YlGn;#ffffcc;#c2e699;#78c679;#31a354;#006842|ep_disabl;5;YlGn;#ffffcc;#c2e699;#78c679;#31a354;#006843|e_sngpnt;5;YlGn;#ffffcc;#c2e699;#78c679;#31a354;#006844|ep_sngpnt;5;YlGn;#ffffcc;#c2e699;#78c679;#31a354;#006845|spl_theme4;5;Reds;#fee5d9;#fcae91;#fb6a4a;#de2d26;#a50f15|e_munit;5;Reds;#fee5d9;#fcae91;#fb6a4a;#de2d26;#a50f16|ep_munit;5;Reds;#fee5d9;#fcae91;#fb6a4a;#de2d26;#a50f17|e_mobile;5;Reds;#fee5d9;#fcae91;#fb6a4a;#de2d26;#a50f18|ep_mobile;5;Reds;#fee5d9;#fcae91;#fb6a4a;#de2d26;#a50f19|e_crowd;5;Reds;#fee5d9;#fcae91;#fb6a4a;#de2d26;#a50f20|ep_crowd;5;Reds;#fee5d9;#fcae91;#fb6a4a;#de2d26;#a50f21|e_noveh;5;Reds;#fee5d9;#fcae91;#fb6a4a;#de2d26;#a50f22|ep_noveh;5;Reds;#fee5d9;#fcae91;#fb6a4a;#de2d26;#a50f23|e_groupq;5;Reds;#fee5d9;#fcae91;#fb6a4a;#de2d26;#a50f24|ep_groupq;5;Reds;#fee5d9;#fcae91;#fb6a4a;#de2d26;#a50f25"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "derivativeUrl",
+          "value": "/data/mdc_2018_svi_tract/"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "customEtl",
+          "value": "subset"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "dependencyTable",
+          "value": "{'etl_group/dependency_group/dependency_table_name': 'fl_2018_svi_tract'}"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "pointOfContact",
+          "value": "{'iso_group/point_of_contact_group/contact_affiliation': 'University of Miami Libraries, Frost Institute for Data Science and Computing', 'iso_group/point_of_contact_group/contact_affiliation_identifier': 'https://ror.org/02dgjyy92', 'iso_group/point_of_contact_group/contact_affiliation_schema': 'ror', 'iso_group/point_of_contact_group/contact_affiliation_schema_uri': 'https://ror.org/', 'iso_group/point_of_contact_group/contact_email': 'tnorris@miami.edu', 'iso_group/point_of_contact_group/contact_first_name': 'Timothy', 'iso_group/point_of_contact_group/contact_identifier': 'https://orcid.org/0000-0002-0898-3027', 'iso_group/point_of_contact_group/contact_identifier_schema': 'orcid', 'iso_group/point_of_contact_group/contact_identifier_schema_uri': 'https://orcid.org/', 'iso_group/point_of_contact_group/contact_last_name': 'Norris', 'iso_group/point_of_contact_group/contact_name': 'Timothy B. Norris'}"
+        }
+      ],
+      "identifier": {
+        "@type": "PropertyValue",
+        "name": "external_id",
+        "value": "842264778"
+      },
       "url": "https://www.atsdr.cdc.gov/place-health/php/svi/svi-data-documentation-download.html",
       "inLanguage": "en",
       "datePublished": "2020-10-22",
-      "dateModified": "2022-02-08",
+      "dateModified": "2026-02-10 10:00:41",
       "creator": [
         {
           "@type": "Role",
@@ -125,78 +237,6 @@
           "name": "Source distribution",
           "contentUrl": "https://svi.cdc.gov/Documents/Data/2018/db/states/Florida.zip",
           "encodingFormat": "gdb"
-        }
-      ],
-      "additionalProperty": [
-        {
-          "@type": "PropertyValue",
-          "name": "postgis_table",
-          "value": "mdc_2018_svi_tract"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "kobo_record_id",
-          "value": "141.0"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "creator_type",
-          "value": "organization"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "cartography_label_field",
-          "value": "location"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "cartography_value_field",
-          "value": "area_sqmi"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "analytic_function",
-          "value": "gdsc_get_attributes"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "Spatial Reference System",
-          "value": "http://www.opengis.net/def/crs/EPSG/0/2236"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "source_file",
-          "value": "{'etl_group/file_name_group/file_inside_archive': 'SVI2018_FLORIDA_tract', 'etl_group/file_name_group/file_name_value': 'mdc_2018_svi_tract'}"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "customParameters",
-          "value": "stcnty;=;'12086'"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "serviceDefinition",
-          "value": "SVI2018_FLORIDA_tract.sd"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "colorRamp",
-          "value": "spl_theme1;5;GnBu;#f0f9e8;#bae4bc;#7bccc4;#43a2ca;#0868ac|e_pov;5;GnBu;#f0f9e8;#bae4bc;#7bccc4;#43a2ca;#0868ac|ep_pov;5;GnBu;#f0f9e8;#bae4bc;#7bccc4;#43a2ca;#0868ac|e_unemp;5;GnBu;#f0f9e8;#bae4bc;#7bccc4;#43a2ca;#0868ac|ep_unemp;5;GnBu;#f0f9e8;#bae4bc;#7bccc4;#43a2ca;#0868ac|e_hburd;5;GnBu;#f0f9e8;#bae4bc;#7bccc4;#43a2ca;#0868ac|ep_hburd;5;GnBu;#f0f9e8;#bae4bc;#7bccc4;#43a2ca;#0868ac|e_nohsdp;5;GnBu;#f0f9e8;#bae4bc;#7bccc4;#43a2ca;#0868ac|ep_nohsdp;5;GnBu;#f0f9e8;#bae4bc;#7bccc4;#43a2ca;#0868ac|spl_theme3;5;YlOrBr;#ffffd4;#fed98e;#fe9929;#d95f0e;#993404|e_minrty;5;YlOrBr;#ffffd4;#fed98e;#fe9929;#d95f0e;#993405|ep_minrty;5;YlOrBr;#ffffd4;#fed98e;#fe9929;#d95f0e;#993406|e_limeng;5;YlOrBr;#ffffd4;#fed98e;#fe9929;#d95f0e;#993407|ep_limeng;5;YlOrBr;#ffffd4;#fed98e;#fe9929;#d95f0e;#993408|spl_theme2;5;YlGn;#ffffcc;#c2e699;#78c679;#31a354;#006837|e_age17;5;YlGn;#ffffcc;#c2e699;#78c679;#31a354;#006838|ep_age17;5;YlGn;#ffffcc;#c2e699;#78c679;#31a354;#006839|e_age65;5;YlGn;#ffffcc;#c2e699;#78c679;#31a354;#006840|ep_age65;5;YlGn;#ffffcc;#c2e699;#78c679;#31a354;#006841|e_disabl;5;YlGn;#ffffcc;#c2e699;#78c679;#31a354;#006842|ep_disabl;5;YlGn;#ffffcc;#c2e699;#78c679;#31a354;#006843|e_sngpnt;5;YlGn;#ffffcc;#c2e699;#78c679;#31a354;#006844|ep_sngpnt;5;YlGn;#ffffcc;#c2e699;#78c679;#31a354;#006845|spl_theme4;5;Reds;#fee5d9;#fcae91;#fb6a4a;#de2d26;#a50f15|e_munit;5;Reds;#fee5d9;#fcae91;#fb6a4a;#de2d26;#a50f16|ep_munit;5;Reds;#fee5d9;#fcae91;#fb6a4a;#de2d26;#a50f17|e_mobile;5;Reds;#fee5d9;#fcae91;#fb6a4a;#de2d26;#a50f18|ep_mobile;5;Reds;#fee5d9;#fcae91;#fb6a4a;#de2d26;#a50f19|e_crowd;5;Reds;#fee5d9;#fcae91;#fb6a4a;#de2d26;#a50f20|ep_crowd;5;Reds;#fee5d9;#fcae91;#fb6a4a;#de2d26;#a50f21|e_noveh;5;Reds;#fee5d9;#fcae91;#fb6a4a;#de2d26;#a50f22|ep_noveh;5;Reds;#fee5d9;#fcae91;#fb6a4a;#de2d26;#a50f23|e_groupq;5;Reds;#fee5d9;#fcae91;#fb6a4a;#de2d26;#a50f24|ep_groupq;5;Reds;#fee5d9;#fcae91;#fb6a4a;#de2d26;#a50f25"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "customEtl",
-          "value": "subset"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "dependencyTable",
-          "value": "{'etl_group/dependency_group/dependency_table_name': 'fl_2018_svi_tract'}"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "pointOfContact",
-          "value": "{'iso_group/point_of_contact_group/contact_name': 'TBD'}"
         }
       ],
       "dct:accrualPeriodicity": "never",

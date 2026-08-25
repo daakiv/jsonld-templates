@@ -1,0 +1,521 @@
+{
+  "@context": {
+    "@vocab": "https://schema.org/",
+    "schema": "https://schema.org/",
+    "@language": "en",
+    "dct": "http://purl.org/dc/terms/"
+  },
+  "@graph": [
+    {
+      "@type": "schema:Dataset",
+      "@id": "https://gdsc.idsc.miami.edu/detail/mdc_qualified_opportunity_zones",
+      "name": "Miami-Dade Qualified Opportunity Zones",
+      "description": "A polygon feature class with all population census tracts designated as Qualified Opportunity Zones (QOZs) as well as all population census tracts originally eligible for designation as a QOZ for purposes of 1400Z1 and 1400Z2 of the Internal Revenue Code (the Code). To identify areas designated as Qualified Opportunity Zones (QOZs). An Opportunity Zone is an economically-distressed community where new investments, under certain conditions, may be eligible for preferential tax treatment.",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "name": "size",
+          "value": "262K"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "postgis_table",
+          "value": "mdc_qualified_opportunity_zones"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "kobo_record_id",
+          "value": "62"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "creator_type",
+          "value": "organization"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "process_step",
+          "value": "#########\n  # GDSC ETL is performed in two steps: shell script to ETL data into postgres\n  # and then additional transformations with SQL in postGIS (if needed).\n  ####\n  \n  #########\n  # Step 1 - bash script (pseudo code)\n  ####\n  \n  # create directory structure and move into it\n  mkdir -p /data/mdc_qualified_opportunity_zones/download -p /data/mdc_qualified_opportunity_zones/etl\n  chmod 777 /data/mdc_qualified_opportunity_zones/download\n  cd /data/mdc_qualified_opportunity_zones\n  \n  # set update flag based on last update and update frequency\n  do_update=0 if date() < last_update + update_frequency else do_update = 1\n  \n  # download if update flag is set:\n  if do_update == 1 then\n  wget -O download/mdc_qualified_opportunity_zones.json 'https://services.arcgis.com/8Pc9XBTAsYuxx9Ny/arcgis/rest/services/QualifiedOpportunityZones_gdb/FeatureServer/0/query?outFields=*&where=1%3D1&outSR=4326&f=geojson'\n  \n  # replace column names Shape__Length and Shape__Area to avoid conflict when\n  # providing as service on ArcServer.\n  sed -i 's/Shape__Length/shape_length/gI; s/Shape__Area/shape_area/gI' download/mdc_qualified_opportunity_zones.json\n  \n  # load into postGIS with:\n    ogr2ogr -lco GEOMETRY_NAME=geom -f PostgreSQL PG:\"<postgres connection>\" download/mdc_qualified_opportunity_zones.json -nlt multipolygon -nln mdc_qualified_opportunity_zones\n  \n  #########\n  # Step 2 - SQL script (pseudo code):\n  ####\n  \n  # remove duplicate points and make geometries valid:\n  UPDATE mdc_qualified_opportunity_zones\n    SET geom=ST_MakeValid(ST_RemoveRepeatedPoints(geom));\n  \n  # add local geometry column and reproject existing geometries into local EPSG:\n  SELECT AddGeometryColumn (\n    'mdc_qualified_opportunity_zones',\n    'geom_local', 2236, 'multipolygon', 2\n  );\n  UPDATE mdc_qualified_opportunity_zones\n    SET geom_local=ST_MakeValid(ST_RemoveRepeatedPoints(ST_Transform(ST_Multi(geom),2236)));\n  CREATE INDEX mdc_qualified_opportunity_zones_geom_local_idx\n    ON mdc_qualified_opportunity_zones\n    USING GIST (geom_local);\n  NOTIFY pgrst, 'reload schema';\n  # Move into corrrect directory and create derivative directory in data package on osgeo\n  cd /data/mdc_qualified_opportunity_zones/\n  mkdir -p derived\n  \n  # Move into correct directory\n  cd /data/mdc_qualified_opportunity_zones/\n  \n  # Create pg_dump of table SQL in derivate directory on postgis.\n  pg_dump <postgres opts> -h gdsc-postgis-node-htibusvpm7rorahm -t mdc_qualified_opportunity_zones > derived/mdc_qualified_opportunity_zones.sql\n  \n  # Create downloadable tarfile of SQL in derivative directory on postgis\n  rm -f derived/mdc_qualified_opportunity_zones.sql.tar.gz\n  tar -czf derived/mdc_qualified_opportunity_zones.sql.tar.gz meta_dcat_mdc_qualified_opportunity_zones.json -C derived mdc_qualified_opportunity_zones.sql"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "processor",
+          "value": "GDSC automation (see Process Step)"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "label",
+          "value": "namelsad10"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "analytic_function",
+          "value": "gdsc_nearest_neighbor"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "Spatial Reference System",
+          "value": "http://www.opengis.net/def/crs/EPSG/0/2236"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "derivatives",
+          "value": "sql"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "download_method",
+          "value": "wget"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "source_file",
+          "value": "{'etl_group/file_name_group/file_name_value': 'mdc_qualified_opportunity_zones'}"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "extent",
+          "value": "POLYGON((-80.501568 25.433080, -80.126671 25.433080, -80.126671 25.974684, -80.501568 25.974684, -80.501568 25.433080))"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "podid",
+          "value": "gdsc-postgis-node-htibusvpm7rorahm"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "up",
+          "value": "false"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "serviceDefinition",
+          "value": "API|arcgis|query"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "derivativeUrl",
+          "value": "/data/mdc_qualified_opportunity_zones/"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "pointOfContact",
+          "value": "{'iso_group/point_of_contact_group/contact_affiliation': 'University of Miami Libraries, Frost Institute for Data Science and Computing', 'iso_group/point_of_contact_group/contact_affiliation_identifier': 'https://ror.org/02dgjyy92', 'iso_group/point_of_contact_group/contact_affiliation_schema': 'ror', 'iso_group/point_of_contact_group/contact_affiliation_schema_uri': 'https://ror.org/', 'iso_group/point_of_contact_group/contact_email': 'tnorris@miami.edu', 'iso_group/point_of_contact_group/contact_first_name': 'Timothy', 'iso_group/point_of_contact_group/contact_identifier': 'https://orcid.org/0000-0002-0898-3027', 'iso_group/point_of_contact_group/contact_identifier_schema': 'orcid', 'iso_group/point_of_contact_group/contact_identifier_schema_uri': 'https://orcid.org/', 'iso_group/point_of_contact_group/contact_last_name': 'Norris', 'iso_group/point_of_contact_group/contact_name': 'Timothy B. Norris'}"
+        }
+      ],
+      "identifier": {
+        "@type": "PropertyValue",
+        "name": "external_id",
+        "value": "842270260"
+      },
+      "url": "https://gis-mdc.opendata.arcgis.com/datasets/MDC::qualified-opportunity-zones/about",
+      "inLanguage": "en",
+      "datePublished": "2018-12-07",
+      "dateModified": "2025-05-22 09:51:06",
+      "creator": [
+        {
+          "@type": "Role",
+          "roleName": "creator",
+          "creator": {
+            "@type": "Organization",
+            "name": "Miami-Dade County Open Data Hub"
+          }
+        },
+        {
+          "@type": "Role",
+          "roleName": "creator",
+          "creator": {
+            "@type": "Organization",
+            "name": "Information Technology Department"
+          }
+        }
+      ],
+      "provider": {
+        "@type": "Organization",
+        "name": "Miami-Dade County"
+      },
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Miami-Dade County",
+        "additionalProperty": [
+          {
+            "@type": "PropertyValue",
+            "name": "geonames",
+            "value": "4164238",
+            "url": "https://www.geonames.org/4164238"
+          },
+          {
+            "@type": "PropertyValue",
+            "name": "Spatial Reference System",
+            "value": "http://www.opengis.net/def/crs/EPSG/0/4326"
+          }
+        ]
+      },
+      "keywords": [
+        "Florida",
+        "Miami-Dade County",
+        "MDC",
+        "Property",
+        "Planning",
+        "Regulation",
+        "Qualified Opportunity Zone",
+        "Development",
+        "Population",
+        "Infrastructure"
+      ],
+      "includedInDataCatalog": [
+        {
+          "@type": "DataCatalog",
+          "@id": "https://gdsc.idsc.miami.edu",
+          "name": "Geospatial Digital Special Collections",
+          "url": "https://gdsc.idsc.miami.edu"
+        },
+        {
+          "@type": "DataCatalog",
+          "name": "displacement-vulnerability-mitigation-tool",
+          "@id": "https://gdsc.idsc.miami.edu/?collection=displacement-vulnerability-mitigation-tool",
+          "url": "https://gdsc.idsc.miami.edu/?collection=displacement-vulnerability-mitigation-tool"
+        },
+        {
+          "@type": "DataCatalog",
+          "name": "vulnerability",
+          "@id": "https://gdsc.idsc.miami.edu/?collection=vulnerability",
+          "url": "https://gdsc.idsc.miami.edu/?collection=vulnerability"
+        },
+        {
+          "@type": "DataCatalog",
+          "name": "displacement",
+          "@id": "https://gdsc.idsc.miami.edu/?collection=displacement",
+          "url": "https://gdsc.idsc.miami.edu/?collection=displacement"
+        },
+        {
+          "@type": "DataCatalog",
+          "name": "climate-and-equity-mapping-program",
+          "@id": "https://gdsc.idsc.miami.edu/?collection=climate-and-equity-mapping-program",
+          "url": "https://gdsc.idsc.miami.edu/?collection=climate-and-equity-mapping-program"
+        },
+        {
+          "@type": "DataCatalog",
+          "name": "land-access-neighborhood-development",
+          "@id": "https://gdsc.idsc.miami.edu/?collection=land-access-neighborhood-development",
+          "url": "https://gdsc.idsc.miami.edu/?collection=land-access-neighborhood-development"
+        },
+        {
+          "@type": "DataCatalog",
+          "name": "miami-affordability-project",
+          "@id": "https://gdsc.idsc.miami.edu/?collection=miami-affordability-project",
+          "url": "https://gdsc.idsc.miami.edu/?collection=miami-affordability-project"
+        }
+      ],
+      "measurementTechnique": [
+        {
+          "@type": "DefinedTerm",
+          "name": "GIS Data Structure",
+          "termCode": "vector",
+          "inDefinedTermSet": {
+            "@type": "DefinedTermSet",
+            "name": "dataRepresentation",
+            "url": "https://gdsc.idsc.miami.edu/vocab/dataRepresentation"
+          }
+        },
+        {
+          "@type": "DefinedTerm",
+          "name": "GIS Vector Geometry",
+          "termCode": "polygon",
+          "inDefinedTermSet": {
+            "@type": "DefinedTermSet",
+            "name": "vectorGeometry",
+            "url": "https://gdsc.idsc.miami.edu/vocab/vectorGeometry"
+          }
+        },
+        {
+          "@type": "DefinedTerm",
+          "name": "Data Processing Level",
+          "termCode": "observed",
+          "inDefinedTermSet": {
+            "@type": "DefinedTermSet",
+            "name": "dataProcessingLevel",
+            "url": "https://gdsc.idsc.miami.edu/vocab/dataProcessingLevel"
+          }
+        }
+      ],
+      "distribution": [
+        {
+          "@type": "DataDownload",
+          "name": "Source distribution",
+          "contentUrl": "https://services.arcgis.com/8Pc9XBTAsYuxx9Ny/arcgis/rest/services/QualifiedOpportunityZones_gdb/FeatureServer/0/query?outFields=*&where=1%3D1&outSR=4326&f=geojson",
+          "encodingFormat": "application/json"
+        }
+      ],
+      "dct:accrualPeriodicity": "as_needed",
+      "variableMeasured": [
+        {
+          "@type": "PropertyValue",
+          "name": "objectid",
+          "description": "Unique identifier",
+          "qudt:dataType": "xsd:oid",
+          "sourceOrganization": {
+            "@type": "Organization",
+            "name": "Esri"
+          }
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "statefp10",
+          "description": "2010 Census state FIPS code",
+          "qudt:dataType": "xsd:string",
+          "sourceOrganization": {
+            "@type": "Organization",
+            "name": "Census"
+          }
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "countyfp10",
+          "description": "2010 Census county FIPS code",
+          "qudt:dataType": "xsd:string",
+          "sourceOrganization": {
+            "@type": "Organization",
+            "name": "Census"
+          }
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "tractce10",
+          "description": "2010 Census tract code",
+          "qudt:dataType": "xsd:string",
+          "sourceOrganization": {
+            "@type": "Organization",
+            "name": "Census"
+          }
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "geoid10",
+          "description": "Census Track identifier: a concatenation of 2010 Census state FIPS code, county FIPS code, and census tract code",
+          "qudt:dataType": "xsd:string",
+          "sourceOrganization": {
+            "@type": "Organization",
+            "name": "Census"
+          }
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "name10",
+          "description": "Census tract name, this is the census tract code converted to an integer or integer plus two-digit decimal if the last two characters of the code are not both zeros",
+          "qudt:dataType": "xsd:string",
+          "sourceOrganization": {
+            "@type": "Organization",
+            "name": "Census"
+          }
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "namelsad10",
+          "description": "2010 Census translated legal/statistical area description and the census tract name",
+          "qudt:dataType": "xsd:string",
+          "sourceOrganization": {
+            "@type": "Organization",
+            "name": "Census"
+          }
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "mtfcc10",
+          "description": "maf/tiger feature class code (G5020)",
+          "qudt:dataType": "xsd:string",
+          "sourceOrganization": {
+            "@type": "Organization",
+            "name": "Census"
+          }
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "funcstat10",
+          "description": "2010 Census functional status",
+          "qudt:dataType": "xsd:string",
+          "sourceOrganization": {
+            "@type": "Organization",
+            "name": "Census"
+          }
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "aland10",
+          "description": "2010 Census land area",
+          "qudt:dataType": "xsd:integer",
+          "sourceOrganization": {
+            "@type": "Organization",
+            "name": "Census"
+          }
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "awater10",
+          "description": "2010 Census water area",
+          "qudt:dataType": "xsd:integer",
+          "sourceOrganization": {
+            "@type": "Organization",
+            "name": "Census"
+          }
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "intptlat10",
+          "description": "2010 Census latitude of the internal point",
+          "qudt:dataType": "xsd:string",
+          "sourceOrganization": {
+            "@type": "Organization",
+            "name": "Census"
+          }
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "intptlon10",
+          "description": "2010 Census longitude of the internal point",
+          "qudt:dataType": "xsd:string",
+          "sourceOrganization": {
+            "@type": "Organization",
+            "name": "Census"
+          }
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "pop100",
+          "description": "100% population count for the zone",
+          "sourceOrganization": {
+            "@type": "Organization",
+            "name": "string"
+          }
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "hu100",
+          "description": "The 100% count of housing units for the zone",
+          "qudt:dataType": "xsd:string",
+          "sourceOrganization": {
+            "@type": "Organization",
+            "name": "Census"
+          }
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "p0020002",
+          "description": "Total population",
+          "qudt:dataType": "xsd:integer",
+          "sourceOrganization": {
+            "@type": "Organization",
+            "name": "Census"
+          }
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "p0020005",
+          "description": "White population alone",
+          "qudt:dataType": "xsd:integer",
+          "sourceOrganization": {
+            "@type": "Organization",
+            "name": "Census"
+          }
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "p0020006",
+          "description": "Black or African American population alone",
+          "qudt:dataType": "xsd:integer",
+          "sourceOrganization": {
+            "@type": "Organization",
+            "name": "Census"
+          }
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "p0020007",
+          "description": "American Indian and Alaska Native population alone",
+          "qudt:dataType": "xsd:integer",
+          "sourceOrganization": {
+            "@type": "Organization",
+            "name": "Census"
+          }
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "p0020008",
+          "description": "Asian population alone",
+          "qudt:dataType": "xsd:integer",
+          "sourceOrganization": {
+            "@type": "Organization",
+            "name": "Census"
+          }
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "p0020009",
+          "description": "Native Hawaiian and Other Pacific Islander population alone",
+          "qudt:dataType": "xsd:integer",
+          "sourceOrganization": {
+            "@type": "Organization",
+            "name": "Census"
+          }
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "p0020010",
+          "description": "Some Other Race alone",
+          "qudt:dataType": "xsd:integer",
+          "sourceOrganization": {
+            "@type": "Organization",
+            "name": "Census"
+          }
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "p0020011",
+          "description": "Population of two or more races",
+          "qudt:dataType": "xsd:integer",
+          "sourceOrganization": {
+            "@type": "Organization",
+            "name": "Census"
+          }
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "shape__area",
+          "description": "Area of zone",
+          "qudt:dataType": "xsd:float",
+          "sourceOrganization": {
+            "@type": "Organization",
+            "name": "Esri"
+          }
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "shape__length",
+          "description": "Length of zone",
+          "qudt:dataType": "xsd:float",
+          "sourceOrganization": {
+            "@type": "Organization",
+            "name": "Esri"
+          }
+        }
+      ],
+      "isAccessibleForFree": false,
+      "dct:provenance": " direct from source",
+      "additionalType": "vector_dataset",
+      "funder": [
+        {
+          "@type": "Organization",
+          "name": "IDSC",
+          "url": "https://idsc.miami.edu"
+        },
+        {
+          "@type": "Organization",
+          "name": "Library",
+          "url": "https://www.library.miami.edu"
+        }
+      ],
+      "disambiguatingDescription": "Miami-Dade County provides this data for use \"as is\". The areas depicted by this map/data are approximate, and are not accurate to surveying or engineering standards. The maps/data shown here are for illustration purposes only and are not suitable for site-specific decision making. Information found here should not be used for making financial or any other commitments. Miami-Dade County provides this information with the understanding that it is not guaranteed to be accurate, correct or complete and conclusions drawn from such information are the sole responsibility of the user. While every effort has been made to ensure the accuracy, correctness and timeliness of materials presented, Miami-Dade County assumes no responsibility for errors or omissions, even if Miami-Dade County is advised of the possibility of such damage.",
+      "image": "published"
+    }
+  ]
+}

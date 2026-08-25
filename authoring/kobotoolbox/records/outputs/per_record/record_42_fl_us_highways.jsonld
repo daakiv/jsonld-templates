@@ -1,0 +1,358 @@
+{
+  "@context": {
+    "@vocab": "https://schema.org/",
+    "schema": "https://schema.org/",
+    "@language": "en",
+    "dct": "http://purl.org/dc/terms/"
+  },
+  "@graph": [
+    {
+      "@type": "schema:Dataset",
+      "@id": "https://gdsc.idsc.miami.edu/detail/fl_us_highways",
+      "name": "Florida US Highways",
+      "description": "Location of US Routes in the state of Florida as derived from even mapping",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "name": "size",
+          "value": "1.9M"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "postgis_table",
+          "value": "fl_us_highways"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "kobo_record_id",
+          "value": "42"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "creator_type",
+          "value": "organization"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "process_step",
+          "value": "#########\n  # GDSC ETL is performed in two steps: shell script to ETL data into postgres\n  # and then additional transformations with SQL in postGIS (if needed).\n  ####\n  \n  #########\n  # Step 1 - bash script (pseudo code)\n  ####\n  \n  # create directory structure and move into it\n  mkdir -p /data/fl_us_highways/download -p /data/fl_us_highways/etl\n  chmod 777 /data/fl_us_highways/download\n  cd /data/fl_us_highways\n  \n  # set update flag based on last update and update frequency\n  do_update=0 if date() < last_update + update_frequency else do_update = 1\n  \n  # download if update flag is set:\n  if do_update == 1 then\n  wget -O download/fl_us_highways.json 'https://services1.arcgis.com/O1JpcwDW8sjYuddV/arcgis/rest/services/US_Routes_TDA/FeatureServer/0/query?where=1%3D1&outFields=*&outSR=4326&f=json'\n  \n  # replace column names Shape__Length and Shape__Area to avoid conflict when\n  # providing as service on ArcServer.\n  sed -i 's/Shape__Length/shape_length/gI; s/Shape__Area/shape_area/gI' download/fl_us_highways.json\n  \n  # load into postGIS with:\n    ogr2ogr -lco GEOMETRY_NAME=geom -f PostgreSQL PG:\"<postgres connection>\" download/fl_us_highways.json -nlt multilinestring -nln fl_us_highways\n  \n  #########\n  # Step 2 - SQL script (pseudo code):\n  ####\n  \n  # remove duplicate points and make geometries valid:\n  UPDATE fl_us_highways\n    SET geom=ST_MakeValid(ST_RemoveRepeatedPoints(geom));\n  \n  # add local geometry column and reproject existing geometries into local EPSG:\n  SELECT AddGeometryColumn (\n    'fl_us_highways',\n    'geom_local', 2236, 'multilinestring', 2\n  );\n  UPDATE fl_us_highways\n    SET geom_local=ST_MakeValid(ST_RemoveRepeatedPoints(ST_Transform(ST_Multi(geom),2236)));\n  CREATE INDEX fl_us_highways_geom_local_idx\n    ON fl_us_highways\n    USING GIST (geom_local);\n  NOTIFY pgrst, 'reload schema';\n  # Move into corrrect directory and create derivative directory in data package on osgeo\n  cd /data/fl_us_highways/\n  mkdir -p derived\n  \n  # Move into correct directory\n  cd /data/fl_us_highways/\n  \n  # Create pg_dump of table SQL in derivate directory on postgis.\n  pg_dump <postgres opts> -h gdsc-node-au7rbwee3k8vte4f -t fl_us_highways > derived/fl_us_highways.sql\n  \n  # Create downloadable tarfile of SQL in derivative directory on postgis\n  rm -f derived/fl_us_highways.sql.tar.gz\n  tar -czf derived/fl_us_highways.sql.tar.gz meta_dcat_fl_us_highways.json -C derived fl_us_highways.sql"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "processor",
+          "value": "GDSC automation (see Process Step)"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "label",
+          "value": "route"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "analytic_function",
+          "value": "gdsc_nearest_neighbor"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "Spatial Reference System",
+          "value": "http://www.opengis.net/def/crs/EPSG/0/2236"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "derivatives",
+          "value": "sql"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "download_method",
+          "value": "wget"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "source_file",
+          "value": "{'etl_group/file_name_group/file_name_value': 'fl_us_highways'}"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "extent",
+          "value": "POLYGON((-87.447899 24.550420, -80.051915 24.550420, -80.051915 30.998450, -87.447899 30.998450, -87.447899 24.550420))"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "podid",
+          "value": "gdsc-node-au7rbwee3k8vte4f"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "up",
+          "value": "false"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "serviceDefinition",
+          "value": "API|arcgis|query"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "derivativeUrl",
+          "value": "/data/fl_us_highways/"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "pointOfContact",
+          "value": "{'iso_group/point_of_contact_group/contact_affiliation': 'University of Miami Libraries, Frost Institute for Data Science and Computing', 'iso_group/point_of_contact_group/contact_affiliation_identifier': 'https://ror.org/02dgjyy92', 'iso_group/point_of_contact_group/contact_affiliation_schema': 'ror', 'iso_group/point_of_contact_group/contact_affiliation_schema_uri': 'https://ror.org/', 'iso_group/point_of_contact_group/contact_email': 'tnorris@miami.edu', 'iso_group/point_of_contact_group/contact_first_name': 'Timothy', 'iso_group/point_of_contact_group/contact_identifier': 'https://orcid.org/0000-0002-0898-3027', 'iso_group/point_of_contact_group/contact_identifier_schema': 'orcid', 'iso_group/point_of_contact_group/contact_identifier_schema_uri': 'https://orcid.org/', 'iso_group/point_of_contact_group/contact_last_name': 'Norris', 'iso_group/point_of_contact_group/contact_name': 'Timothy B. Norris'}"
+        }
+      ],
+      "identifier": {
+        "@type": "PropertyValue",
+        "name": "external_id",
+        "value": "842270033"
+      },
+      "url": "https://gis-fdot.opendata.arcgis.com/datasets/fdot::us-routes-tda/about",
+      "inLanguage": "en",
+      "datePublished": "2017-07-21",
+      "dateModified": "2025-10-05 23:25:05",
+      "creator": [
+        {
+          "@type": "Role",
+          "roleName": "creator",
+          "creator": {
+            "@type": "Organization",
+            "name": "Florida Department of Transporation"
+          }
+        }
+      ],
+      "provider": {
+        "@type": "Organization",
+        "name": "Florida Department of Transportation"
+      },
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Florida",
+        "additionalProperty": [
+          {
+            "@type": "PropertyValue",
+            "name": "geonames",
+            "value": "4155751",
+            "url": "https://www.geonames.org/4155751"
+          },
+          {
+            "@type": "PropertyValue",
+            "name": "Spatial Reference System",
+            "value": "http://www.opengis.net/def/crs/EPSG/0/4326"
+          }
+        ]
+      },
+      "keywords": [
+        "United States",
+        "Florida",
+        "Florida Department of Transportation",
+        "Transportation",
+        "US Routes",
+        "Highways",
+        "Interstates",
+        "Infrastructure"
+      ],
+      "includedInDataCatalog": [
+        {
+          "@type": "DataCatalog",
+          "@id": "https://gdsc.idsc.miami.edu",
+          "name": "Geospatial Digital Special Collections",
+          "url": "https://gdsc.idsc.miami.edu"
+        },
+        {
+          "@type": "DataCatalog",
+          "name": "displacement-vulnerability-mitigation-tool",
+          "@id": "https://gdsc.idsc.miami.edu/?collection=displacement-vulnerability-mitigation-tool",
+          "url": "https://gdsc.idsc.miami.edu/?collection=displacement-vulnerability-mitigation-tool"
+        },
+        {
+          "@type": "DataCatalog",
+          "name": "transportation",
+          "@id": "https://gdsc.idsc.miami.edu/?collection=transportation",
+          "url": "https://gdsc.idsc.miami.edu/?collection=transportation"
+        }
+      ],
+      "measurementTechnique": [
+        {
+          "@type": "DefinedTerm",
+          "name": "GIS Data Structure",
+          "termCode": "vector",
+          "inDefinedTermSet": {
+            "@type": "DefinedTermSet",
+            "name": "dataRepresentation",
+            "url": "https://gdsc.idsc.miami.edu/vocab/dataRepresentation"
+          }
+        },
+        {
+          "@type": "DefinedTerm",
+          "name": "GIS Vector Geometry",
+          "termCode": "line",
+          "inDefinedTermSet": {
+            "@type": "DefinedTermSet",
+            "name": "vectorGeometry",
+            "url": "https://gdsc.idsc.miami.edu/vocab/vectorGeometry"
+          }
+        },
+        {
+          "@type": "DefinedTerm",
+          "name": "Data Processing Level",
+          "termCode": "observed",
+          "inDefinedTermSet": {
+            "@type": "DefinedTermSet",
+            "name": "dataProcessingLevel",
+            "url": "https://gdsc.idsc.miami.edu/vocab/dataProcessingLevel"
+          }
+        }
+      ],
+      "distribution": [
+        {
+          "@type": "DataDownload",
+          "name": "Source distribution",
+          "contentUrl": "https://services1.arcgis.com/O1JpcwDW8sjYuddV/arcgis/rest/services/US_Routes_TDA/FeatureServer/0/query?where=1%3D1&outFields=*&outSR=4326&f=json",
+          "encodingFormat": "application/json"
+        }
+      ],
+      "dct:accrualPeriodicity": "one_week",
+      "variableMeasured": [
+        {
+          "@type": "PropertyValue",
+          "name": "fid",
+          "description": "Sequential unique whole numbers that are automatically generated",
+          "qudt:dataType": "xsd:oid",
+          "sourceOrganization": {
+            "@type": "Organization",
+            "name": "ESRI"
+          }
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "roadway",
+          "description": "A  unique 8-character identification number assigned to a roadway or section of a roadway either On or Off the State Highway System for which information is maintained in the Department's Roadway Characteristics Inventory (RCI)",
+          "qudt:dataType": "xsd:string",
+          "sourceOrganization": {
+            "@type": "Organization",
+            "name": "Florida Department of Transportation, Transportation Data & Analytics Office"
+          }
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "rank",
+          "description": "Indicates this county road segment's rank. A rank of 1 means that the segment is primary, a rank of 2 means that it is secondary. This ranking is pertinent where two county road designations overlap the same roadway.",
+          "qudt:dataType": "xsd:string",
+          "sourceOrganization": {
+            "@type": "Organization",
+            "name": "Florida Department of Transportation, Transportation Data & Analytics Office"
+          }
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "route",
+          "description": "US route number",
+          "qudt:dataType": "xsd:string",
+          "sourceOrganization": {
+            "@type": "Organization",
+            "name": "Florida Department of Transportation, Transportation Data &Analytics Office"
+          }
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "routenum",
+          "description": "US route number (number only",
+          "qudt:dataType": "xsd:string",
+          "sourceOrganization": {
+            "@type": "Organization",
+            "name": "Florida Department of Transportation, Transportation Data & Analytics Office"
+          }
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "district",
+          "description": "FDOT District Number",
+          "qudt:dataType": "xsd:string",
+          "sourceOrganization": {
+            "@type": "Organization",
+            "name": "Florida Department of Transportation, Transportation Data & Analytics Office"
+          }
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "countydot",
+          "description": "Two-character Florida Department of Transportation county identifier.  The ROADWAY identifier's first 2 characters are the county identifier.",
+          "qudt:dataType": "xsd:string",
+          "sourceOrganization": {
+            "@type": "Organization",
+            "name": "Florida Department of Transportation, Transportation Data & Analytics Office"
+          }
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "county",
+          "description": "The county that contains the roadway",
+          "qudt:dataType": "xsd:string",
+          "sourceOrganization": {
+            "@type": "Organization",
+            "name": "Florida Department of Transportation, Transportation Data & Analytics Office"
+          }
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "mng_dist",
+          "description": "The District that manages the roadway (District 1, District 2, District 3, District 4, District 5, District 6, District 7, or Turnpike). Note that the Managing District may not be the same as the geographic district.  For example, roadway ID 08470001 is managed by Turnpike, but its geographic District is District 7. This is a 2-character representation of the Managing District.",
+          "qudt:dataType": "xsd:string",
+          "sourceOrganization": {
+            "@type": "Organization",
+            "name": "Florida Department of Transportation, Transportation Data & Analytics Office"
+          }
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "begin_post",
+          "description": "Denotes the lowest milepoint for the record",
+          "qudt:dataType": "xsd:float",
+          "sourceOrganization": {
+            "@type": "Organization",
+            "name": "Florida Department of Transportation, Transportation Data & Analytics Office"
+          }
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "end_post",
+          "description": "Denotes the highest milepoint for the record",
+          "qudt:dataType": "xsd:float",
+          "sourceOrganization": {
+            "@type": "Organization",
+            "name": "Florida Department of Transportation, Transportation Data & Analytics Office"
+          }
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "shape_leng",
+          "description": "Length in meters of the geometry for the record",
+          "qudt:dataType": "xsd:float",
+          "sourceOrganization": {
+            "@type": "Organization",
+            "name": "ESRI"
+          }
+        }
+      ],
+      "isAccessibleForFree": false,
+      "dct:provenance": " direct from source",
+      "additionalType": "vector_dataset",
+      "funder": [
+        {
+          "@type": "Organization",
+          "name": "IDSC",
+          "url": "https://idsc.miami.edu"
+        },
+        {
+          "@type": "Organization",
+          "name": "Library",
+          "url": "https://www.library.miami.edu"
+        }
+      ],
+      "disambiguatingDescription": "NO WARRANTIES: This site and its content is made available by the Florida Department of Transportation on an \"as is\", \"as available\" basis without warranties of any kind, express or implied. DISCLAIMER OF LIABILITY: The user of this application and data assumes all responsibility and risk for the use of both. Under no circumstances, including negligence, shall the Florida Department of Transportation, or its employees be liable for any DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY or CONSEQUENTIAL DAMAGES, or LOST PROFITS that result from the use, misuse or inability to use the application and data. Nor shall the Florida Department of Transportation, or its employees be liable for any damages resulting from or related to reliance; mistakes, omissions, interruptions, deletion of files, computer viruses, errors, defects, or any failure of performance, communications failure, theft, destruction or unauthorized access to the application and data.",
+      "image": "published"
+    }
+  ]
+}

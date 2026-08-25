@@ -11,9 +11,101 @@
       "@id": "https://gdsc.idsc.miami.edu/detail/mdc_2024_dormir_study",
       "name": "Miami-Dade 2025 DORMIR Study",
       "description": "A set of patient home locations in Miami-Dade County joined to the sleep study data collection based on point location",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "name": "size",
+          "value": "0"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "postgis_table",
+          "value": "mdc_2024_dormir_study"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "kobo_record_id",
+          "value": "148"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "process_step",
+          "value": "#########\n  # GDSC ETL is performed in two steps: shell script to ETL data into postgres\n  # and then additional transformations with SQL in postGIS (if needed).\n  ####\n  \n  #########\n  # Step 1 - bash script (pseudo code)\n  ####\n  \n  # create directory structure and move into it\n  mkdir -p /data/mdc_2024_dormir_study/download -p /data/mdc_2024_dormir_study/etl\n  chmod 777 /data/mdc_2024_dormir_study/download\n  cd /data/mdc_2024_dormir_study\n  \n  # set update flag based on last update and update frequency\n  do_update=0 if date() < last_update + update_frequency else do_update = 1\n  \n  # load mdc_2024_dormir_geocode as dependency (see mdc_2024_dormir_geocode for details).\n  \n  # load mdc_2018_svi_tract as dependency (see mdc_2018_svi_tract for details).\n  \n  # load mdc_2020_svi_tract as dependency (see mdc_2020_svi_tract for details).\n  \n  # load mdc_2022_svi_tract as dependency (see mdc_2022_svi_tract for details).\n  \n  # load mdc_2013_2022_avg_lst_30m as dependency (see mdc_2013_2022_avg_lst_30m for details).\n  \n  # load mdc_distance_to_water as dependency (see mdc_distance_to_water for details).\n  \n  # load mdc_distance_to_parks as dependency (see mdc_distance_to_parks for details).\n  \n  # load mdc_2015_dem_30ft as dependency (see mdc_2015_dem_30ft for details).\n  \n  # load mdc_2021_nlcd_tcc_v4 as dependency (see mdc_2021_nlcd_tcc_v4 for details).\n  \n  # load mdc_2021_ndvi_greenness_30m as dependency (see mdc_2021_ndvi_greenness_30m for details).\n  \n  # load mdc_2023_viirs_vnp46a4 as dependency (see mdc_2023_viirs_vnp46a4 for details).\n  \n  -- load extension for foreign table management into pod\n  CREATE EXTENSION IF NOT EXISTS postgres_fdw;\n  \n  -- join mdc_2018_svi_tract to mdc_2024_dormir_study (within)\n  CREATE SERVER gdsc_postgis_node_znz3el2j3tabpm5q FOREIGN DATA WRAPPER postgres_fdw OPTIONS (host 'gdsc-postgis-node-znz3el2j3tabpm5q', dbname 'gdsc', port '5432');\n  CREATE USER MAPPING FOR postgres SERVER gdsc_postgis_node_znz3el2j3tabpm5q OPTIONS (user '__PGUSER__', password '__PGPASS__');\n  IMPORT FOREIGN SCHEMA public LIMIT TO (mdc_2018_svi_tract) FROM SERVER gdsc_postgis_node_znz3el2j3tabpm5q INTO public;\n  ALTER TABLE mdc_2024_dormir_study ADD COLUMN IF NOT EXISTS e_pov_2018 int4, ADD COLUMN IF NOT EXISTS ep_pov_2018 float8, ADD COLUMN IF NOT EXISTS e_pci_2018 int4, ADD COLUMN IF NOT EXISTS ep_pci_2018 float8, ADD COLUMN IF NOT EXISTS e_unemp_2018 int4, ADD COLUMN IF NOT EXISTS ep_unemp_2018 float8, ADD COLUMN IF NOT EXISTS e_nohsdp_2018 int4, ADD COLUMN IF NOT EXISTS ep_nohsdp_2018 float8, ADD COLUMN IF NOT EXISTS e_limeng_2018 int4, ADD COLUMN IF NOT EXISTS ep_limeng_2018 float8, ADD COLUMN IF NOT EXISTS e_minrty_2018 int4, ADD COLUMN IF NOT EXISTS ep_minrty_2018 float8, ADD COLUMN IF NOT EXISTS e_age65_2018 int4, ADD COLUMN IF NOT EXISTS ep_age65_2018 float8, ADD COLUMN IF NOT EXISTS e_age17_2018 int4, ADD COLUMN IF NOT EXISTS ep_age17_2018 float8, ADD COLUMN IF NOT EXISTS e_disabl_2018 int4, ADD COLUMN IF NOT EXISTS ep_disabl_2018 float8, ADD COLUMN IF NOT EXISTS e_sngpnt_2018 int4, ADD COLUMN IF NOT EXISTS ep_sngpnt_2018 float8, ADD COLUMN IF NOT EXISTS e_munit_2018 int4, ADD COLUMN IF NOT EXISTS ep_munit_2018 float8, ADD COLUMN IF NOT EXISTS e_mobile_2018 int4, ADD COLUMN IF NOT EXISTS ep_mobile_2018 float8, ADD COLUMN IF NOT EXISTS e_crowd_2018 int4, ADD COLUMN IF NOT EXISTS ep_crowd_2018 float8, ADD COLUMN IF NOT EXISTS e_noveh_2018 int4, ADD COLUMN IF NOT EXISTS ep_noveh_2018 float8, ADD COLUMN IF NOT EXISTS e_groupq_2018 int4, ADD COLUMN IF NOT EXISTS ep_groupq_2018 float8, ADD COLUMN IF NOT EXISTS spl_theme1_2018 float8, ADD COLUMN IF NOT EXISTS spl_theme2_2018 float8, ADD COLUMN IF NOT EXISTS spl_theme3_2018 float8, ADD COLUMN IF NOT EXISTS spl_theme4_2018 float8;\n  COMMIT;\n  UPDATE mdc_2024_dormir_study \n  SET e_pov_2018=mdc_2018_svi_tract.e_pov, ep_pov_2018=mdc_2018_svi_tract.ep_pov, e_pci_2018=mdc_2018_svi_tract.e_pci, ep_pci_2018=mdc_2018_svi_tract.ep_pci, e_unemp_2018=mdc_2018_svi_tract.e_unemp, ep_unemp_2018=mdc_2018_svi_tract.ep_unemp, e_nohsdp_2018=mdc_2018_svi_tract.e_nohsdp, ep_nohsdp_2018=mdc_2018_svi_tract.ep_nohsdp, e_limeng_2018=mdc_2018_svi_tract.e_limeng, ep_limeng_2018=mdc_2018_svi_tract.ep_limeng, e_minrty_2018=mdc_2018_svi_tract.e_minrty, ep_minrty_2018=mdc_2018_svi_tract.ep_minrty, e_age65_2018=mdc_2018_svi_tract.e_age65, ep_age65_2018=mdc_2018_svi_tract.ep_age65, e_age17_2018=mdc_2018_svi_tract.e_age17, ep_age17_2018=mdc_2018_svi_tract.ep_age17, e_disabl_2018=mdc_2018_svi_tract.e_disabl, ep_disabl_2018=mdc_2018_svi_tract.ep_disabl, e_sngpnt_2018=mdc_2018_svi_tract.e_sngpnt, ep_sngpnt_2018=mdc_2018_svi_tract.ep_sngpnt, e_munit_2018=mdc_2018_svi_tract.e_munit, ep_munit_2018=mdc_2018_svi_tract.ep_munit, e_mobile_2018=mdc_2018_svi_tract.e_mobile, ep_mobile_2018=mdc_2018_svi_tract.ep_mobile, e_crowd_2018=mdc_2018_svi_tract.e_crowd, ep_crowd_2018=mdc_2018_svi_tract.ep_crowd, e_noveh_2018=mdc_2018_svi_tract.e_noveh, ep_noveh_2018=mdc_2018_svi_tract.ep_noveh, e_groupq_2018=mdc_2018_svi_tract.e_groupq, ep_groupq_2018=mdc_2018_svi_tract.ep_groupq, spl_theme1_2018=mdc_2018_svi_tract.spl_theme1, spl_theme2_2018=mdc_2018_svi_tract.spl_theme2, spl_theme3_2018=mdc_2018_svi_tract.spl_theme3, spl_theme4_2018=mdc_2018_svi_tract.spl_theme4\n    FROM mdc_2018_svi_tract\n    WHERE ST_Within(mdc_2024_dormir_study.geom_local,mdc_2018_svi_tract.geom_local);\n  COMMIT;\n  -- drop foreign server(??)\n  \n  -- join mdc_2020_svi_tract to mdc_2024_dormir_study (within)\n  CREATE SERVER gdsc_postgis_node_s0oibfty8wjs5tt2 FOREIGN DATA WRAPPER postgres_fdw OPTIONS (host 'gdsc-postgis-node-s0oibfty8wjs5tt2', dbname 'gdsc', port '5432');\n  CREATE USER MAPPING FOR postgres SERVER gdsc_postgis_node_s0oibfty8wjs5tt2 OPTIONS (user '__PGUSER__', password '__PGPASS__');\n  IMPORT FOREIGN SCHEMA public LIMIT TO (mdc_2020_svi_tract) FROM SERVER gdsc_postgis_node_s0oibfty8wjs5tt2 INTO public;\n  ALTER TABLE mdc_2024_dormir_study ADD COLUMN IF NOT EXISTS e_pov150_2020 int4, ADD COLUMN IF NOT EXISTS ep_pov150_2020 float8, ADD COLUMN IF NOT EXISTS e_hburd_2020 int4, ADD COLUMN IF NOT EXISTS ep_hburd_2020 float8, ADD COLUMN IF NOT EXISTS e_unemp_2020 int4, ADD COLUMN IF NOT EXISTS ep_unemp_2020 float8, ADD COLUMN IF NOT EXISTS e_nohsdp_2020 int4, ADD COLUMN IF NOT EXISTS ep_nohsdp_2020 float8, ADD COLUMN IF NOT EXISTS e_limeng_2020 int4, ADD COLUMN IF NOT EXISTS ep_limeng_2020 float8, ADD COLUMN IF NOT EXISTS e_minrty_2020 int4, ADD COLUMN IF NOT EXISTS ep_minrty_2020 float8, ADD COLUMN IF NOT EXISTS e_age65_2020 int4, ADD COLUMN IF NOT EXISTS ep_age65_2020 float8, ADD COLUMN IF NOT EXISTS e_age17_2020 int4, ADD COLUMN IF NOT EXISTS ep_age17_2020 float8, ADD COLUMN IF NOT EXISTS e_disabl_2020 int4, ADD COLUMN IF NOT EXISTS ep_disabl_2020 float8, ADD COLUMN IF NOT EXISTS e_sngpnt_2020 int4, ADD COLUMN IF NOT EXISTS ep_sngpnt_2020 float8, ADD COLUMN IF NOT EXISTS e_munit_2020 int4, ADD COLUMN IF NOT EXISTS ep_munit_2020 float8, ADD COLUMN IF NOT EXISTS e_mobile_2020 int4, ADD COLUMN IF NOT EXISTS ep_mobile_2020 float8, ADD COLUMN IF NOT EXISTS e_crowd_2020 int4, ADD COLUMN IF NOT EXISTS ep_crowd_2020 float8, ADD COLUMN IF NOT EXISTS e_noveh_2020 int4, ADD COLUMN IF NOT EXISTS ep_noveh_2020 float8, ADD COLUMN IF NOT EXISTS e_groupq_2020 int4, ADD COLUMN IF NOT EXISTS ep_groupq_2020 float8, ADD COLUMN IF NOT EXISTS spl_theme1_2020 float8, ADD COLUMN IF NOT EXISTS spl_theme2_2020 float8, ADD COLUMN IF NOT EXISTS spl_theme3_2020 float8, ADD COLUMN IF NOT EXISTS spl_theme4_2020 float8;\n  COMMIT;\n  UPDATE mdc_2024_dormir_study \n  SET e_pov150_2020=mdc_2020_svi_tract.e_pov150, ep_pov150_2020=mdc_2020_svi_tract.ep_pov150, e_hburd_2020=mdc_2020_svi_tract.e_hburd, ep_hburd_2020=mdc_2020_svi_tract.ep_hburd, e_unemp_2020=mdc_2020_svi_tract.e_unemp, ep_unemp_2020=mdc_2020_svi_tract.ep_unemp, e_nohsdp_2020=mdc_2020_svi_tract.e_nohsdp, ep_nohsdp_2020=mdc_2020_svi_tract.ep_nohsdp, e_limeng_2020=mdc_2020_svi_tract.e_limeng, ep_limeng_2020=mdc_2020_svi_tract.ep_limeng, e_minrty_2020=mdc_2020_svi_tract.e_minrty, ep_minrty_2020=mdc_2020_svi_tract.ep_minrty, e_age65_2020=mdc_2020_svi_tract.e_age65, ep_age65_2020=mdc_2020_svi_tract.ep_age65, e_age17_2020=mdc_2020_svi_tract.e_age17, ep_age17_2020=mdc_2020_svi_tract.ep_age17, e_disabl_2020=mdc_2020_svi_tract.e_disabl, ep_disabl_2020=mdc_2020_svi_tract.ep_disabl, e_sngpnt_2020=mdc_2020_svi_tract.e_sngpnt, ep_sngpnt_2020=mdc_2020_svi_tract.ep_sngpnt, e_munit_2020=mdc_2020_svi_tract.e_munit, ep_munit_2020=mdc_2020_svi_tract.ep_munit, e_mobile_2020=mdc_2020_svi_tract.e_mobile, ep_mobile_2020=mdc_2020_svi_tract.ep_mobile, e_crowd_2020=mdc_2020_svi_tract.e_crowd, ep_crowd_2020=mdc_2020_svi_tract.ep_crowd, e_noveh_2020=mdc_2020_svi_tract.e_noveh, ep_noveh_2020=mdc_2020_svi_tract.ep_noveh, e_groupq_2020=mdc_2020_svi_tract.e_groupq, ep_groupq_2020=mdc_2020_svi_tract.ep_groupq, spl_theme1_2020=mdc_2020_svi_tract.spl_theme1, spl_theme2_2020=mdc_2020_svi_tract.spl_theme2, spl_theme3_2020=mdc_2020_svi_tract.spl_theme3, spl_theme4_2020=mdc_2020_svi_tract.spl_theme4\n    FROM mdc_2020_svi_tract\n    WHERE ST_Within(mdc_2024_dormir_study.geom_local,mdc_2020_svi_tract.geom_local);\n  COMMIT;\n  -- drop foreign server(??)\n  \n  -- join mdc_2022_svi_tract to mdc_2024_dormir_study (within)\n  CREATE SERVER gdsc_postgis_node_sxztgqd6071bq4ie FOREIGN DATA WRAPPER postgres_fdw OPTIONS (host 'gdsc-postgis-node-sxztgqd6071bq4ie', dbname 'gdsc', port '5432');\n  CREATE USER MAPPING FOR postgres SERVER gdsc_postgis_node_sxztgqd6071bq4ie OPTIONS (user '__PGUSER__', password '__PGPASS__');\n  IMPORT FOREIGN SCHEMA public LIMIT TO (mdc_2022_svi_tract) FROM SERVER gdsc_postgis_node_sxztgqd6071bq4ie INTO public;\n  ALTER TABLE mdc_2024_dormir_study ADD COLUMN IF NOT EXISTS e_pov150_2022 int4, ADD COLUMN IF NOT EXISTS ep_pov150_2022 float8, ADD COLUMN IF NOT EXISTS e_hburd_2022 int4, ADD COLUMN IF NOT EXISTS ep_hburd_2022 float8, ADD COLUMN IF NOT EXISTS e_unemp_2022 int4, ADD COLUMN IF NOT EXISTS ep_unemp_2022 float8, ADD COLUMN IF NOT EXISTS e_nohsdp_2022 int4, ADD COLUMN IF NOT EXISTS ep_nohsdp_2022 float8, ADD COLUMN IF NOT EXISTS e_limeng_2022 int4, ADD COLUMN IF NOT EXISTS ep_limeng_2022 float8, ADD COLUMN IF NOT EXISTS e_minrty_2022 int4, ADD COLUMN IF NOT EXISTS ep_minrty_2022 float8, ADD COLUMN IF NOT EXISTS e_age65_2022 int4, ADD COLUMN IF NOT EXISTS ep_age65_2022 float8, ADD COLUMN IF NOT EXISTS e_age17_2022 int4, ADD COLUMN IF NOT EXISTS ep_age17_2022 float8, ADD COLUMN IF NOT EXISTS e_disabl_2022 int4, ADD COLUMN IF NOT EXISTS ep_disabl_2022 float8, ADD COLUMN IF NOT EXISTS e_sngpnt_2022 int4, ADD COLUMN IF NOT EXISTS ep_sngpnt_2022 float8, ADD COLUMN IF NOT EXISTS e_munit_2022 int4, ADD COLUMN IF NOT EXISTS ep_munit_2022 float8, ADD COLUMN IF NOT EXISTS e_mobile_2022 int4, ADD COLUMN IF NOT EXISTS ep_mobile_2022 float8, ADD COLUMN IF NOT EXISTS e_crowd_2022 int4, ADD COLUMN IF NOT EXISTS ep_crowd_2022 float8, ADD COLUMN IF NOT EXISTS e_noveh_2022 int4, ADD COLUMN IF NOT EXISTS ep_noveh_2022 float8, ADD COLUMN IF NOT EXISTS e_groupq_2022 int4, ADD COLUMN IF NOT EXISTS ep_groupq_2022 float8, ADD COLUMN IF NOT EXISTS spl_theme1_2022 float8, ADD COLUMN IF NOT EXISTS spl_theme2_2022 float8, ADD COLUMN IF NOT EXISTS spl_theme3_2022 float8, ADD COLUMN IF NOT EXISTS spl_theme4_2022 float8;\n  COMMIT;\n  UPDATE mdc_2024_dormir_study \n  SET e_pov150_2022=mdc_2022_svi_tract.e_pov150, ep_pov150_2022=mdc_2022_svi_tract.ep_pov150, e_hburd_2022=mdc_2022_svi_tract.e_hburd, ep_hburd_2022=mdc_2022_svi_tract.ep_hburd, e_unemp_2022=mdc_2022_svi_tract.e_unemp, ep_unemp_2022=mdc_2022_svi_tract.ep_unemp, e_nohsdp_2022=mdc_2022_svi_tract.e_nohsdp, ep_nohsdp_2022=mdc_2022_svi_tract.ep_nohsdp, e_limeng_2022=mdc_2022_svi_tract.e_limeng, ep_limeng_2022=mdc_2022_svi_tract.ep_limeng, e_minrty_2022=mdc_2022_svi_tract.e_minrty, ep_minrty_2022=mdc_2022_svi_tract.ep_minrty, e_age65_2022=mdc_2022_svi_tract.e_age65, ep_age65_2022=mdc_2022_svi_tract.ep_age65, e_age17_2022=mdc_2022_svi_tract.e_age17, ep_age17_2022=mdc_2022_svi_tract.ep_age17, e_disabl_2022=mdc_2022_svi_tract.e_disabl, ep_disabl_2022=mdc_2022_svi_tract.ep_disabl, e_sngpnt_2022=mdc_2022_svi_tract.e_sngpnt, ep_sngpnt_2022=mdc_2022_svi_tract.ep_sngpnt, e_munit_2022=mdc_2022_svi_tract.e_munit, ep_munit_2022=mdc_2022_svi_tract.ep_munit, e_mobile_2022=mdc_2022_svi_tract.e_mobile, ep_mobile_2022=mdc_2022_svi_tract.ep_mobile, e_crowd_2022=mdc_2022_svi_tract.e_crowd, ep_crowd_2022=mdc_2022_svi_tract.ep_crowd, e_noveh_2022=mdc_2022_svi_tract.e_noveh, ep_noveh_2022=mdc_2022_svi_tract.ep_noveh, e_groupq_2022=mdc_2022_svi_tract.e_groupq, ep_groupq_2022=mdc_2022_svi_tract.ep_groupq, spl_theme1_2022=mdc_2022_svi_tract.spl_theme1, spl_theme2_2022=mdc_2022_svi_tract.spl_theme2, spl_theme3_2022=mdc_2022_svi_tract.spl_theme3, spl_theme4_2022=mdc_2022_svi_tract.spl_theme4\n    FROM mdc_2022_svi_tract\n    WHERE ST_Within(mdc_2024_dormir_study.geom_local,mdc_2022_svi_tract.geom_local);\n  COMMIT;\n  -- drop foreign server(??)\n  \n  -- join mdc_distance_to_water to mdc_2024_dormir_study (extract)\n  CREATE SERVER gdsc_postgis_node_xpe7zu5urev2v23y FOREIGN DATA WRAPPER postgres_fdw OPTIONS (host 'gdsc-postgis-node-xpe7zu5urev2v23y', dbname 'gdsc', port '5432');\n  CREATE USER MAPPING FOR postgres SERVER gdsc_postgis_node_xpe7zu5urev2v23y OPTIONS (user '__PGUSER__', password '__PGPASS__');\n  IMPORT FOREIGN SCHEMA public LIMIT TO (mdc_distance_to_water) FROM SERVER gdsc_postgis_node_xpe7zu5urev2v23y INTO public;\n  ALTER TABLE mdc_2024_dormir_study ADD COLUMN IF NOT EXISTS distance_to_water numeric;\n  COMMIT;\n  UPDATE mdc_2024_dormir_study \n  SET distance_to_water = ST_Value(rast,ST_Transform(mdc_2024_dormir_study.geom,3857))\n    FROM mdc_distance_to_water\n    WHERE ST_Intersects(ST_Transform(mdc_2024_dormir_study.geom,3857), mdc_distance_to_water.rast);\n  COMMIT;\n  -- drop foreign server(??)\n  \n  -- join mdc_distance_to_parks to mdc_2024_dormir_study (extract)\n  CREATE SERVER gdsc_postgis_node_vjo59rtuqli2y7zg FOREIGN DATA WRAPPER postgres_fdw OPTIONS (host 'gdsc-postgis-node-vjo59rtuqli2y7zg', dbname 'gdsc', port '5432');\n  CREATE USER MAPPING FOR postgres SERVER gdsc_postgis_node_vjo59rtuqli2y7zg OPTIONS (user '__PGUSER__', password '__PGPASS__');\n  IMPORT FOREIGN SCHEMA public LIMIT TO (mdc_distance_to_parks) FROM SERVER gdsc_postgis_node_vjo59rtuqli2y7zg INTO public;\n  ALTER TABLE mdc_2024_dormir_study ADD COLUMN IF NOT EXISTS distance_to_parks numeric;\n  COMMIT;\n  UPDATE mdc_2024_dormir_study \n  SET distance_to_parks = ST_Value(rast,ST_Transform(mdc_2024_dormir_study.geom,3857))\n    FROM mdc_distance_to_parks\n    WHERE ST_Intersects(ST_Transform(mdc_2024_dormir_study.geom,3857), mdc_distance_to_parks.rast);\n  COMMIT;\n  -- drop foreign server(??)\n  \n  -- join mdc_2013_2022_avg_lst_30m to mdc_2024_dormir_study (extract)\n  CREATE SERVER gdsc_postgis_node_hdgpjg659nsrep1o FOREIGN DATA WRAPPER postgres_fdw OPTIONS (host 'gdsc-postgis-node-hdgpjg659nsrep1o', dbname 'gdsc', port '5432');\n  CREATE USER MAPPING FOR postgres SERVER gdsc_postgis_node_hdgpjg659nsrep1o OPTIONS (user '__PGUSER__', password '__PGPASS__');\n  IMPORT FOREIGN SCHEMA public LIMIT TO (mdc_2013_2022_avg_lst_30m) FROM SERVER gdsc_postgis_node_hdgpjg659nsrep1o INTO public;\n  ALTER TABLE mdc_2024_dormir_study ADD COLUMN IF NOT EXISTS avg_lst numeric;\n  COMMIT;\n  UPDATE mdc_2024_dormir_study \n  SET avg_lst = ST_Value(rast,ST_Transform(mdc_2024_dormir_study.geom,32617))\n    FROM mdc_2013_2022_avg_lst_30m\n    WHERE ST_Intersects(ST_Transform(mdc_2024_dormir_study.geom,32617), mdc_2013_2022_avg_lst_30m.rast);\n  COMMIT;\n  -- drop foreign server(??)\n  \n  -- join mdc_2015_dem_30ft to mdc_2024_dormir_study (extract)\n  CREATE SERVER gdsc_postgis_node_hlng7lrt3rppxfyy FOREIGN DATA WRAPPER postgres_fdw OPTIONS (host 'gdsc-postgis-node-hlng7lrt3rppxfyy', dbname 'gdsc', port '5432');\n  CREATE USER MAPPING FOR postgres SERVER gdsc_postgis_node_hlng7lrt3rppxfyy OPTIONS (user '__PGUSER__', password '__PGPASS__');\n  IMPORT FOREIGN SCHEMA public LIMIT TO (mdc_2015_dem_30ft) FROM SERVER gdsc_postgis_node_hlng7lrt3rppxfyy INTO public;\n  ALTER TABLE mdc_2024_dormir_study ADD COLUMN IF NOT EXISTS elevation numeric;\n  COMMIT;\n  UPDATE mdc_2024_dormir_study \n  SET elevation = ST_Value(rast,mdc_2024_dormir_study.geom_local)\n    FROM mdc_2015_dem_30ft\n    WHERE ST_Intersects(mdc_2024_dormir_study.geom_local, mdc_2015_dem_30ft.rast);\n  COMMIT;\n  -- drop foreign server(??)\n  \n  -- join mdc_2021_nlcd_tcc_v4 to mdc_2024_dormir_study (extract)\n  CREATE SERVER gdsc_postgis_node_asjiga83cdsk6wo8 FOREIGN DATA WRAPPER postgres_fdw OPTIONS (host 'gdsc-postgis-node-asjiga83cdsk6wo8', dbname 'gdsc', port '5432');\n  CREATE USER MAPPING FOR postgres SERVER gdsc_postgis_node_asjiga83cdsk6wo8 OPTIONS (user '__PGUSER__', password '__PGPASS__');\n  IMPORT FOREIGN SCHEMA public LIMIT TO (mdc_2021_nlcd_tcc_v4) FROM SERVER gdsc_postgis_node_asjiga83cdsk6wo8 INTO public;\n  ALTER TABLE mdc_2024_dormir_study ADD COLUMN IF NOT EXISTS tree_canopy_cover varchar;\n  COMMIT;\n  UPDATE mdc_2024_dormir_study \n  SET tree_canopy_cover = ST_Value(rast,mdc_2024_dormir_study.geom)\n    FROM mdc_2021_nlcd_tcc_v4\n    WHERE ST_Intersects(mdc_2024_dormir_study.geom, mdc_2021_nlcd_tcc_v4.rast);\n  COMMIT;\n  -- drop foreign server(??)\n  \n  -- join mdc_2021_ndvi_greenness_30m to mdc_2024_dormir_study (extract)\n  CREATE SERVER gdsc_postgis_node_0rx0jfodqcvl0670 FOREIGN DATA WRAPPER postgres_fdw OPTIONS (host 'gdsc-postgis-node-0rx0jfodqcvl0670', dbname 'gdsc', port '5432');\n  CREATE USER MAPPING FOR postgres SERVER gdsc_postgis_node_0rx0jfodqcvl0670 OPTIONS (user '__PGUSER__', password '__PGPASS__');\n  IMPORT FOREIGN SCHEMA public LIMIT TO (mdc_2021_ndvi_greenness_30m) FROM SERVER gdsc_postgis_node_0rx0jfodqcvl0670 INTO public;\n  ALTER TABLE mdc_2024_dormir_study ADD COLUMN IF NOT EXISTS ndvi varchar;\n  COMMIT;\n  UPDATE mdc_2024_dormir_study \n  SET ndvi = ST_Value(rast,ST_Transform(mdc_2024_dormir_study.geom,3857))\n    FROM mdc_2021_ndvi_greenness_30m\n    WHERE ST_Intersects(ST_Transform(mdc_2024_dormir_study.geom,3857), mdc_2021_ndvi_greenness_30m.rast);\n  COMMIT;\n  -- drop foreign server(??)\n  \n  -- join mdc_2023_viirs_vnp46a4 to mdc_2024_dormir_study (extract)\n  CREATE SERVER gdsc_postgis_node_6c7p0fvuiqf6gdk2 FOREIGN DATA WRAPPER postgres_fdw OPTIONS (host 'gdsc-postgis-node-6c7p0fvuiqf6gdk2', dbname 'gdsc', port '5432');\n  CREATE USER MAPPING FOR postgres SERVER gdsc_postgis_node_6c7p0fvuiqf6gdk2 OPTIONS (user '__PGUSER__', password '__PGPASS__');\n  IMPORT FOREIGN SCHEMA public LIMIT TO (mdc_2023_viirs_vnp46a4) FROM SERVER gdsc_postgis_node_6c7p0fvuiqf6gdk2 INTO public;\n  ALTER TABLE mdc_2024_dormir_study ADD COLUMN IF NOT EXISTS viirs_nightlight numeric;\n  COMMIT;\n  UPDATE mdc_2024_dormir_study \n  SET viirs_nightlight = ST_Value(rast,mdc_2024_dormir_study.geom)\n    FROM mdc_2023_viirs_vnp46a4\n    WHERE ST_Intersects(mdc_2024_dormir_study.geom, mdc_2023_viirs_vnp46a4.rast);\n  COMMIT;\n  -- drop foreign server(??)\n  \n  -- remove extension postgres_fwd (??)\n  # add local geometry column and reproject existing geometries into local EPSG:\n  SELECT AddGeometryColumn (\n    'mdc_2024_dormir_study',\n    'geom_local', 2236, 'point', 2\n  );\n  UPDATE mdc_2024_dormir_study\n    SET geom_local=ST_MakeValid(ST_RemoveRepeatedPoints(ST_Transform(geom,2236)));\n  CREATE INDEX mdc_2024_dormir_study_geom_local_idx\n    ON mdc_2024_dormir_study\n    USING GIST (geom_local);\n  NOTIFY pgrst, 'reload schema';\n  # Move into corrrect directory and create derivative directory in data package on osgeo\n  cd /data/mdc_2024_dormir_study/\n  mkdir -p derived\n  \n  # Move into correct directory\n  cd /data/mdc_2024_dormir_study/\n  \n  # Create pg_dump of table SQL in derivate directory on postgis.\n  pg_dump <postgres opts> -h gdsc-postgis-node-0c28p3t8pizzwceh -t mdc_2024_dormir_study > derived/mdc_2024_dormir_study.sql\n  \n  # Create downloadable tarfile of SQL in derivative directory on postgis\n  rm -f derived/mdc_2024_dormir_study.sql.tar.gz\n  tar -czf derived/mdc_2024_dormir_study.sql.tar.gz meta_dcat_mdc_2024_dormir_study.json -C derived mdc_2024_dormir_study.sql"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "processor",
+          "value": "GDSC automation (see Process Step)"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "label",
+          "value": "folio"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "analytic_function",
+          "value": "gdsc_get_attributes"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "Spatial Reference System",
+          "value": "http://www.opengis.net/def/crs/EPSG/0/2236"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "derivatives",
+          "value": "sql"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "source_file",
+          "value": "{'etl_group/file_name_group/file_name_value': 'mdc_2024_dormir_study'}"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "podid",
+          "value": "gdsc-postgis-node-0c28p3t8pizzwceh"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "up",
+          "value": "false"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "customParameters",
+          "value": "within;mdc_2018_svi_tract;e_pov;e_pov_2018;int4;ep_pov;ep_pov_2018;float8;e_pci;e_pci_2018;int4;ep_pci;ep_pci_2018;float8;e_unemp;e_unemp_2018;int4;ep_unemp;ep_unemp_2018;float8;e_nohsdp;e_nohsdp_2018;int4;ep_nohsdp;ep_nohsdp_2018;float8;e_limeng;e_limeng_2018;int4;ep_limeng;ep_limeng_2018;float8;e_minrty;e_minrty_2018;int4;ep_minrty;ep_minrty_2018;float8;e_age65;e_age65_2018;int4;ep_age65;ep_age65_2018;float8;e_age17;e_age17_2018;int4;ep_age17;ep_age17_2018;float8;e_disabl;e_disabl_2018;int4;ep_disabl;ep_disabl_2018;float8;e_sngpnt;e_sngpnt_2018;int4;ep_sngpnt;ep_sngpnt_2018;float8;e_munit;e_munit_2018;int4;ep_munit;ep_munit_2018;float8;e_mobile;e_mobile_2018;int4;ep_mobile;ep_mobile_2018;float8;e_crowd;e_crowd_2018;int4;ep_crowd;ep_crowd_2018;float8;e_noveh;e_noveh_2018;int4;ep_noveh;ep_noveh_2018;float8;e_groupq;e_groupq_2018;int4;ep_groupq;ep_groupq_2018;float8;spl_theme1;spl_theme1_2018;float8;spl_theme2;spl_theme2_2018;float8;spl_theme3;spl_theme3_2018;float8;spl_theme4;spl_theme4_2018;float8;|within;mdc_2020_svi_tract;e_pov150;e_pov150_2020;int4;ep_pov150;ep_pov150_2020;float8;e_hburd;e_hburd_2020;int4;ep_hburd;ep_hburd_2020;float8;e_unemp;e_unemp_2020;int4;ep_unemp;ep_unemp_2020;float8;e_nohsdp;e_nohsdp_2020;int4;ep_nohsdp;ep_nohsdp_2020;float8;e_limeng;e_limeng_2020;int4;ep_limeng;ep_limeng_2020;float8;e_minrty;e_minrty_2020;int4;ep_minrty;ep_minrty_2020;float8;e_age65;e_age65_2020;int4;ep_age65;ep_age65_2020;float8;e_age17;e_age17_2020;int4;ep_age17;ep_age17_2020;float8;e_disabl;e_disabl_2020;int4;ep_disabl;ep_disabl_2020;float8;e_sngpnt;e_sngpnt_2020;int4;ep_sngpnt;ep_sngpnt_2020;float8;e_munit;e_munit_2020;int4;ep_munit;ep_munit_2020;float8;e_mobile;e_mobile_2020;int4;ep_mobile;ep_mobile_2020;float8;e_crowd;e_crowd_2020;int4;ep_crowd;ep_crowd_2020;float8;e_noveh;e_noveh_2020;int4;ep_noveh;ep_noveh_2020;float8;e_groupq;e_groupq_2020;int4;ep_groupq;ep_groupq_2020;float8;spl_theme1;spl_theme1_2020;float8;spl_theme2;spl_theme2_2020;float8;spl_theme3;spl_theme3_2020;float8;spl_theme4;spl_theme4_2020;float8;|within;mdc_2022_svi_tract;e_pov150;e_pov150_2022;int4;ep_pov150;ep_pov150_2022;float8;e_hburd;e_hburd_2022;int4;ep_hburd;ep_hburd_2022;float8;e_unemp;e_unemp_2022;int4;ep_unemp;ep_unemp_2022;float8;e_nohsdp;e_nohsdp_2022;int4;ep_nohsdp;ep_nohsdp_2022;float8;e_limeng;e_limeng_2022;int4;ep_limeng;ep_limeng_2022;float8;e_minrty;e_minrty_2022;int4;ep_minrty;ep_minrty_2022;float8;e_age65;e_age65_2022;int4;ep_age65;ep_age65_2022;float8;e_age17;e_age17_2022;int4;ep_age17;ep_age17_2022;float8;e_disabl;e_disabl_2022;int4;ep_disabl;ep_disabl_2022;float8;e_sngpnt;e_sngpnt_2022;int4;ep_sngpnt;ep_sngpnt_2022;float8;e_munit;e_munit_2022;int4;ep_munit;ep_munit_2022;float8;e_mobile;e_mobile_2022;int4;ep_mobile;ep_mobile_2022;float8;e_crowd;e_crowd_2022;int4;ep_crowd;ep_crowd_2022;float8;e_noveh;e_noveh_2022;int4;ep_noveh;ep_noveh_2022;float8;e_groupq;e_groupq_2022;int4;ep_groupq;ep_groupq_2022;float8;spl_theme1;spl_theme1_2022;float8;spl_theme2;spl_theme2_2022;float8;spl_theme3;spl_theme3_2022;float8;spl_theme4;spl_theme4_2022;float8;|extract;mdc_distance_to_water;rast;distance_to_water;numeric|extract;mdc_distance_to_parks;rast;distance_to_parks;numeric|extract;mdc_2013_2022_avg_lst_30m;rast;avg_lst;numeric|extract;mdc_2015_dem_30ft;rast;elevation;numeric|extract;mdc_2021_nlcd_tcc_v4;rast;tree_canopy_cover;varchar|extract;mdc_2021_ndvi_greenness_30m;rast;ndvi;varchar|extract;mdc_2023_viirs_vnp46a4;rast;viirs_nightlight;numeric"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "derivativeUrl",
+          "value": "/data/mdc_2024_dormir_study/"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "customEtl",
+          "value": "join"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "dependencyTable",
+          "value": "{'etl_group/dependency_group/dependency_table_name': 'mdc_2024_dormir_geocode'}"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "pointOfContact",
+          "value": "{'iso_group/point_of_contact_group/contact_affiliation': 'University of Miami Libraries, Frost Institute for Data Science and Computing', 'iso_group/point_of_contact_group/contact_affiliation_identifier': 'https://ror.org/02dgjyy92', 'iso_group/point_of_contact_group/contact_affiliation_schema': 'ror', 'iso_group/point_of_contact_group/contact_affiliation_schema_uri': 'https://ror.org/', 'iso_group/point_of_contact_group/contact_email': 'tnorris@miami.edu', 'iso_group/point_of_contact_group/contact_first_name': 'Timothy', 'iso_group/point_of_contact_group/contact_identifier': 'https://orcid.org/0000-0002-0898-3027', 'iso_group/point_of_contact_group/contact_identifier_schema': 'orcid', 'iso_group/point_of_contact_group/contact_identifier_schema_uri': 'https://orcid.org/', 'iso_group/point_of_contact_group/contact_last_name': 'Norris', 'iso_group/point_of_contact_group/contact_name': 'Timothy B. Norris'}"
+        }
+      ],
+      "identifier": {
+        "@type": "PropertyValue",
+        "name": "external_id",
+        "value": "842264635"
+      },
       "inLanguage": "en",
       "datePublished": "2024-06-24",
-      "dateModified": "2024-06-30",
+      "dateModified": "not known",
       "creator": [
         {
           "@type": "Role",
@@ -118,63 +210,6 @@
           "name": "Source distribution",
           "contentUrl": "mdc_2024_dormir_geocode",
           "encodingFormat": "text/csv"
-        }
-      ],
-      "additionalProperty": [
-        {
-          "@type": "PropertyValue",
-          "name": "postgis_table",
-          "value": "mdc_2024_dormir_study"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "kobo_record_id",
-          "value": "148.0"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "cartography_label_field",
-          "value": "folio"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "analytic_function",
-          "value": "gdsc_get_attributes"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "Spatial Reference System",
-          "value": "http://www.opengis.net/def/crs/EPSG/0/2236"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "derivatives",
-          "value": "sql"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "source_file",
-          "value": "{'etl_group/file_name_group/file_name_value': 'mdc_2024_dormir_study'}"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "customParameters",
-          "value": "within;mdc_2018_svi_tract;e_pov;e_pov_2018;int4;ep_pov;ep_pov_2018;float8;e_pci;e_pci_2018;int4;ep_pci;ep_pci_2018;float8;e_unemp;e_unemp_2018;int4;ep_unemp;ep_unemp_2018;float8;e_nohsdp;e_nohsdp_2018;int4;ep_nohsdp;ep_nohsdp_2018;float8;e_limeng;e_limeng_2018;int4;ep_limeng;ep_limeng_2018;float8;e_minrty;e_minrty_2018;int4;ep_minrty;ep_minrty_2018;float8;e_age65;e_age65_2018;int4;ep_age65;ep_age65_2018;float8;e_age17;e_age17_2018;int4;ep_age17;ep_age17_2018;float8;e_disabl;e_disabl_2018;int4;ep_disabl;ep_disabl_2018;float8;e_sngpnt;e_sngpnt_2018;int4;ep_sngpnt;ep_sngpnt_2018;float8;e_munit;e_munit_2018;int4;ep_munit;ep_munit_2018;float8;e_mobile;e_mobile_2018;int4;ep_mobile;ep_mobile_2018;float8;e_crowd;e_crowd_2018;int4;ep_crowd;ep_crowd_2018;float8;e_noveh;e_noveh_2018;int4;ep_noveh;ep_noveh_2018;float8;e_groupq;e_groupq_2018;int4;ep_groupq;ep_groupq_2018;float8;spl_theme1;spl_theme1_2018;float8;spl_theme2;spl_theme2_2018;float8;spl_theme3;spl_theme3_2018;float8;spl_theme4;spl_theme4_2018;float8;|within;mdc_2020_svi_tract;e_pov150;e_pov150_2020;int4;ep_pov150;ep_pov150_2020;float8;e_hburd;e_hburd_2020;int4;ep_hburd;ep_hburd_2020;float8;e_unemp;e_unemp_2020;int4;ep_unemp;ep_unemp_2020;float8;e_nohsdp;e_nohsdp_2020;int4;ep_nohsdp;ep_nohsdp_2020;float8;e_limeng;e_limeng_2020;int4;ep_limeng;ep_limeng_2020;float8;e_minrty;e_minrty_2020;int4;ep_minrty;ep_minrty_2020;float8;e_age65;e_age65_2020;int4;ep_age65;ep_age65_2020;float8;e_age17;e_age17_2020;int4;ep_age17;ep_age17_2020;float8;e_disabl;e_disabl_2020;int4;ep_disabl;ep_disabl_2020;float8;e_sngpnt;e_sngpnt_2020;int4;ep_sngpnt;ep_sngpnt_2020;float8;e_munit;e_munit_2020;int4;ep_munit;ep_munit_2020;float8;e_mobile;e_mobile_2020;int4;ep_mobile;ep_mobile_2020;float8;e_crowd;e_crowd_2020;int4;ep_crowd;ep_crowd_2020;float8;e_noveh;e_noveh_2020;int4;ep_noveh;ep_noveh_2020;float8;e_groupq;e_groupq_2020;int4;ep_groupq;ep_groupq_2020;float8;spl_theme1;spl_theme1_2020;float8;spl_theme2;spl_theme2_2020;float8;spl_theme3;spl_theme3_2020;float8;spl_theme4;spl_theme4_2020;float8;|within;mdc_2022_svi_tract;e_pov150;e_pov150_2022;int4;ep_pov150;ep_pov150_2022;float8;e_hburd;e_hburd_2022;int4;ep_hburd;ep_hburd_2022;float8;e_unemp;e_unemp_2022;int4;ep_unemp;ep_unemp_2022;float8;e_nohsdp;e_nohsdp_2022;int4;ep_nohsdp;ep_nohsdp_2022;float8;e_limeng;e_limeng_2022;int4;ep_limeng;ep_limeng_2022;float8;e_minrty;e_minrty_2022;int4;ep_minrty;ep_minrty_2022;float8;e_age65;e_age65_2022;int4;ep_age65;ep_age65_2022;float8;e_age17;e_age17_2022;int4;ep_age17;ep_age17_2022;float8;e_disabl;e_disabl_2022;int4;ep_disabl;ep_disabl_2022;float8;e_sngpnt;e_sngpnt_2022;int4;ep_sngpnt;ep_sngpnt_2022;float8;e_munit;e_munit_2022;int4;ep_munit;ep_munit_2022;float8;e_mobile;e_mobile_2022;int4;ep_mobile;ep_mobile_2022;float8;e_crowd;e_crowd_2022;int4;ep_crowd;ep_crowd_2022;float8;e_noveh;e_noveh_2022;int4;ep_noveh;ep_noveh_2022;float8;e_groupq;e_groupq_2022;int4;ep_groupq;ep_groupq_2022;float8;spl_theme1;spl_theme1_2022;float8;spl_theme2;spl_theme2_2022;float8;spl_theme3;spl_theme3_2022;float8;spl_theme4;spl_theme4_2022;float8;|extract;mdc_distance_to_water;rast;distance_to_water;numeric|extract;mdc_distance_to_parks;rast;distance_to_parks;numeric|extract;mdc_2013_2022_avg_lst_30m;rast;avg_lst;numeric|extract;mdc_2015_dem_30ft;rast;elevation;numeric|extract;mdc_2021_nlcd_tcc_v4;rast;tree_canopy_cover;varchar|extract;mdc_2021_ndvi_greenness_30m;rast;ndvi;varchar|extract;mdc_2023_viirs_vnp46a4;rast;viirs_nightlight;numeric"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "customEtl",
-          "value": "join"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "dependencyTable",
-          "value": "{'etl_group/dependency_group/dependency_table_name': 'mdc_2024_dormir_geocode'}"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "pointOfContact",
-          "value": "{'iso_group/point_of_contact_group/contact_name': 'TBD'}"
         }
       ],
       "dct:accrualPeriodicity": "never",
@@ -1540,7 +1575,7 @@
         }
       ],
       "isAccessibleForFree": false,
-      "usageInfo": "Not for use outside of some research group",
+      "conditionsOfAccess": "Not for use outside of some research group",
       "dct:provenance": "From 2024 DORMIR study",
       "additionalType": "vector_dataset",
       "funder": [

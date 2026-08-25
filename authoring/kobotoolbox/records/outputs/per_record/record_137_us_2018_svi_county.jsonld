@@ -11,10 +11,119 @@
       "@id": "https://gdsc.idsc.miami.edu/detail/us_2018_svi_county",
       "name": "2018 USA CDC Social Vulnerability Index (counties)",
       "description": "Social vulnerability refers to the potential negative effects on communities caused by external stresses on human health. Such stresses include natural or human-caused disasters, or disease outbreaks. Reducing social vulnerability can decrease both human suffering and economic loss.\n  \n  The CDC/ATSDR Social Vulnerability Index (CDC/ATSDR SVI) uses 16 U.S. census variables to help local officials identify communities that may need support before, during, or after disasters.",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "name": "size",
+          "value": "9.9M"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "postgis_table",
+          "value": "us_2018_svi_county"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "kobo_record_id",
+          "value": "137"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "creator_type",
+          "value": "organization"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "process_step",
+          "value": "#########\n  # GDSC ETL is performed in two steps: shell script to ETL data into postgres\n  # and then additional transformations with SQL in postGIS (if needed).\n  ####\n  \n  #########\n  # Step 1 - bash script (pseudo code)\n  ####\n  \n  # create directory structure and move into it\n  mkdir -p /data/us_2018_svi_county/download -p /data/us_2018_svi_county/etl\n  chmod 777 /data/us_2018_svi_county/download\n  cd /data/us_2018_svi_county\n  \n  # set update flag based on last update and update frequency\n  do_update=0 if date() < last_update + update_frequency else do_update = 1\n  \n  # download if update flag is set:\n  if do_update == 1 then\n  wget -O download/us_2018_svi_county.zip 'https://svi.cdc.gov/Documents/Data/2018/db/states_counties/SVI_2018_US_county.zip'\n  \n  # unzip to download directory if update flag is set\n  if do_update == 1 then\n  unzip -d download download/us_2018_svi_county.zip && rm download/us_2018_svi_county.zip\n  \n  # load into postGIS with:\n    ogr2ogr -lco GEOMETRY_NAME=geom -f PostgreSQL PG:\"<postgres connection>\" download/SVI2018_US_county.gdb -nlt multipolygon -nln us_2018_svi_county\n  \n  #########\n  # Step 2 - SQL script (pseudo code):\n  ####\n  \n  # remove duplicate points and make geometries valid:\n  UPDATE us_2018_svi_county\n    SET geom=ST_MakeValid(ST_RemoveRepeatedPoints(geom));\n  \n  # add local geometry column and reproject existing geometries into local EPSG:\n  SELECT AddGeometryColumn (\n    'us_2018_svi_county',\n    'geom_local', 6350, 'multipolygon', 2\n  );\n  UPDATE us_2018_svi_county\n    SET geom_local=ST_MakeValid(ST_RemoveRepeatedPoints(ST_Transform(ST_Multi(geom),6350)));\n  CREATE INDEX us_2018_svi_county_geom_local_idx\n    ON us_2018_svi_county\n    USING GIST (geom_local);\n  NOTIFY pgrst, 'reload schema';\n  # Move into corrrect directory and create derivative directory in data package on osgeo\n  cd /data/us_2018_svi_county/\n  mkdir -p derived\n  \n  # Move into correct directory\n  cd /data/us_2018_svi_county/\n  \n  # Create pg_dump of table SQL in derivate directory on postgis.\n  pg_dump <postgres opts> -h gaia-db -t us_2018_svi_county > derived/us_2018_svi_county.sql\n  \n  # Create downloadable tarfile of SQL in derivative directory on postgis\n  rm -f derived/us_2018_svi_county.sql.tar.gz\n  tar -czf derived/us_2018_svi_county.sql.tar.gz meta_dcat_us_2018_svi_county.json -C derived us_2018_svi_county.sql"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "processor",
+          "value": "GDSC automation (see Process Step)"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "label",
+          "value": "location"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "values",
+          "value": "area_sqmi"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "no_data",
+          "value": "{'cartography_group/no_data_group/no_data_type': 'int4', 'cartography_group/no_data_group/no_data_value': '-999'}"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "analytic_function",
+          "value": "gdsc_get_attributes"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "Spatial Reference System",
+          "value": "http://www.opengis.net/def/crs/EPSG/0/6350"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "derivatives",
+          "value": "sql"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "download_method",
+          "value": "wget"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "source_file",
+          "value": "{'etl_group/file_name_group/file_inside_archive': 'SVI2018_US_county', 'etl_group/file_name_group/file_name_value': 'us_2018_svi_county'}"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "extent",
+          "value": "POLYGON((-179.148909 18.910361, 179.778470 18.910361, 179.778470 71.365162, -179.148909 71.365162, -179.148909 18.910361))"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "podid",
+          "value": "gaia-db"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "up",
+          "value": "false"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "derivativeUrl",
+          "value": "/data/us_2018_svi_county/"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "pointOfContact",
+          "value": "{'iso_group/point_of_contact_group/contact_affiliation': 'University of Miami Libraries, Frost Institute for Data Science and Computing', 'iso_group/point_of_contact_group/contact_affiliation_identifier': 'https://ror.org/02dgjyy92', 'iso_group/point_of_contact_group/contact_affiliation_schema': 'ror', 'iso_group/point_of_contact_group/contact_affiliation_schema_uri': 'https://ror.org/', 'iso_group/point_of_contact_group/contact_email': 'tnorris@miami.edu', 'iso_group/point_of_contact_group/contact_first_name': 'Timothy', 'iso_group/point_of_contact_group/contact_identifier': 'https://orcid.org/0000-0002-0898-3027', 'iso_group/point_of_contact_group/contact_identifier_schema': 'orcid', 'iso_group/point_of_contact_group/contact_identifier_schema_uri': 'https://orcid.org/', 'iso_group/point_of_contact_group/contact_last_name': 'Norris', 'iso_group/point_of_contact_group/contact_name': 'Timothy B. Norris'}"
+        }
+      ],
+      "identifier": [
+        {
+          "@type": "PropertyValue",
+          "name": "external_id",
+          "value": "847669128"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "externalId",
+          "value": "ohdsi"
+        }
+      ],
       "url": "https://www.atsdr.cdc.gov/place-health/php/svi/svi-data-documentation-download.html",
       "inLanguage": "en",
       "datePublished": "2020-10-22",
-      "dateModified": "2022-02-08",
+      "dateModified": "2025-05-23 08:50:42",
       "creator": [
         {
           "@type": "Role",
@@ -112,73 +221,6 @@
           "name": "Source distribution",
           "contentUrl": "https://svi.cdc.gov/Documents/Data/2018/db/states_counties/SVI_2018_US_county.zip",
           "encodingFormat": "gdb"
-        }
-      ],
-      "additionalProperty": [
-        {
-          "@type": "PropertyValue",
-          "name": "postgis_table",
-          "value": "us_2018_svi_county"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "kobo_record_id",
-          "value": "137"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "external_id",
-          "value": "ohdsi"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "creator_type",
-          "value": "organization"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "cartography_label_field",
-          "value": "location"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "cartography_value_field",
-          "value": "area_sqmi"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "no_data",
-          "value": "{'cartography_group/no_data_group/no_data_type': 'int4', 'cartography_group/no_data_group/no_data_value': '-999'}"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "analytic_function",
-          "value": "gdsc_get_attributes"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "Spatial Reference System",
-          "value": "http://www.opengis.net/def/crs/EPSG/0/6350"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "derivatives",
-          "value": "sql"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "download_method",
-          "value": "wget"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "source_file",
-          "value": "{'etl_group/file_name_group/file_inside_archive': 'SVI2018_US_county', 'etl_group/file_name_group/file_name_value': 'us_2018_svi_county'}"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "pointOfContact",
-          "value": "{'iso_group/point_of_contact_group/contact_name': 'TBD'}"
         }
       ],
       "dct:accrualPeriodicity": "never",

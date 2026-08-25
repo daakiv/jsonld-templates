@@ -11,10 +11,107 @@
       "@id": "https://gdsc.idsc.miami.edu/detail/hh_glaciares_osm",
       "name": "OSM Huayhuash Glaciares",
       "description": "A line feature set for the walking trails of the Cordillera Huayhuash sourced from OpenStreetMap with a query that includes roads, tracks, and other transport networks",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "name": "size",
+          "value": "524K"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "postgis_table",
+          "value": "hh_glaciares_osm"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "kobo_record_id",
+          "value": "320"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "process_step",
+          "value": "#########\n  # GDSC ETL is performed in two steps: shell script to ETL data into postgres\n  # and then additional transformations with SQL in postGIS (if needed).\n  ####\n  \n  #########\n  # Step 1 - bash script (pseudo code)\n  ####\n  \n  # create directory structure and move into it\n  mkdir -p /data/hh_glaciares_osm/download -p /data/hh_glaciares_osm/etl\n  chmod 777 /data/hh_glaciares_osm/download\n  cd /data/hh_glaciares_osm\n  \n  # set update flag based on last update and update frequency\n  do_update=0 if date() < last_update + update_frequency else do_update = 1\n  \n  # download if update flag is set:\n  if do_update == 1 then\n  curl -o download/hh_glaciares_osm.osm 'https://overpass-api.de/api/interpreter?data=%28nwr%5B%22natural%22=%22glacier%22%5D%28-10.7,-77.33,-9.8,-76.55%29;%29;%28._;%3E;%29;out;'\n  \n  # load into postGIS with:\n    ogr2ogr -lco GEOMETRY_NAME=geom -f PostgreSQL PG:\"<postgres connection>\" download/hh_glaciares_osm.osm\n  \n  #########\n  # Step 2 - SQL script (pseudo code):\n  ####\n  \n  # Select proper geometry into the named table\n  psql -d $POSTGRES_DB -U $POSTGRES_USER -p $POSTGRES_PORT -h gdsc-postgis-node-dkvb941lp8x7p0xs -c \"\n  SELECT * INTO hh_glaciares_osm FROM multipolygons;\n  DROP TABLE IF EXISTS lines;\n  DROP TABLE IF EXISTS multilinestrings;\n  DROP TABLE IF EXISTS multipolygons;\n  DROP TABLE IF EXISTS other_relations;\n  DROP TABLE IF EXISTS points;\"\n  \n  # remove duplicate points and make geometries valid:\n  UPDATE hh_glaciares_osm\n    SET geom=ST_MakeValid(ST_RemoveRepeatedPoints(geom));\n  \n  # add local geometry column and reproject existing geometries into local EPSG:\n  SELECT AddGeometryColumn (\n    'hh_glaciares_osm',\n    'geom_local', 5387, 'multipolygon', 2\n  );\n  UPDATE hh_glaciares_osm\n    SET geom_local=ST_MakeValid(ST_RemoveRepeatedPoints(ST_Transform(ST_Multi(geom),5387)));\n  CREATE INDEX hh_glaciares_osm_geom_local_idx\n    ON hh_glaciares_osm\n    USING GIST (geom_local);\n  NOTIFY pgrst, 'reload schema';\n  # Move into corrrect directory and create derivative directory in data package on osgeo\n  cd /data/hh_glaciares_osm/\n  mkdir -p derived\n  \n  # Create shapefile of table in derivate directory on osgeo \n  ogr2ogr -f \"ESRI Shapefile\" -overwrite derived/hh_glaciares_osm.shp PG:\"<postgres connection>\" hh_glaciares_osm\n  \n  # Create downloadable tarfile of shp in derivative directory on osgeo\n  rm -f derived/hh_glaciares_osm.shp.tar.gz\n  tar -czf derived/hh_glaciares_osm.shp.tar.gz meta_dcat_hh_glaciares_osm.json -C derived hh_glaciares_osm.shp hh_glaciares_osm.prj hh_glaciares_osm.shx hh_glaciares_osm.dbf\n  \n  # Create gpkg of table in derivate directory on osgeo \n  rm -f derived/hh_glaciares_osm.gpkg\n  ogr2ogr -f GPKG -overwrite derived/hh_glaciares_osm.gpkg PG:\"<postgres connection>\" -select \"osm_id,name,highway,other_tags,geom\" hh_glaciares_osm\n  \n  # Create downloadable tarfile of gpkg in derivative directory on osgeo\n  rm -f derived/hh_glaciares_osm.gpkg.tar.gz\n  tar -czf derived/hh_glaciares_osm.gpkg.tar.gz meta_dcat_hh_glaciares_osm.json -C derived hh_glaciares_osm.gpkg\n  \n  # Create geojson of table in derivate directory on osgeo \n  rm -f derived/hh_glaciares_osm.json\n  ogr2ogr -f GeoJSON -overwrite derived/hh_glaciares_osm.json PG:\"<postgres connection>\" -select \"osm_id,name,highway,other_tags,geom\" hh_glaciares_osm\n  \n  # Create downloadable tarfile of geojson in derivative directory on osgeo\n  rm -f derived/hh_glaciares_osm.geojson.tar.gz\n  tar -czf derived/hh_glaciares_osm.geojson.tar.gz meta_dcat_hh_glaciares_osm.json -C derived hh_glaciares_osm.json\n  \n  # Move into correct directory\n  cd /data/hh_glaciares_osm/"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "processor",
+          "value": "GDSC automation (see Process Step)"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "label",
+          "value": "name"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "values",
+          "value": "osm_id"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "Spatial Reference System",
+          "value": "http://www.opengis.net/def/crs/EPSG/0/5387"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "derivatives",
+          "value": "shp geojson gpkg"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "download_method",
+          "value": "curl"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "source_file",
+          "value": "{'etl_group/file_name_group/file_name_value': 'hh_glaciares_osm'}"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "extent",
+          "value": "POLYGON((-77.2791689 -10.5939545,-77.2791689 -9.7967986,-76.7043239 -9.7967986,-76.7043239 -10.5939545,-77.2791689 -10.5939545))"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "podid",
+          "value": "gdsc-postgis-node-dkvb941lp8x7p0xs"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "up",
+          "value": "true"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "serviceDefinition",
+          "value": "api"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "derivativeUrl",
+          "value": "/data/hh_glaciares_osm/"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "etlParameters",
+          "value": "multipolygons"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "pointOfContact",
+          "value": "{'iso_group/point_of_contact_group/contact_affiliation': 'University of Miami Libraries, Frost Institute for Data Science and Computing', 'iso_group/point_of_contact_group/contact_affiliation_identifier': 'https://ror.org/02dgjyy92', 'iso_group/point_of_contact_group/contact_affiliation_schema': 'ror', 'iso_group/point_of_contact_group/contact_affiliation_schema_uri': 'https://ror.org/', 'iso_group/point_of_contact_group/contact_email': 'tnorris@miami.edu', 'iso_group/point_of_contact_group/contact_first_name': 'Timothy', 'iso_group/point_of_contact_group/contact_identifier': 'https://orcid.org/0000-0002-0898-3027', 'iso_group/point_of_contact_group/contact_identifier_schema': 'orcid', 'iso_group/point_of_contact_group/contact_identifier_schema_uri': 'https://orcid.org/', 'iso_group/point_of_contact_group/contact_last_name': 'Norris', 'iso_group/point_of_contact_group/contact_name': 'Timothy B. Norris'}"
+        }
+      ],
+      "identifier": {
+        "@type": "PropertyValue",
+        "name": "external_id",
+        "value": "842259802"
+      },
       "url": "https://www.openstreetmap.org/",
-      "license": "odbl",
+      "license": "https://opendatacommons.org/licenses/odbl/1.0/",
       "datePublished": "2025-04-23",
-      "dateModified": "2025-02-24",
+      "dateModified": "2026-07-11 13:38:03",
       "creator": [
         {
           "@type": "Role",
@@ -106,79 +203,19 @@
           "encodingFormat": "osm"
         }
       ],
-      "additionalProperty": [
-        {
-          "@type": "PropertyValue",
-          "name": "postgis_table",
-          "value": "hh_glaciares_osm"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "kobo_record_id",
-          "value": "320"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "cartography_label_field",
-          "value": "name"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "cartography_value_field",
-          "value": "osm_id"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "Spatial Reference System",
-          "value": "http://www.opengis.net/def/crs/EPSG/0/5387"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "derivatives",
-          "value": "shp geojson gpkg"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "download_method",
-          "value": "curl"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "source_file",
-          "value": "{'etl_group/file_name_group/file_name_value': 'hh_glaciares_osm'}"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "extent",
-          "value": "-77.33|-10.7|-76.55|-9.8"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "serviceDefinition",
-          "value": "api"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "etlParameters",
-          "value": "multipolygons"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "pointOfContact",
-          "value": "{'iso_group/point_of_contact_group/contact_name': 'TBD'}"
-        }
-      ],
       "dct:accrualPeriodicity": "as_needed",
       "variableMeasured": [
         {
           "@type": "PropertyValue",
           "name": "osm_id",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:varchar"
         },
         {
           "@type": "PropertyValue",
           "name": "name",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:varchar"
         },
         {
           "@type": "PropertyValue",
@@ -188,14 +225,13 @@
         {
           "@type": "PropertyValue",
           "name": "other_tags",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:varchar"
         }
       ],
       "isAccessibleForFree": false,
-      "usageInfo": [
-        "OpenStreetMap® is open data, licensed under the [Open Data Commons Open Database License](https://opendatacommons.org/licenses/odbl/) (ODbL) by the [OpenStreetMap Foundation](https://osmfoundation.org/) (OSMF).",
-        "You are free to copy, distribute, transmit and adapt our data, as long as you credit OpenStreetMap and its contributors. If you alter or build upon our data, you may distribute the result only under the same licence."
-      ],
+      "usageInfo": "OpenStreetMap® is open data, licensed under the [Open Data Commons Open Database License](https://opendatacommons.org/licenses/odbl/) (ODbL) by the [OpenStreetMap Foundation](https://osmfoundation.org/) (OSMF).",
+      "conditionsOfAccess": "You are free to copy, distribute, transmit and adapt our data, as long as you credit OpenStreetMap and its contributors. If you alter or build upon our data, you may distribute the result only under the same licence.",
       "dct:provenance": "Direct from source.",
       "additionalType": "vector_dataset",
       "funder": [
@@ -210,6 +246,7 @@
           "url": "https://www.library.miami.edu"
         }
       ],
+      "creativeWorkStatus": "draft",
       "disambiguatingDescription": "The Database is licensed by the Licensor “as is” and without any warranty of any kind, either express, implied, or arising by statute, custom, course of dealing, or trade usage. Licensor specifically disclaims any and all implied warranties or conditions of title, non-infringement, accuracy or completeness, the presence or absence of errors, fitness for a particular purpose, merchantability, or otherwise. Some jurisdictions do not allow the exclusion of implied warranties, so this exclusion may not apply to You.\n  \n  Subject to any liability that may not be excluded or limited by law, the Licensor is not liable for, and expressly excludes, all liability for loss or damage however and whenever caused to anyone by any use under this License, whether by You or by anyone else, and whether caused by any fault on the part of the Licensor or not. This exclusion of liability includes, but is not limited to, any special, incidental, consequential, punitive, or exemplary damages such as loss of revenue, data, anticipated profits, and lost business. This exclusion applies even if the Licensor has been advised of the possibility of such damages. \n  \n  If liability may not be excluded by law, it is limited to actual and direct financial loss to the extent it is caused by proved negligence on the part of the Licensor."
     }
   ]

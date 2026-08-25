@@ -11,10 +11,97 @@
       "@id": "https://gdsc.idsc.miami.edu/detail/hh_centrospoblados_dispersos_idep",
       "name": "Centros Poblados Huayhuash (IDEP-INEI)",
       "description": "Centros Poblados de Huayuhash",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "name": "size",
+          "value": "12M"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "postgis_table",
+          "value": "hh_centrospoblados_dispersos_idep"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "kobo_record_id",
+          "value": "208"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "process_step",
+          "value": "#########\n  # GDSC ETL is performed in two steps: shell script to ETL data into postgres\n  # and then additional transformations with SQL in postGIS (if needed).\n  ####\n  \n  #########\n  # Step 1 - bash script (pseudo code)\n  ####\n  \n  # create directory structure and move into it\n  mkdir -p /data/hh_centrospoblados_dispersos_idep/download -p /data/hh_centrospoblados_dispersos_idep/etl\n  chmod 777 /data/hh_centrospoblados_dispersos_idep/download\n  cd /data/hh_centrospoblados_dispersos_idep\n  \n  # set update flag based on last update and update frequency\n  do_update=0 if date() < last_update + update_frequency else do_update = 1\n  \n  # download if update flag is set:\n  if do_update == 1 then\n  ogr2ogr -nln hh_centrospoblados_dispersos_idep download/hh_centrospoblados_dispersos_idep.json 'https://www.idep.gob.pe/geoportal/rest/services/DATOS_GEOESPACIALES/CENTROS_POBLADOS_DISPERSOS/FeatureServer/0/query?where=1%3D1&geometry=%22xmin%22%3A-77.33%2C%22ymin%22%3A-10.7%2C%22xmax%22%3A-76.55%2C%22ymax%22%3A-9.8&geometryType=esriGeometryEnvelope&inSR=4326&spatialRel=esriSpatialRelIntersects&outFields=*&where=1%3D1&outSR=4326&f=geojson'\n  \n  # replace column names Shape__Length and Shape__Area to avoid conflict when\n  # providing as service on ArcServer.\n  sed -i 's/Shape__Length/shape_length/gI; s/Shape__Area/shape_area/gI' download/hh_centrospoblados_dispersos_idep.json\n  \n  # load into postGIS with:\n    ogr2ogr -lco GEOMETRY_NAME=geom -f PostgreSQL PG:\"<postgres connection>\" download/hh_centrospoblados_dispersos_idep.json -nlt point -nln hh_centrospoblados_dispersos_idep\n  \n  #########\n  # Step 2 - SQL script (pseudo code):\n  ####\n  \n  # remove duplicate points and make geometries valid:\n  UPDATE hh_centrospoblados_dispersos_idep\n    SET geom=ST_MakeValid(ST_RemoveRepeatedPoints(geom));\n  \n  # add local geometry column and reproject existing geometries into local EPSG:\n  SELECT AddGeometryColumn (\n    'hh_centrospoblados_dispersos_idep',\n    'geom_local', 5387, 'point', 2\n  );\n  UPDATE hh_centrospoblados_dispersos_idep\n    SET geom_local=ST_MakeValid(ST_RemoveRepeatedPoints(ST_Transform(geom,5387)));\n  CREATE INDEX hh_centrospoblados_dispersos_idep_geom_local_idx\n    ON hh_centrospoblados_dispersos_idep\n    USING GIST (geom_local);\n  NOTIFY pgrst, 'reload schema';\n  # Move into corrrect directory and create derivative directory in data package on osgeo\n  cd /data/hh_centrospoblados_dispersos_idep/\n  mkdir -p derived\n  \n  # Create shapefile of table in derivate directory on osgeo \n  ogr2ogr -f \"ESRI Shapefile\" -overwrite derived/hh_centrospoblados_dispersos_idep.shp PG:\"<postgres connection>\" hh_centrospoblados_dispersos_idep\n  \n  # Create downloadable tarfile of shp in derivative directory on osgeo\n  rm -f derived/hh_centrospoblados_dispersos_idep.shp.tar.gz\n  tar -czf derived/hh_centrospoblados_dispersos_idep.shp.tar.gz meta_dcat_hh_centrospoblados_dispersos_idep.json -C derived hh_centrospoblados_dispersos_idep.shp hh_centrospoblados_dispersos_idep.prj hh_centrospoblados_dispersos_idep.shx hh_centrospoblados_dispersos_idep.dbf\n  \n  # Create gpkg of table in derivate directory on osgeo \n  rm -f derived/hh_centrospoblados_dispersos_idep.gpkg\n  ogr2ogr -f GPKG -overwrite derived/hh_centrospoblados_dispersos_idep.gpkg PG:\"<postgres connection>\" -select \"fuente,descarga,gid,cod_dpto,nom_dpto,cod_prov,nom_prov,cod_dist,nom_dist,cod_ccpp,nom_ccpp,num_viv_pa,num_hogare,pob_total,c5_p2_2,gr_edad_1,gr_edad_2,gr_edad_3,gr_edad_4,gr_edad_5,c5_p8_6,c5_p9_3,c5_p9_4,c5_p9_5,c5_p9_6,c5_p12_2,p_sex_m,p_ge_0a14,p_ge_15a29,p_ge_30a44,p_ge_45a64,p_ge_65ym,p_af_ning,p_dl_hab,p_dl_mov,p_dl_ent,p_dl_rel,p_lees_no,c2_p3_1,c2_p3_3,c2_p3_4,c2_p3_5,c2_p3_7,c2_p5_6,c2_p12_1,c3_p1_2,c3_p1_5,vs_agua_rp,pvs_agua_r,vs_sh,pvs_sh,vs_aelec,pvs_aelec,pv_ptierra,ph_lenna,hs_pclptb,phs_pclptb,hs_tcelu,phs_tcelu,hs_inter,phs_inter,pv_ladri,pv_adobe,pv_tapia,pv_quin,pv_mader,pv_1hab,ph_gasb,viv_pa_op,tipo,cod_tipo,id_ccpp,dpto,prov,dist,ccpp,pob_et14,pob_et14_p,pob_ocup,pob_ocup_p,epatro,epatro_p,indep,indep_p,emple,emple_p,obre,obre_p,negfam,negfam_p,thog,thog_p,cp_etiq,geom\" hh_centrospoblados_dispersos_idep\n  \n  # Create downloadable tarfile of gpkg in derivative directory on osgeo\n  rm -f derived/hh_centrospoblados_dispersos_idep.gpkg.tar.gz\n  tar -czf derived/hh_centrospoblados_dispersos_idep.gpkg.tar.gz meta_dcat_hh_centrospoblados_dispersos_idep.json -C derived hh_centrospoblados_dispersos_idep.gpkg\n  \n  # Create geojson of table in derivate directory on osgeo \n  rm -f derived/hh_centrospoblados_dispersos_idep.json\n  ogr2ogr -f GeoJSON -overwrite derived/hh_centrospoblados_dispersos_idep.json PG:\"<postgres connection>\" -select \"fuente,descarga,gid,cod_dpto,nom_dpto,cod_prov,nom_prov,cod_dist,nom_dist,cod_ccpp,nom_ccpp,num_viv_pa,num_hogare,pob_total,c5_p2_2,gr_edad_1,gr_edad_2,gr_edad_3,gr_edad_4,gr_edad_5,c5_p8_6,c5_p9_3,c5_p9_4,c5_p9_5,c5_p9_6,c5_p12_2,p_sex_m,p_ge_0a14,p_ge_15a29,p_ge_30a44,p_ge_45a64,p_ge_65ym,p_af_ning,p_dl_hab,p_dl_mov,p_dl_ent,p_dl_rel,p_lees_no,c2_p3_1,c2_p3_3,c2_p3_4,c2_p3_5,c2_p3_7,c2_p5_6,c2_p12_1,c3_p1_2,c3_p1_5,vs_agua_rp,pvs_agua_r,vs_sh,pvs_sh,vs_aelec,pvs_aelec,pv_ptierra,ph_lenna,hs_pclptb,phs_pclptb,hs_tcelu,phs_tcelu,hs_inter,phs_inter,pv_ladri,pv_adobe,pv_tapia,pv_quin,pv_mader,pv_1hab,ph_gasb,viv_pa_op,tipo,cod_tipo,id_ccpp,dpto,prov,dist,ccpp,pob_et14,pob_et14_p,pob_ocup,pob_ocup_p,epatro,epatro_p,indep,indep_p,emple,emple_p,obre,obre_p,negfam,negfam_p,thog,thog_p,cp_etiq,geom\" hh_centrospoblados_dispersos_idep\n  \n  # Create downloadable tarfile of geojson in derivative directory on osgeo\n  rm -f derived/hh_centrospoblados_dispersos_idep.geojson.tar.gz\n  tar -czf derived/hh_centrospoblados_dispersos_idep.geojson.tar.gz meta_dcat_hh_centrospoblados_dispersos_idep.json -C derived hh_centrospoblados_dispersos_idep.json\n  \n  # Move into correct directory\n  cd /data/hh_centrospoblados_dispersos_idep/"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "processor",
+          "value": "GDSC automation (see Process Step)"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "values",
+          "value": "fuente"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "Spatial Reference System",
+          "value": "http://www.opengis.net/def/crs/EPSG/0/5387"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "derivatives",
+          "value": "shp geojson gpkg"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "download_method",
+          "value": "esri_recursive_ogr"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "source_file",
+          "value": "{'etl_group/file_name_group/file_name_value': 'hh_centrospoblados_dispersos_idep'}"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "extent",
+          "value": "POLYGON((-77.329600 -10.699700, -76.550000 -10.699700, -76.550000 -9.800000, -77.329600 -9.800000, -77.329600 -10.699700))"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "podid",
+          "value": "gdsc-postgis-node-7pmy1xe14oww89mh"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "up",
+          "value": "true"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "serviceDefinition",
+          "value": "API|arcgis|query"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "derivativeUrl",
+          "value": "/data/hh_centrospoblados_dispersos_idep/"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "pointOfContact",
+          "value": "{'iso_group/point_of_contact_group/contact_affiliation': 'University of Miami Libraries, Frost Institute for Data Science and Computing', 'iso_group/point_of_contact_group/contact_affiliation_identifier': 'https://ror.org/02dgjyy92', 'iso_group/point_of_contact_group/contact_affiliation_schema': 'ror', 'iso_group/point_of_contact_group/contact_affiliation_schema_uri': 'https://ror.org/', 'iso_group/point_of_contact_group/contact_email': 'tnorris@miami.edu', 'iso_group/point_of_contact_group/contact_first_name': 'Timothy', 'iso_group/point_of_contact_group/contact_identifier': 'https://orcid.org/0000-0002-0898-3027', 'iso_group/point_of_contact_group/contact_identifier_schema': 'orcid', 'iso_group/point_of_contact_group/contact_identifier_schema_uri': 'https://orcid.org/', 'iso_group/point_of_contact_group/contact_last_name': 'Norris', 'iso_group/point_of_contact_group/contact_name': 'Timothy B. Norris'}"
+        }
+      ],
+      "identifier": {
+        "@type": "PropertyValue",
+        "name": "external_id",
+        "value": "842259721"
+      },
       "url": "https://www.idep.gob.pe/geoportal/rest/services/DATOS_GEOESPACIALES/CENTROS_POBLADOS_DISPERSOS/FeatureServer/0",
       "inLanguage": "es",
       "datePublished": "2017-01-01",
-      "dateModified": "2025-02-27",
+      "dateModified": "2025-06-09 10:19:32",
       "creator": [
         {
           "@type": "Role",
@@ -113,524 +200,565 @@
           "encodingFormat": "application/json"
         }
       ],
-      "additionalProperty": [
-        {
-          "@type": "PropertyValue",
-          "name": "postgis_table",
-          "value": "hh_centrospoblados_dispersos_idep"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "kobo_record_id",
-          "value": "208"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "cartography_value_field",
-          "value": "fuente"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "Spatial Reference System",
-          "value": "http://www.opengis.net/def/crs/EPSG/0/5387"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "derivatives",
-          "value": "shp geojson gpkg"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "download_method",
-          "value": "esri_recursive_ogr"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "source_file",
-          "value": "{'etl_group/file_name_group/file_name_value': 'hh_centrospoblados_dispersos_idep'}"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "extent",
-          "value": "-77.33|-10.7|-76.55|-9.8"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "serviceDefinition",
-          "value": "API|arcgis|query"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "pointOfContact",
-          "value": "{'iso_group/point_of_contact_group/contact_name': 'TBD'}"
-        }
-      ],
       "dct:accrualPeriodicity": "as_needed",
       "variableMeasured": [
         {
           "@type": "PropertyValue",
           "name": "fuente",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:varchar"
         },
         {
           "@type": "PropertyValue",
           "name": "descarga",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:varchar"
         },
         {
           "@type": "PropertyValue",
           "name": "gid",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:int4"
         },
         {
           "@type": "PropertyValue",
           "name": "cod_dpto",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:varchar"
         },
         {
           "@type": "PropertyValue",
           "name": "nom_dpto",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:varchar"
         },
         {
           "@type": "PropertyValue",
           "name": "cod_prov",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:varchar"
         },
         {
           "@type": "PropertyValue",
           "name": "nom_prov",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:varchar"
         },
         {
           "@type": "PropertyValue",
           "name": "cod_dist",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:varchar"
         },
         {
           "@type": "PropertyValue",
           "name": "nom_dist",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:varchar"
         },
         {
           "@type": "PropertyValue",
           "name": "cod_ccpp",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:varchar"
         },
         {
           "@type": "PropertyValue",
           "name": "nom_ccpp",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:varchar"
         },
         {
           "@type": "PropertyValue",
           "name": "num_viv_pa",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:int4"
         },
         {
           "@type": "PropertyValue",
           "name": "num_hogare",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:int4"
         },
         {
           "@type": "PropertyValue",
           "name": "pob_total",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:int4"
         },
         {
           "@type": "PropertyValue",
           "name": "c5_p2_2",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:int4"
         },
         {
           "@type": "PropertyValue",
           "name": "gr_edad_1",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:int4"
         },
         {
           "@type": "PropertyValue",
           "name": "gr_edad_2",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:int4"
         },
         {
           "@type": "PropertyValue",
           "name": "gr_edad_3",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:int4"
         },
         {
           "@type": "PropertyValue",
           "name": "gr_edad_4",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:int4"
         },
         {
           "@type": "PropertyValue",
           "name": "gr_edad_5",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:int4"
         },
         {
           "@type": "PropertyValue",
           "name": "c5_p8_6",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:int4"
         },
         {
           "@type": "PropertyValue",
           "name": "c5_p9_3",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:int4"
         },
         {
           "@type": "PropertyValue",
           "name": "c5_p9_4",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:int4"
         },
         {
           "@type": "PropertyValue",
           "name": "c5_p9_5",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:int4"
         },
         {
           "@type": "PropertyValue",
           "name": "c5_p9_6",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:int4"
         },
         {
           "@type": "PropertyValue",
           "name": "c5_p12_2",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:int4"
         },
         {
           "@type": "PropertyValue",
           "name": "p_sex_m",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:float8"
         },
         {
           "@type": "PropertyValue",
           "name": "p_ge_0a14",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:float8"
         },
         {
           "@type": "PropertyValue",
           "name": "p_ge_15a29",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:float8"
         },
         {
           "@type": "PropertyValue",
           "name": "p_ge_30a44",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:float8"
         },
         {
           "@type": "PropertyValue",
           "name": "p_ge_45a64",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:float8"
         },
         {
           "@type": "PropertyValue",
           "name": "p_ge_65ym",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:float8"
         },
         {
           "@type": "PropertyValue",
           "name": "p_af_ning",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:float8"
         },
         {
           "@type": "PropertyValue",
           "name": "p_dl_hab",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:float8"
         },
         {
           "@type": "PropertyValue",
           "name": "p_dl_mov",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:float8"
         },
         {
           "@type": "PropertyValue",
           "name": "p_dl_ent",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:float8"
         },
         {
           "@type": "PropertyValue",
           "name": "p_dl_rel",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:float8"
         },
         {
           "@type": "PropertyValue",
           "name": "p_lees_no",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:float8"
         },
         {
           "@type": "PropertyValue",
           "name": "c2_p3_1",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:int4"
         },
         {
           "@type": "PropertyValue",
           "name": "c2_p3_3",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:int4"
         },
         {
           "@type": "PropertyValue",
           "name": "c2_p3_4",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:int4"
         },
         {
           "@type": "PropertyValue",
           "name": "c2_p3_5",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:int4"
         },
         {
           "@type": "PropertyValue",
           "name": "c2_p3_7",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:int4"
         },
         {
           "@type": "PropertyValue",
           "name": "c2_p5_6",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:int4"
         },
         {
           "@type": "PropertyValue",
           "name": "c2_p12_1",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:int4"
         },
         {
           "@type": "PropertyValue",
           "name": "c3_p1_2",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:int4"
         },
         {
           "@type": "PropertyValue",
           "name": "c3_p1_5",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:int4"
         },
         {
           "@type": "PropertyValue",
           "name": "vs_agua_rp",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:int4"
         },
         {
           "@type": "PropertyValue",
           "name": "pvs_agua_r",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:float8"
         },
         {
           "@type": "PropertyValue",
           "name": "vs_sh",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:int4"
         },
         {
           "@type": "PropertyValue",
           "name": "pvs_sh",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:float8"
         },
         {
           "@type": "PropertyValue",
           "name": "vs_aelec",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:int4"
         },
         {
           "@type": "PropertyValue",
           "name": "pvs_aelec",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:float8"
         },
         {
           "@type": "PropertyValue",
           "name": "pv_ptierra",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:float8"
         },
         {
           "@type": "PropertyValue",
           "name": "ph_lenna",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:float8"
         },
         {
           "@type": "PropertyValue",
           "name": "hs_pclptb",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:int4"
         },
         {
           "@type": "PropertyValue",
           "name": "phs_pclptb",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:float8"
         },
         {
           "@type": "PropertyValue",
           "name": "hs_tcelu",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:int4"
         },
         {
           "@type": "PropertyValue",
           "name": "phs_tcelu",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:float8"
         },
         {
           "@type": "PropertyValue",
           "name": "hs_inter",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:int4"
         },
         {
           "@type": "PropertyValue",
           "name": "phs_inter",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:float8"
         },
         {
           "@type": "PropertyValue",
           "name": "pv_ladri",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:float8"
         },
         {
           "@type": "PropertyValue",
           "name": "pv_adobe",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:float8"
         },
         {
           "@type": "PropertyValue",
           "name": "pv_tapia",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:float8"
         },
         {
           "@type": "PropertyValue",
           "name": "pv_quin",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:float8"
         },
         {
           "@type": "PropertyValue",
           "name": "pv_mader",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:float8"
         },
         {
           "@type": "PropertyValue",
           "name": "pv_1hab",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:float8"
         },
         {
           "@type": "PropertyValue",
           "name": "ph_gasb",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:float8"
         },
         {
           "@type": "PropertyValue",
           "name": "viv_pa_op",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:int4"
         },
         {
           "@type": "PropertyValue",
           "name": "tipo",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:varchar"
         },
         {
           "@type": "PropertyValue",
           "name": "cod_tipo",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:int4"
         },
         {
           "@type": "PropertyValue",
           "name": "id_ccpp",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:varchar"
         },
         {
           "@type": "PropertyValue",
           "name": "dpto",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:varchar"
         },
         {
           "@type": "PropertyValue",
           "name": "prov",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:varchar"
         },
         {
           "@type": "PropertyValue",
           "name": "dist",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:varchar"
         },
         {
           "@type": "PropertyValue",
           "name": "ccpp",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:varchar"
         },
         {
           "@type": "PropertyValue",
           "name": "pob_et14",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:int4"
         },
         {
           "@type": "PropertyValue",
           "name": "pob_et14_p",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:int4"
         },
         {
           "@type": "PropertyValue",
           "name": "pob_ocup",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:int4"
         },
         {
           "@type": "PropertyValue",
           "name": "pob_ocup_p",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:float8"
         },
         {
           "@type": "PropertyValue",
           "name": "epatro",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:int4"
         },
         {
           "@type": "PropertyValue",
           "name": "epatro_p",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:float8"
         },
         {
           "@type": "PropertyValue",
           "name": "indep",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:int4"
         },
         {
           "@type": "PropertyValue",
           "name": "indep_p",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:float8"
         },
         {
           "@type": "PropertyValue",
           "name": "emple",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:int4"
         },
         {
           "@type": "PropertyValue",
           "name": "emple_p",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:float8"
         },
         {
           "@type": "PropertyValue",
           "name": "obre",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:int4"
         },
         {
           "@type": "PropertyValue",
           "name": "obre_p",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:float8"
         },
         {
           "@type": "PropertyValue",
           "name": "negfam",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:int4"
         },
         {
           "@type": "PropertyValue",
           "name": "negfam_p",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:float8"
         },
         {
           "@type": "PropertyValue",
           "name": "thog",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:int4"
         },
         {
           "@type": "PropertyValue",
           "name": "thog_p",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:float8"
         },
         {
           "@type": "PropertyValue",
           "name": "cp_etiq",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:varchar"
         }
       ],
       "isAccessibleForFree": false,

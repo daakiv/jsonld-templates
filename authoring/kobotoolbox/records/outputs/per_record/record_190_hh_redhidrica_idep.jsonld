@@ -10,9 +10,97 @@
       "@type": "schema:Dataset",
       "@id": "https://gdsc.idsc.miami.edu/detail/hh_redhidrica_idep",
       "name": "Red Hídrica Huayhuash (IDEP 100000)",
-      "description": "TBD",
+      "description": "Una inventario de la red hidrica en la Cordillera Huayhuash. Fuente: Instituo Geografica Nacional del Peru por la Infraestructura de Datos Espaciales del Perú (IDEP).",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "name": "size",
+          "value": "4.9M"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "postgis_table",
+          "value": "hh_redhidrica_idep"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "kobo_record_id",
+          "value": "190"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "process_step",
+          "value": "#########\n  # GDSC ETL is performed in two steps: shell script to ETL data into postgres\n  # and then additional transformations with SQL in postGIS (if needed).\n  ####\n  \n  #########\n  # Step 1 - bash script (pseudo code)\n  ####\n  \n  # create directory structure and move into it\n  mkdir -p /data/hh_redhidrica_idep/download -p /data/hh_redhidrica_idep/etl\n  chmod 777 /data/hh_redhidrica_idep/download\n  cd /data/hh_redhidrica_idep\n  \n  # set update flag based on last update and update frequency\n  do_update=0 if date() < last_update + update_frequency else do_update = 1\n  \n  # download if update flag is set:\n  if do_update == 1 then\n  ogr2ogr -nln hh_redhidrica_idep download/hh_redhidrica_idep.json 'https://www.idep.gob.pe/geoportal/rest/services/SERVICIOS_IGN/HIDROGRAFIA_100K/MapServer/0/query?where=1%3D1&geometry=%22xmin%22%3A-77.33%2C%22ymin%22%3A-10.7%2C%22xmax%22%3A-76.55%2C%22ymax%22%3A-9.8&geometryType=esriGeometryEnvelope&inSR=4326&spatialRel=esriSpatialRelIntersects&outFields=*&returnGeometry=true&outSR=4326&f=geojson'\n  \n  # replace column names Shape__Length and Shape__Area to avoid conflict when\n  # providing as service on ArcServer.\n  sed -i 's/Shape__Length/shape_length/gI; s/Shape__Area/shape_area/gI' download/hh_redhidrica_idep.json\n  \n  # load into postGIS with:\n    ogr2ogr -lco GEOMETRY_NAME=geom -f PostgreSQL PG:\"<postgres connection>\" download/hh_redhidrica_idep.json -nlt multilinestring -nln hh_redhidrica_idep\n  \n  #########\n  # Step 2 - SQL script (pseudo code):\n  ####\n  \n  # remove duplicate points and make geometries valid:\n  UPDATE hh_redhidrica_idep\n    SET geom=ST_MakeValid(ST_RemoveRepeatedPoints(geom));\n  \n  # add local geometry column and reproject existing geometries into local EPSG:\n  SELECT AddGeometryColumn (\n    'hh_redhidrica_idep',\n    'geom_local', 5387, 'multilinestring', 2\n  );\n  UPDATE hh_redhidrica_idep\n    SET geom_local=ST_MakeValid(ST_RemoveRepeatedPoints(ST_Transform(ST_Multi(geom),5387)));\n  CREATE INDEX hh_redhidrica_idep_geom_local_idx\n    ON hh_redhidrica_idep\n    USING GIST (geom_local);\n  NOTIFY pgrst, 'reload schema';\n  # Move into corrrect directory and create derivative directory in data package on osgeo\n  cd /data/hh_redhidrica_idep/\n  mkdir -p derived\n  \n  # Create shapefile of table in derivate directory on osgeo \n  ogr2ogr -f \"ESRI Shapefile\" -overwrite derived/hh_redhidrica_idep.shp PG:\"<postgres connection>\" hh_redhidrica_idep\n  \n  # Create downloadable tarfile of shp in derivative directory on osgeo\n  rm -f derived/hh_redhidrica_idep.shp.tar.gz\n  tar -czf derived/hh_redhidrica_idep.shp.tar.gz meta_dcat_hh_redhidrica_idep.json -C derived hh_redhidrica_idep.shp hh_redhidrica_idep.prj hh_redhidrica_idep.shx hh_redhidrica_idep.dbf\n  \n  # Create gpkg of table in derivate directory on osgeo \n  rm -f derived/hh_redhidrica_idep.gpkg\n  ogr2ogr -f GPKG -overwrite derived/hh_redhidrica_idep.gpkg PG:\"<postgres connection>\" -select \"longitud,objectid,rasgo_prin,rasgo_secu,nombre,cuenca,caract,obs,provincia,dpto,distrito,cod_facc,cod_ign,geom\" hh_redhidrica_idep\n  \n  # Create downloadable tarfile of gpkg in derivative directory on osgeo\n  rm -f derived/hh_redhidrica_idep.gpkg.tar.gz\n  tar -czf derived/hh_redhidrica_idep.gpkg.tar.gz meta_dcat_hh_redhidrica_idep.json -C derived hh_redhidrica_idep.gpkg\n  \n  # Create geojson of table in derivate directory on osgeo \n  rm -f derived/hh_redhidrica_idep.json\n  ogr2ogr -f GeoJSON -overwrite derived/hh_redhidrica_idep.json PG:\"<postgres connection>\" -select \"longitud,objectid,rasgo_prin,rasgo_secu,nombre,cuenca,caract,obs,provincia,dpto,distrito,cod_facc,cod_ign,geom\" hh_redhidrica_idep\n  \n  # Create downloadable tarfile of geojson in derivative directory on osgeo\n  rm -f derived/hh_redhidrica_idep.geojson.tar.gz\n  tar -czf derived/hh_redhidrica_idep.geojson.tar.gz meta_dcat_hh_redhidrica_idep.json -C derived hh_redhidrica_idep.json\n  \n  # Move into correct directory\n  cd /data/hh_redhidrica_idep/"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "processor",
+          "value": "GDSC automation (see Process Step)"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "values",
+          "value": "longitud"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "Spatial Reference System",
+          "value": "http://www.opengis.net/def/crs/EPSG/0/5387"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "derivatives",
+          "value": "shp geojson gpkg"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "download_method",
+          "value": "esri_recursive_ogr"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "source_file",
+          "value": "{'etl_group/file_name_group/file_name_value': 'hh_redhidrica_idep'}"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "extent",
+          "value": "POLYGON((-77.452711 -10.912497, -76.500000 -10.912497, -76.500000 -9.500000, -77.452711 -9.500000, -77.452711 -10.912497))"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "podid",
+          "value": "gdsc-postgis-node-2i1ilim7ofd3rqty"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "up",
+          "value": "true"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "serviceDefinition",
+          "value": "API|arcgis|query"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "derivativeUrl",
+          "value": "/data/hh_redhidrica_idep/"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "pointOfContact",
+          "value": "{'iso_group/point_of_contact_group/contact_affiliation': 'University of Miami Libraries, Frost Institute for Data Science and Computing', 'iso_group/point_of_contact_group/contact_affiliation_identifier': 'https://ror.org/02dgjyy92', 'iso_group/point_of_contact_group/contact_affiliation_schema': 'ror', 'iso_group/point_of_contact_group/contact_affiliation_schema_uri': 'https://ror.org/', 'iso_group/point_of_contact_group/contact_email': 'tnorris@miami.edu', 'iso_group/point_of_contact_group/contact_first_name': 'Timothy', 'iso_group/point_of_contact_group/contact_identifier': 'https://orcid.org/0000-0002-0898-3027', 'iso_group/point_of_contact_group/contact_identifier_schema': 'orcid', 'iso_group/point_of_contact_group/contact_identifier_schema_uri': 'https://orcid.org/', 'iso_group/point_of_contact_group/contact_last_name': 'Norris', 'iso_group/point_of_contact_group/contact_name': 'Timothy B. Norris'}"
+        }
+      ],
+      "identifier": {
+        "@type": "PropertyValue",
+        "name": "external_id",
+        "value": "842259636"
+      },
       "url": "https://www.idep.gob.pe/geoportal/rest/services/SERVICIOS_IGN/HIDROGRAFIA_100K/MapServer/0",
       "inLanguage": "es",
+      "dateModified": "2025-04-29 16:33:43",
       "creator": [
         {
           "@type": "Role",
@@ -93,117 +181,89 @@
           "encodingFormat": "application/json"
         }
       ],
-      "additionalProperty": [
-        {
-          "@type": "PropertyValue",
-          "name": "postgis_table",
-          "value": "hh_redhidrica_idep"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "kobo_record_id",
-          "value": "190"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "cartography_value_field",
-          "value": "longitud"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "Spatial Reference System",
-          "value": "http://www.opengis.net/def/crs/EPSG/0/5387"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "derivatives",
-          "value": "shp geojson gpkg"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "download_method",
-          "value": "esri_recursive_ogr"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "source_file",
-          "value": "{'etl_group/file_name_group/file_name_value': 'hh_redhidrica_idep'}"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "serviceDefinition",
-          "value": "API|arcgis|query"
-        }
-      ],
       "dct:accrualPeriodicity": "as_needed",
       "variableMeasured": [
         {
           "@type": "PropertyValue",
           "name": "longitud",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:float8"
         },
         {
           "@type": "PropertyValue",
           "name": "objectid",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:int4"
         },
         {
           "@type": "PropertyValue",
           "name": "rasgo_prin",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:varchar"
         },
         {
           "@type": "PropertyValue",
           "name": "rasgo_secu",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:varchar"
         },
         {
           "@type": "PropertyValue",
           "name": "nombre",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:varchar"
         },
         {
           "@type": "PropertyValue",
           "name": "cuenca",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:varchar"
         },
         {
           "@type": "PropertyValue",
           "name": "caract",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:varchar"
         },
         {
           "@type": "PropertyValue",
           "name": "obs",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:varchar"
         },
         {
           "@type": "PropertyValue",
           "name": "provincia",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:varchar"
         },
         {
           "@type": "PropertyValue",
           "name": "dpto",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:varchar"
         },
         {
           "@type": "PropertyValue",
           "name": "distrito",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:varchar"
         },
         {
           "@type": "PropertyValue",
           "name": "cod_facc",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:varchar"
         },
         {
           "@type": "PropertyValue",
           "name": "cod_ign",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:varchar"
         }
       ],
       "isAccessibleForFree": false,
+      "dct:provenance": "Direct from source.",
       "additionalType": "vector_dataset"
     }
   ]

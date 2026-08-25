@@ -1,0 +1,233 @@
+{
+  "@context": {
+    "@vocab": "https://schema.org/",
+    "schema": "https://schema.org/",
+    "@language": "en",
+    "dct": "http://purl.org/dc/terms/"
+  },
+  "@graph": [
+    {
+      "@type": "schema:Dataset",
+      "@id": "https://gdsc.idsc.miami.edu/detail/mdc_unincorporated_zone_desc",
+      "name": "Miami-Dade County Unincorporated Zone District Specifications",
+      "description": "A table that provides a description of the main development attributes for each Zoning District in Unincorporated Miami Dade County.",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "name": "size",
+          "value": "12K"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "postgis_table",
+          "value": "mdc_unincorporated_zone_desc"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "kobo_record_id",
+          "value": "258"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "creator_type",
+          "value": "organization"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "process_step",
+          "value": "#########\n  # GDSC ETL is performed in two steps: shell script to ETL data into postgres\n  # and then additional transformations with SQL in postGIS (if needed).\n  ####\n  \n  #########\n  # Step 1 - bash script (pseudo code)\n  ####\n  \n  # create directory structure and move into it\n  mkdir -p /data/mdc_unincorporated_zone_desc/download -p /data/mdc_unincorporated_zone_desc/etl\n  chmod 777 /data/mdc_unincorporated_zone_desc/download\n  cd /data/mdc_unincorporated_zone_desc\n  \n  # set update flag based on last update and update frequency\n  do_update=0 if date() < last_update + update_frequency else do_update = 1\n  \n  # download if update flag is set:\n  if do_update == 1 then\n  wget -O download/mdc_unincorporated_zone_desc.json 'https://services.arcgis.com/8Pc9XBTAsYuxx9Ny/ArcGIS/rest/services/TBLUnincorporatedZoneDistrict/FeatureServer/0/query?where=1%3D1&outFields=*&f=json'\n  \n  # load into postGIS with:\n    ogr2ogr -lco GEOMETRY_NAME=geom -f PostgreSQL PG:\"<postgres connection>\" download/mdc_unincorporated_zone_desc.json -nln mdc_unincorporated_zone_desc"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "processor",
+          "value": "GDSC automation (see Process Step)"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "label",
+          "value": "zone"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "download_method",
+          "value": "wget"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "source_file",
+          "value": "{'etl_group/file_name_group/file_name_value': 'mdc_unincorporated_zone_desc'}"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "podid",
+          "value": "gdsc-postgis-node-3xqs7lcqd9lx2eht"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "up",
+          "value": "false"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "derivativeUrl",
+          "value": "/data/mdc_unincorporated_zone_desc/"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "pointOfContact",
+          "value": "{'iso_group/point_of_contact_group/contact_affiliation': 'University of Miami Libraries, Frost Institute for Data Science and Computing', 'iso_group/point_of_contact_group/contact_affiliation_identifier': 'https://ror.org/02dgjyy92', 'iso_group/point_of_contact_group/contact_affiliation_schema': 'ror', 'iso_group/point_of_contact_group/contact_affiliation_schema_uri': 'https://ror.org/', 'iso_group/point_of_contact_group/contact_email': 'tnorris@miami.edu', 'iso_group/point_of_contact_group/contact_first_name': 'Timothy', 'iso_group/point_of_contact_group/contact_identifier': 'https://orcid.org/0000-0002-0898-3027', 'iso_group/point_of_contact_group/contact_identifier_schema': 'orcid', 'iso_group/point_of_contact_group/contact_identifier_schema_uri': 'https://orcid.org/', 'iso_group/point_of_contact_group/contact_last_name': 'Norris', 'iso_group/point_of_contact_group/contact_name': 'Timothy B. Norris'}"
+        }
+      ],
+      "identifier": {
+        "@type": "PropertyValue",
+        "name": "external_id",
+        "value": "842276356"
+      },
+      "url": "https://gis-mdc.opendata.arcgis.com/datasets/276ee4451b604600b8fcd8e870bd524a_0/explore",
+      "inLanguage": "en",
+      "datePublished": "2019-02-11",
+      "dateModified": "2026-04-23 16:00:06",
+      "creator": [
+        {
+          "@type": "Role",
+          "roleName": "creator",
+          "creator": {
+            "@type": "Organization",
+            "name": "Miami-Dade County Open Data Hub"
+          }
+        },
+        {
+          "@type": "Role",
+          "roleName": "creator",
+          "creator": {
+            "@type": "Organization",
+            "name": "Information Technology Department"
+          }
+        }
+      ],
+      "provider": {
+        "@type": "Organization",
+        "name": "Miami-Dade County"
+      },
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Miami-Dade County",
+        "additionalProperty": [
+          {
+            "@type": "PropertyValue",
+            "name": "geonames",
+            "value": "4164238",
+            "url": "https://www.geonames.org/4164238"
+          }
+        ]
+      },
+      "keywords": [
+        "Florida",
+        "Miami-Dade County",
+        "Zoning",
+        "Unincorporated"
+      ],
+      "includedInDataCatalog": [
+        {
+          "@type": "DataCatalog",
+          "@id": "https://gdsc.idsc.miami.edu",
+          "name": "Geospatial Digital Special Collections",
+          "url": "https://gdsc.idsc.miami.edu"
+        },
+        {
+          "@type": "DataCatalog",
+          "name": "land-access-neighborhood-development",
+          "@id": "https://gdsc.idsc.miami.edu/?collection=land-access-neighborhood-development",
+          "url": "https://gdsc.idsc.miami.edu/?collection=land-access-neighborhood-development"
+        }
+      ],
+      "measurementTechnique": [
+        {
+          "@type": "DefinedTerm",
+          "name": "GIS Data Structure",
+          "termCode": "table",
+          "inDefinedTermSet": {
+            "@type": "DefinedTermSet",
+            "name": "dataRepresentation",
+            "url": "https://gdsc.idsc.miami.edu/vocab/dataRepresentation"
+          }
+        },
+        {
+          "@type": "DefinedTerm",
+          "name": "Data Processing Level",
+          "termCode": "derived",
+          "inDefinedTermSet": {
+            "@type": "DefinedTermSet",
+            "name": "dataProcessingLevel",
+            "url": "https://gdsc.idsc.miami.edu/vocab/dataProcessingLevel"
+          }
+        }
+      ],
+      "distribution": [
+        {
+          "@type": "DataDownload",
+          "name": "Source distribution",
+          "contentUrl": "https://services.arcgis.com/8Pc9XBTAsYuxx9Ny/ArcGIS/rest/services/TBLUnincorporatedZoneDistrict/FeatureServer/0/query?where=1%3D1&outFields=*&f=json",
+          "encodingFormat": "application/json"
+        }
+      ],
+      "dct:accrualPeriodicity": "as_needed",
+      "variableMeasured": [
+        {
+          "@type": "PropertyValue",
+          "name": "zone",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "minlotsize",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "density",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "far",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "minlotwdth",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "maxheight",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "devcode",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "genrllutype",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "mixuse",
+          "description": ""
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "maxlotcov",
+          "description": ""
+        }
+      ],
+      "isAccessibleForFree": false,
+      "additionalType": "api",
+      "isRelatedTo": "mdc_county_zoning",
+      "disambiguatingDescription": "Miami-Dade County provides the data for use \"as is\". The areas depicted in this map/data are approximate and are not accurate to surveying or engineering standards. The maps/data shown here are for illustration purposes only and are not suitable for site-specific decision making. Information found here should not be used for making financial or any other commitments.Miami-Dade County provides this information with the understanding that it is not guaranteed to be accurate, correct or complete and conclusions drawn from such information are the responsibility of the user. While every effort has been made to ensure the accuracy, correctness, and timeliness of materials presented, Miami-Dade County assumes no responsibility for errors or omissions, even if Miami-Dade County is advised of the possibility of such damage."
+    }
+  ]
+}

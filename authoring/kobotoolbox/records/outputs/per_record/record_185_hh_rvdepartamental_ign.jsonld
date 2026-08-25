@@ -11,8 +11,96 @@
       "@id": "https://gdsc.idsc.miami.edu/detail/hh_rvdepartamental_ign",
       "name": "Red Vial Departamental Huayhuash (IGN)",
       "description": "Los datos corresponden a las carreteras que constituyen la red vial circunscrita al ámbito de un Gobierno Regional; articulando básicamente a la Red Vial Nacional con la Red Vial Vecinal o Rural.",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "name": "size",
+          "value": "315K"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "postgis_table",
+          "value": "hh_rvdepartamental_ign"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "kobo_record_id",
+          "value": "185"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "process_step",
+          "value": "#########\n  # GDSC ETL is performed in two steps: shell script to ETL data into postgres\n  # and then additional transformations with SQL in postGIS (if needed).\n  ####\n  \n  #########\n  # Step 1 - bash script (pseudo code)\n  ####\n  \n  # create directory structure and move into it\n  mkdir -p /data/hh_rvdepartamental_ign/download -p /data/hh_rvdepartamental_ign/etl\n  chmod 777 /data/hh_rvdepartamental_ign/download\n  cd /data/hh_rvdepartamental_ign\n  \n  # set update flag based on last update and update frequency\n  do_update=0 if date() < last_update + update_frequency else do_update = 1\n  \n  # download if update flag is set:\n  if do_update == 1 then\n  ogr2ogr -nln hh_rvdepartamental_ign download/hh_rvdepartamental_ign.json 'https://geoservidorperu.minam.gob.pe/arcgis/rest/services/Servicio_Degradacion_tematicas/MapServer/2/query?where=1%3D1&geometry=%22xmin%22%3A-77.33%2C%22ymin%22%3A-10.7%2C%22xmax%22%3A-76.55%2C%22ymax%22%3A-9.8&geometryType=esriGeometryEnvelope&inSR=4326&spatialRel=esriSpatialRelIntersects&outFields=*&returnGeometry=true&outSR=4326&f=geojson'\n  \n  # replace column names Shape__Length and Shape__Area to avoid conflict when\n  # providing as service on ArcServer.\n  sed -i 's/Shape__Length/shape_length/gI; s/Shape__Area/shape_area/gI' download/hh_rvdepartamental_ign.json\n  \n  # load into postGIS with:\n    ogr2ogr -lco GEOMETRY_NAME=geom -f PostgreSQL PG:\"<postgres connection>\" download/hh_rvdepartamental_ign.json -nlt multilinestring -nln hh_rvdepartamental_ign\n  \n  #########\n  # Step 2 - SQL script (pseudo code):\n  ####\n  \n  # remove duplicate points and make geometries valid:\n  UPDATE hh_rvdepartamental_ign\n    SET geom=ST_MakeValid(ST_RemoveRepeatedPoints(geom));\n  \n  # add local geometry column and reproject existing geometries into local EPSG:\n  SELECT AddGeometryColumn (\n    'hh_rvdepartamental_ign',\n    'geom_local', 5387, 'multilinestring', 2\n  );\n  UPDATE hh_rvdepartamental_ign\n    SET geom_local=ST_MakeValid(ST_RemoveRepeatedPoints(ST_Transform(ST_Multi(geom),5387)));\n  CREATE INDEX hh_rvdepartamental_ign_geom_local_idx\n    ON hh_rvdepartamental_ign\n    USING GIST (geom_local);\n  NOTIFY pgrst, 'reload schema';\n  # Move into corrrect directory and create derivative directory in data package on osgeo\n  cd /data/hh_rvdepartamental_ign/\n  mkdir -p derived\n  \n  # Create shapefile of table in derivate directory on osgeo \n  ogr2ogr -f \"ESRI Shapefile\" -overwrite derived/hh_rvdepartamental_ign.shp PG:\"<postgres connection>\" hh_rvdepartamental_ign\n  \n  # Create downloadable tarfile of shp in derivative directory on osgeo\n  rm -f derived/hh_rvdepartamental_ign.shp.tar.gz\n  tar -czf derived/hh_rvdepartamental_ign.shp.tar.gz meta_dcat_hh_rvdepartamental_ign.json -C derived hh_rvdepartamental_ign.shp hh_rvdepartamental_ign.prj hh_rvdepartamental_ign.shx hh_rvdepartamental_ign.dbf\n  \n  # Create gpkg of table in derivate directory on osgeo \n  rm -f derived/hh_rvdepartamental_ign.gpkg\n  ogr2ogr -f GPKG -overwrite derived/hh_rvdepartamental_ign.gpkg PG:\"<postgres connection>\" -select \"objectid,longitud,dpto,ruta_d044,red_044,supercicie,geom\" hh_rvdepartamental_ign\n  \n  # Create downloadable tarfile of gpkg in derivative directory on osgeo\n  rm -f derived/hh_rvdepartamental_ign.gpkg.tar.gz\n  tar -czf derived/hh_rvdepartamental_ign.gpkg.tar.gz meta_dcat_hh_rvdepartamental_ign.json -C derived hh_rvdepartamental_ign.gpkg\n  \n  # Create geojson of table in derivate directory on osgeo \n  rm -f derived/hh_rvdepartamental_ign.json\n  ogr2ogr -f GeoJSON -overwrite derived/hh_rvdepartamental_ign.json PG:\"<postgres connection>\" -select \"objectid,longitud,dpto,ruta_d044,red_044,supercicie,geom\" hh_rvdepartamental_ign\n  \n  # Create downloadable tarfile of geojson in derivative directory on osgeo\n  rm -f derived/hh_rvdepartamental_ign.geojson.tar.gz\n  tar -czf derived/hh_rvdepartamental_ign.geojson.tar.gz meta_dcat_hh_rvdepartamental_ign.json -C derived hh_rvdepartamental_ign.json\n  \n  # Move into correct directory\n  cd /data/hh_rvdepartamental_ign/"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "processor",
+          "value": "GDSC automation (see Process Step)"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "values",
+          "value": "objectid"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "Spatial Reference System",
+          "value": "http://www.opengis.net/def/crs/EPSG/0/5387"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "derivatives",
+          "value": "shp geojson gpkg"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "download_method",
+          "value": "esri_recursive_ogr"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "source_file",
+          "value": "{'etl_group/file_name_group/file_name_value': 'hh_rvdepartamental_ign'}"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "extent",
+          "value": "POLYGON((-77.426178 -10.756968, -76.521683 -10.756968, -76.521683 -9.774233, -77.426178 -9.774233, -77.426178 -10.756968))"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "podid",
+          "value": "gdsc-postgis-node-h3ta9qzu7h9t6tmq"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "up",
+          "value": "true"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "serviceDefinition",
+          "value": "API|arcgis|query"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "derivativeUrl",
+          "value": "/data/hh_rvdepartamental_ign/"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "pointOfContact",
+          "value": "{'iso_group/point_of_contact_group/contact_affiliation': 'University of Miami Libraries, Frost Institute for Data Science and Computing', 'iso_group/point_of_contact_group/contact_affiliation_identifier': 'https://ror.org/02dgjyy92', 'iso_group/point_of_contact_group/contact_affiliation_schema': 'ror', 'iso_group/point_of_contact_group/contact_affiliation_schema_uri': 'https://ror.org/', 'iso_group/point_of_contact_group/contact_email': 'tnorris@miami.edu', 'iso_group/point_of_contact_group/contact_first_name': 'Timothy', 'iso_group/point_of_contact_group/contact_identifier': 'https://orcid.org/0000-0002-0898-3027', 'iso_group/point_of_contact_group/contact_identifier_schema': 'orcid', 'iso_group/point_of_contact_group/contact_identifier_schema_uri': 'https://orcid.org/', 'iso_group/point_of_contact_group/contact_last_name': 'Norris', 'iso_group/point_of_contact_group/contact_name': 'Timothy B. Norris'}"
+        }
+      ],
+      "identifier": {
+        "@type": "PropertyValue",
+        "name": "external_id",
+        "value": "842259577"
+      },
       "url": "https://geoservidorperu.minam.gob.pe/arcgis/rest/services/Servicio_Degradacion_tematicas/MapServer/2",
       "inLanguage": "es",
+      "dateModified": "2025-04-29 16:44:47",
       "creator": [
         {
           "@type": "Role",
@@ -93,82 +181,47 @@
           "encodingFormat": "application/json"
         }
       ],
-      "additionalProperty": [
-        {
-          "@type": "PropertyValue",
-          "name": "postgis_table",
-          "value": "hh_rvdepartamental_ign"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "kobo_record_id",
-          "value": "185"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "cartography_value_field",
-          "value": "objectid"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "Spatial Reference System",
-          "value": "http://www.opengis.net/def/crs/EPSG/0/5387"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "derivatives",
-          "value": "shp geojson gpkg"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "download_method",
-          "value": "esri_recursive_ogr"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "source_file",
-          "value": "{'etl_group/file_name_group/file_name_value': 'hh_rvdepartamental_ign'}"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "serviceDefinition",
-          "value": "API|arcgis|query"
-        }
-      ],
       "dct:accrualPeriodicity": "as_needed",
       "variableMeasured": [
         {
           "@type": "PropertyValue",
           "name": "objectid",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:int4"
         },
         {
           "@type": "PropertyValue",
           "name": "longitud",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:float8"
         },
         {
           "@type": "PropertyValue",
           "name": "dpto",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:varchar"
         },
         {
           "@type": "PropertyValue",
           "name": "ruta_d044",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:varchar"
         },
         {
           "@type": "PropertyValue",
           "name": "red_044",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:varchar"
         },
         {
           "@type": "PropertyValue",
           "name": "supercicie",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:varchar"
         }
       ],
       "isAccessibleForFree": false,
+      "dct:provenance": "Direct from source.",
       "additionalType": "vector_dataset"
     }
   ]

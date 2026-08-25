@@ -11,10 +11,97 @@
       "@id": "https://gdsc.idsc.miami.edu/detail/hh_2023_bofedales_inaigem",
       "name": "Inventario Bofedales Huayhuash 2023 (INAIGEM)",
       "description": "El primer Inventario Nacional de Bofedales (INB) del Perú tiene como finalidad delimitar y cuantificar el ecosistema de bofedales, con el objetivo de proporcionar información a escala nacional detallada sobre la ubicación y extensión de estos ecosistemas. Esta información busca apoyar la toma de decisiones relacionadas con su gestión sostenible.\n  \n  La extensión de los bofedales en el Perú se estima en 910 398.2 hectáreas (ha), lo que representa el 0.71% del territorio nacional. Los bofedales están distribuidos en 19 departamentos, siendo Puno, Arequipa y Ayacucho los que concentran más del 50% de la superficie total con aproximadamente de 493 235.2 ha; mientras que los departamentos de Ica, Amazonas y Piura tienen una menor superficie.\n  \n  El INB se elaboró con un nivel de detalle que permitió cartografiar mediante el uso de técnicas de teledetección unidades mínimas de 0.09 ha, conocido como la Unidad Mínima Cartografiable (UMC). Estas técnicas incluyen el análisis de imágenes satelitales de la constelación Sentinel-1 y Sentinel-2 (correspondientes a la temporada húmeda) y productos DEM - ALOS PALSAR. El análisis se realizó utilizando un clasificador basado en árboles de decisión que integró cinco máscaras como indicadores de presencia de bofedales: altitud (DEM), índice de posición topográfica (TPI), pendiente, índice de humedad (NDII), mixtura espectral (LSU) e intensidad. \n  \n  Es importante destacar que para cada máscara se utilizó umbrales específicos definidos según las macrozonas altoandinas (páramo, norte, centro y sur).\n  \n  Correo electrónico de contacto.\n  hmallqui@inaigem.gob.pe, fmedina@inaigem.gob.pe",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "name": "size",
+          "value": "47M"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "postgis_table",
+          "value": "hh_2023_bofedales_inaigem"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "kobo_record_id",
+          "value": "209"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "process_step",
+          "value": "#########\n  # GDSC ETL is performed in two steps: shell script to ETL data into postgres\n  # and then additional transformations with SQL in postGIS (if needed).\n  ####\n  \n  #########\n  # Step 1 - bash script (pseudo code)\n  ####\n  \n  # create directory structure and move into it\n  mkdir -p /data/hh_2023_bofedales_inaigem/download -p /data/hh_2023_bofedales_inaigem/etl\n  chmod 777 /data/hh_2023_bofedales_inaigem/download\n  cd /data/hh_2023_bofedales_inaigem\n  \n  # set update flag based on last update and update frequency\n  do_update=0 if date() < last_update + update_frequency else do_update = 1\n  \n  # download if update flag is set:\n  if do_update == 1 then\n  curl -o download/hh_2023_bofedales_inaigem.json 'https://datacochageoespacial.inaigem.gob.pe/geoserver/inventario_bofedales/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=inventario_bofedales%3Ainventario_bofedales_2023&outputFormat=application/json&bbox=-77.33,-10.7,-76.55,-9.8,EPSG:4326'\n  \n  # load into postGIS with:\n    ogr2ogr -lco GEOMETRY_NAME=geom -f PostgreSQL PG:\"<postgres connection>\" download/hh_2023_bofedales_inaigem.json -nlt multipolygon -nln hh_2023_bofedales_inaigem\n  \n  #########\n  # Step 2 - SQL script (pseudo code):\n  ####\n  \n  # remove duplicate points and make geometries valid:\n  UPDATE hh_2023_bofedales_inaigem\n    SET geom=ST_MakeValid(ST_RemoveRepeatedPoints(geom));\n  \n  # add local geometry column and reproject existing geometries into local EPSG:\n  SELECT AddGeometryColumn (\n    'hh_2023_bofedales_inaigem',\n    'geom_local', 5387, 'multipolygon', 2\n  );\n  UPDATE hh_2023_bofedales_inaigem\n    SET geom_local=ST_MakeValid(ST_RemoveRepeatedPoints(ST_Transform(ST_Multi(geom),5387)));\n  CREATE INDEX hh_2023_bofedales_inaigem_geom_local_idx\n    ON hh_2023_bofedales_inaigem\n    USING GIST (geom_local);\n  NOTIFY pgrst, 'reload schema';\n  # Move into corrrect directory and create derivative directory in data package on osgeo\n  cd /data/hh_2023_bofedales_inaigem/\n  mkdir -p derived\n  \n  # Create shapefile of table in derivate directory on osgeo \n  ogr2ogr -f \"ESRI Shapefile\" -overwrite derived/hh_2023_bofedales_inaigem.shp PG:\"<postgres connection>\" hh_2023_bofedales_inaigem\n  \n  # Create downloadable tarfile of shp in derivative directory on osgeo\n  rm -f derived/hh_2023_bofedales_inaigem.shp.tar.gz\n  tar -czf derived/hh_2023_bofedales_inaigem.shp.tar.gz meta_dcat_hh_2023_bofedales_inaigem.json -C derived hh_2023_bofedales_inaigem.shp hh_2023_bofedales_inaigem.prj hh_2023_bofedales_inaigem.shx hh_2023_bofedales_inaigem.dbf\n  \n  # Create gpkg of table in derivate directory on osgeo \n  rm -f derived/hh_2023_bofedales_inaigem.gpkg\n  ogr2ogr -f GPKG -overwrite derived/hh_2023_bofedales_inaigem.gpkg PG:\"<postgres connection>\" -select \"objectid,fid_invent,desc_cober,zona_utm,macrozona,vertiente,ubig_dep,nomb_dep,ubig_prov,nomb_prov,ubig_dist,nomb_dist,nomb_capdi,cod_uh,nomb_uh,area_ha,geom\" hh_2023_bofedales_inaigem\n  \n  # Create downloadable tarfile of gpkg in derivative directory on osgeo\n  rm -f derived/hh_2023_bofedales_inaigem.gpkg.tar.gz\n  tar -czf derived/hh_2023_bofedales_inaigem.gpkg.tar.gz meta_dcat_hh_2023_bofedales_inaigem.json -C derived hh_2023_bofedales_inaigem.gpkg\n  \n  # Create geojson of table in derivate directory on osgeo \n  rm -f derived/hh_2023_bofedales_inaigem.json\n  ogr2ogr -f GeoJSON -overwrite derived/hh_2023_bofedales_inaigem.json PG:\"<postgres connection>\" -select \"objectid,fid_invent,desc_cober,zona_utm,macrozona,vertiente,ubig_dep,nomb_dep,ubig_prov,nomb_prov,ubig_dist,nomb_dist,nomb_capdi,cod_uh,nomb_uh,area_ha,geom\" hh_2023_bofedales_inaigem\n  \n  # Create downloadable tarfile of geojson in derivative directory on osgeo\n  rm -f derived/hh_2023_bofedales_inaigem.geojson.tar.gz\n  tar -czf derived/hh_2023_bofedales_inaigem.geojson.tar.gz meta_dcat_hh_2023_bofedales_inaigem.json -C derived hh_2023_bofedales_inaigem.json\n  \n  # Move into correct directory\n  cd /data/hh_2023_bofedales_inaigem/"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "processor",
+          "value": "GDSC automation (see Process Step)"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "values",
+          "value": "objectid"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "Spatial Reference System",
+          "value": "http://www.opengis.net/def/crs/EPSG/0/5387"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "derivatives",
+          "value": "shp geojson gpkg"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "download_method",
+          "value": "curl"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "source_file",
+          "value": "{'etl_group/file_name_group/file_name_value': 'hh_2023_bofedales_inaigem'}"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "extent",
+          "value": "POLYGON((-77.336770 -10.707429, -76.545281 -10.707429, -76.545281 -9.779092, -77.336770 -9.779092, -77.336770 -10.707429))"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "podid",
+          "value": "gdsc-postgis-node-pw253qkkeo29z91s"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "up",
+          "value": "true"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "serviceDefinition",
+          "value": "API|geoserver|query"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "derivativeUrl",
+          "value": "/data/hh_2023_bofedales_inaigem/"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "pointOfContact",
+          "value": "{'iso_group/point_of_contact_group/contact_affiliation': 'University of Miami Libraries, Frost Institute for Data Science and Computing', 'iso_group/point_of_contact_group/contact_affiliation_identifier': 'https://ror.org/02dgjyy92', 'iso_group/point_of_contact_group/contact_affiliation_schema': 'ror', 'iso_group/point_of_contact_group/contact_affiliation_schema_uri': 'https://ror.org/', 'iso_group/point_of_contact_group/contact_email': 'tnorris@miami.edu', 'iso_group/point_of_contact_group/contact_first_name': 'Timothy', 'iso_group/point_of_contact_group/contact_identifier': 'https://orcid.org/0000-0002-0898-3027', 'iso_group/point_of_contact_group/contact_identifier_schema': 'orcid', 'iso_group/point_of_contact_group/contact_identifier_schema_uri': 'https://orcid.org/', 'iso_group/point_of_contact_group/contact_last_name': 'Norris', 'iso_group/point_of_contact_group/contact_name': 'Timothy B. Norris'}"
+        }
+      ],
+      "identifier": {
+        "@type": "PropertyValue",
+        "name": "external_id",
+        "value": "842259741"
+      },
       "url": "https://datacochageoespacial.inaigem.gob.pe/geonetwork/srv/spa/catalog.search#/metadata/0b17e18e-2622-4158-9cc5-a31a587743df",
       "inLanguage": "es",
       "datePublished": "2023-01-01",
-      "dateModified": "2025-02-27",
+      "dateModified": "2025-06-09 10:20:09",
       "creator": [
         {
           "@type": "Role",
@@ -105,134 +192,103 @@
           "encodingFormat": "application/json"
         }
       ],
-      "additionalProperty": [
-        {
-          "@type": "PropertyValue",
-          "name": "postgis_table",
-          "value": "hh_2023_bofedales_inaigem"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "kobo_record_id",
-          "value": "209"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "cartography_value_field",
-          "value": "objectid"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "Spatial Reference System",
-          "value": "http://www.opengis.net/def/crs/EPSG/0/5387"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "derivatives",
-          "value": "shp geojson gpkg"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "download_method",
-          "value": "curl"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "source_file",
-          "value": "{'etl_group/file_name_group/file_name_value': 'hh_2023_bofedales_inaigem'}"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "serviceDefinition",
-          "value": "API|geoserver|query"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "pointOfContact",
-          "value": "{'iso_group/point_of_contact_group/contact_name': 'TBD'}"
-        }
-      ],
       "dct:accrualPeriodicity": "as_needed",
       "variableMeasured": [
         {
           "@type": "PropertyValue",
           "name": "objectid",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:int4"
         },
         {
           "@type": "PropertyValue",
           "name": "fid_invent",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:int4"
         },
         {
           "@type": "PropertyValue",
           "name": "desc_cober",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:varchar"
         },
         {
           "@type": "PropertyValue",
           "name": "zona_utm",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:int4"
         },
         {
           "@type": "PropertyValue",
           "name": "macrozona",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:varchar"
         },
         {
           "@type": "PropertyValue",
           "name": "vertiente",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:varchar"
         },
         {
           "@type": "PropertyValue",
           "name": "ubig_dep",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:varchar"
         },
         {
           "@type": "PropertyValue",
           "name": "nomb_dep",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:varchar"
         },
         {
           "@type": "PropertyValue",
           "name": "ubig_prov",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:varchar"
         },
         {
           "@type": "PropertyValue",
           "name": "nomb_prov",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:varchar"
         },
         {
           "@type": "PropertyValue",
           "name": "ubig_dist",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:varchar"
         },
         {
           "@type": "PropertyValue",
           "name": "nomb_dist",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:varchar"
         },
         {
           "@type": "PropertyValue",
           "name": "nomb_capdi",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:varchar"
         },
         {
           "@type": "PropertyValue",
           "name": "cod_uh",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:varchar"
         },
         {
           "@type": "PropertyValue",
           "name": "nomb_uh",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:varchar"
         },
         {
           "@type": "PropertyValue",
           "name": "area_ha",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:float8"
         }
       ],
       "isAccessibleForFree": false,

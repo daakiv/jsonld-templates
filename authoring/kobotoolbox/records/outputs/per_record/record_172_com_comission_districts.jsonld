@@ -1,0 +1,235 @@
+{
+  "@context": {
+    "@vocab": "https://schema.org/",
+    "schema": "https://schema.org/",
+    "@language": "en",
+    "dct": "http://purl.org/dc/terms/"
+  },
+  "@graph": [
+    {
+      "@type": "schema:Dataset",
+      "@id": "https://gdsc.idsc.miami.edu/detail/com_comission_districts",
+      "name": "City of Miami Comission Districts",
+      "description": "This data is used to display the geogrpahic boundaries of the commission districts and to help manage and facitlitate administrative tasks.\n  \n  The Commission Districts dataset is a spatial data representation of the five districts of City of Miami, originally created by the City Clerk's Office, City of Miami. Each district is administered by a commissioner, which is elected every four years. The data layer is maintained and managed by the GIS Team of the City of Miami.",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "name": "size",
+          "value": "0\n    du: cannot access '/data/com_comission_districts/': No such file or directory"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "postgis_table",
+          "value": "com_comission_districts"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "kobo_record_id",
+          "value": "172"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "process_step",
+          "value": "#########\n  # GDSC ETL is performed in two steps: shell script to ETL data into postgres\n  # and then additional transformations with SQL in postGIS (if needed).\n  ####\n  \n  #########\n  # Step 1 - bash script (pseudo code)\n  ####\n  \n  # create directory structure and move into it\n  mkdir -p /data/com_comission_districts/download -p /data/com_comission_districts/etl\n  chmod 777 /data/com_comission_districts/download\n  cd /data/com_comission_districts\n  \n  # set update flag based on last update and update frequency\n  do_update=0 if date() < last_update + update_frequency else do_update = 1\n  \n  # download if update flag is set:\n  if do_update == 1 then\n  ogr2ogr -nln com_comission_districts download/com_comission_districts.json 'https://services1.arcgis.com/CvuPhqcTQpZPT9qY/arcgis/rest/services/Commission_Districts/FeatureServer/0/query?outFields=*&where=1%3D1&f=geojson'\n  \n  # load into postGIS with:\n    ogr2ogr -lco GEOMETRY_NAME=geom -f PostgreSQL PG:\"<postgres connection>\" download/com_comission_districts.json -nlt multipolygon -nln com_comission_districts\n  \n  #########\n  # Step 2 - SQL script (pseudo code):\n  ####\n  \n  # remove duplicate points and make geometries valid:\n  UPDATE com_comission_districts\n    SET geom=ST_MakeValid(ST_RemoveRepeatedPoints(geom));\n  \n  # add local geometry column and reproject existing geometries into local EPSG:\n  SELECT AddGeometryColumn (\n    'com_comission_districts',\n    'geom_local', 2236, 'multipolygon', 2\n  );\n  UPDATE com_comission_districts\n    SET geom_local=ST_MakeValid(ST_RemoveRepeatedPoints(ST_Transform(ST_Multi(geom),2236)));\n  CREATE INDEX com_comission_districts_geom_local_idx\n    ON com_comission_districts\n    USING GIST (geom_local);\n  NOTIFY pgrst, 'reload schema';"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "processor",
+          "value": "GDSC automation (see Process Step)"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "label",
+          "value": "comdistid"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "Spatial Reference System",
+          "value": "http://www.opengis.net/def/crs/EPSG/0/2236"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "download_method",
+          "value": "esri_recursive_ogr"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "source_file",
+          "value": "{'etl_group/file_name_group/file_name_value': 'com_comission_districts'}"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "podid",
+          "value": "gdsc-postgis-node-lz0j8axwy5jh96wb"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "up",
+          "value": "false"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "derivativeUrl",
+          "value": "/data/com_comission_districts/"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "pointOfContact",
+          "value": "{'iso_group/point_of_contact_group/contact_affiliation': 'University of Miami Libraries, Frost Institute for Data Science and Computing', 'iso_group/point_of_contact_group/contact_affiliation_identifier': 'https://ror.org/02dgjyy92', 'iso_group/point_of_contact_group/contact_affiliation_schema': 'ror', 'iso_group/point_of_contact_group/contact_affiliation_schema_uri': 'https://ror.org/', 'iso_group/point_of_contact_group/contact_email': 'tnorris@miami.edu', 'iso_group/point_of_contact_group/contact_first_name': 'Timothy', 'iso_group/point_of_contact_group/contact_identifier': 'https://orcid.org/0000-0002-0898-3027', 'iso_group/point_of_contact_group/contact_identifier_schema': 'orcid', 'iso_group/point_of_contact_group/contact_identifier_schema_uri': 'https://orcid.org/', 'iso_group/point_of_contact_group/contact_last_name': 'Norris', 'iso_group/point_of_contact_group/contact_name': 'Timothy B. Norris'}"
+        }
+      ],
+      "identifier": {
+        "@type": "PropertyValue",
+        "name": "external_id",
+        "value": "842276298"
+      },
+      "url": "https://datahub-miamigis.opendata.arcgis.com/datasets/1ff4f95b49e142ee8d4e93bb33a9f42d_0/explore",
+      "license": "https://creativecommons.org/licenses/by/4.0/",
+      "inLanguage": "en",
+      "datePublished": "2019-02-17",
+      "dateModified": "not known",
+      "creator": [
+        {
+          "@type": "Role",
+          "roleName": "creator",
+          "creator": {
+            "@type": "Organization",
+            "name": "City of Miami"
+          }
+        }
+      ],
+      "provider": {
+        "@type": "Organization",
+        "name": "City of Miami"
+      },
+      "spatialCoverage": {
+        "@type": "Place",
+        "name": "Miami",
+        "additionalProperty": [
+          {
+            "@type": "PropertyValue",
+            "name": "geonames",
+            "value": "4164138",
+            "url": "https://www.geonames.org/4164138"
+          },
+          {
+            "@type": "PropertyValue",
+            "name": "Spatial Reference System",
+            "value": "http://www.opengis.net/def/crs/EPSG/0/4326"
+          }
+        ]
+      },
+      "keywords": [
+        "City of Miami",
+        "Comission Districts"
+      ],
+      "includedInDataCatalog": [
+        {
+          "@type": "DataCatalog",
+          "@id": "https://gdsc.idsc.miami.edu",
+          "name": "Geospatial Digital Special Collections",
+          "url": "https://gdsc.idsc.miami.edu"
+        },
+        {
+          "@type": "DataCatalog",
+          "name": "climate-and-equity-mapping-program",
+          "@id": "https://gdsc.idsc.miami.edu/?collection=climate-and-equity-mapping-program",
+          "url": "https://gdsc.idsc.miami.edu/?collection=climate-and-equity-mapping-program"
+        },
+        {
+          "@type": "DataCatalog",
+          "name": "land-access-neighborhood-development",
+          "@id": "https://gdsc.idsc.miami.edu/?collection=land-access-neighborhood-development",
+          "url": "https://gdsc.idsc.miami.edu/?collection=land-access-neighborhood-development"
+        }
+      ],
+      "measurementTechnique": [
+        {
+          "@type": "DefinedTerm",
+          "name": "GIS Data Structure",
+          "termCode": "vector",
+          "inDefinedTermSet": {
+            "@type": "DefinedTermSet",
+            "name": "dataRepresentation",
+            "url": "https://gdsc.idsc.miami.edu/vocab/dataRepresentation"
+          }
+        },
+        {
+          "@type": "DefinedTerm",
+          "name": "GIS Vector Geometry",
+          "termCode": "polygon",
+          "inDefinedTermSet": {
+            "@type": "DefinedTermSet",
+            "name": "vectorGeometry",
+            "url": "https://gdsc.idsc.miami.edu/vocab/vectorGeometry"
+          }
+        }
+      ],
+      "distribution": [
+        {
+          "@type": "DataDownload",
+          "name": "Source distribution",
+          "contentUrl": "https://services1.arcgis.com/CvuPhqcTQpZPT9qY/arcgis/rest/services/Commission_Districts/FeatureServer/0/query?outFields=*&where=1%3D1&f=geojson",
+          "encodingFormat": "application/json"
+        }
+      ],
+      "dct:accrualPeriodicity": "as_needed",
+      "variableMeasured": [
+        {
+          "@type": "PropertyValue",
+          "name": "comdistid",
+          "description": "Comission District ID",
+          "qudt:dataType": "xsd:integer",
+          "sourceOrganization": {
+            "@type": "Organization",
+            "name": "City of Miami"
+          }
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "commname",
+          "description": "Comissioner full name",
+          "qudt:dataType": "xsd:varchar",
+          "sourceOrganization": {
+            "@type": "Organization",
+            "name": "City of Miami"
+          }
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "address",
+          "description": "Street address for comissioner office",
+          "qudt:dataType": "xsd:varchar",
+          "sourceOrganization": {
+            "@type": "Organization",
+            "name": "City of Miami"
+          }
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "phone",
+          "description": "Phone number for comissioner office",
+          "qudt:dataType": "xsd:varchar",
+          "sourceOrganization": {
+            "@type": "Organization",
+            "name": "City of Miami"
+          }
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "website",
+          "description": "Website address for comissioner office",
+          "qudt:dataType": "xsd:varchar",
+          "sourceOrganization": {
+            "@type": "Organization",
+            "name": "City of Miami"
+          }
+        }
+      ],
+      "isAccessibleForFree": false,
+      "usageInfo": "CC BY 4.0 - https://creativecommons.org/licenses/by/4.0/",
+      "dct:provenance": "Direct from source",
+      "additionalType": "vector_dataset"
+    }
+  ]
+}

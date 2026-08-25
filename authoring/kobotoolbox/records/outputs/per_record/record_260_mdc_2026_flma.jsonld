@@ -11,10 +11,102 @@
       "@id": "https://gdsc.idsc.miami.edu/detail/mdc_2026_flma",
       "name": "2026 MDC FLMA Managed Areas",
       "description": "The State Parks are derived as a subset from The Florida Natural Areas Inventory. The Florida Natural Areas Inventory is the primary source for information on Florida's conservation lands. FNAI's database includes boundaries and statistics for more than 2,900 federal, state, local, and private managed areas, all provided directly by the managing agencies. National parks, state forests, wildlife management areas, local and private preserves are examples of the managed areas included. The shapefile is called FLMA for Florida Managed Areas; updated versions are published quarterly.\n  \n  FLORIDA CONSERVATION LANDS (layer name FLMA): This is a polygon data layer for public (and some private) lands that the Florida Natural Areas Inventory (FNAI) has identified as having natural resource value and that are being managed at least partially for conservation purposes. The term \"Managed Area\" refers to a managed conservation land.\n  ",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "name": "size",
+          "value": "0"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "postgis_table",
+          "value": "mdc_2026_flma"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "kobo_record_id",
+          "value": "260"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "process_step",
+          "value": "#########\n  # GDSC ETL is performed in two steps: shell script to ETL data into postgres\n  # and then additional transformations with SQL in postGIS (if needed).\n  ####\n  \n  #########\n  # Step 1 - bash script (pseudo code)\n  ####\n  \n  # create directory structure and move into it\n  mkdir -p /data/mdc_2026_flma/download -p /data/mdc_2026_flma/etl\n  chmod 777 /data/mdc_2026_flma/download\n  cd /data/mdc_2026_flma\n  \n  # set update flag based on last update and update frequency\n  do_update=0 if date() < last_update + update_frequency else do_update = 1\n  \n  # load fl_2026_flma as dependency (see fl_2026_flma for details).\n  \n  # Create copy of geom dependency\n  pg_dump -d $POSTGRES_DB -U $POSTGRES_USER -p $POSTGRES_PORT -h gdsc-postgis-node-1jeve09m3vekcikq -t fl_2026_flma | sed 's/fl_2026_flma/mdc_2026_flma/g' | psql -d $POSTGRES_DB -U $POSTGRES_USER -p $POSTGRES_PORT -h gdsc-postgis-node-cgiaaxifrv4cwih4 \n  \n  # drop geom_local and subset as per custom parameters\n  psql -d $POSTGRES_DB -U $POSTGRES_USER -p $POSTGRES_PORT -h gdsc-postgis-node-cgiaaxifrv4cwih4 -c \"\n  ALTER TABLE mdc_2026_flma DROP COLUMN IF EXISTS geom_local;\n  DELETE FROM mdc_2026_flma\n    WHERE NOT (county = 'Miami-Dade');\n  COMMIT;\"\n  # add local geometry column and reproject existing geometries into local EPSG:\n  SELECT AddGeometryColumn (\n    'mdc_2026_flma',\n    'geom_local', 2236, 'multipolygon', 2\n  );\n  UPDATE mdc_2026_flma\n    SET geom_local=ST_MakeValid(ST_RemoveRepeatedPoints(ST_Transform(ST_Multi(geom),2236)));\n  CREATE INDEX mdc_2026_flma_geom_local_idx\n    ON mdc_2026_flma\n    USING GIST (geom_local);\n  NOTIFY pgrst, 'reload schema';\n  # add local geometry column and reproject existing geometries into local EPSG:\n  SELECT AddGeometryColumn (\n    'mdc_2026_flma',\n    'geom_local', 2236, 'multipolygon', 2\n  );\n  UPDATE mdc_2026_flma\n    SET geom_local=ST_MakeValid(ST_RemoveRepeatedPoints(ST_Transform(ST_Multi(geom),2236)));\n  CREATE INDEX mdc_2026_flma_geom_local_idx\n    ON mdc_2026_flma\n    USING GIST (geom_local);\n  NOTIFY pgrst, 'reload schema';"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "processor",
+          "value": "GDSC automation (see Process Step)"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "label",
+          "value": "ma_id"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "analytic_function",
+          "value": "gdsc_get_attributes gdsc_nearest_neighbor"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "Spatial Reference System",
+          "value": "http://www.opengis.net/def/crs/EPSG/0/2236"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "source_file",
+          "value": "{'etl_group/file_name_group/file_name_value': 'mdc_2026_flma'}"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "extent",
+          "value": "POLYGON((-87.521467 24.246904, -79.879816 24.246904, -79.879816 30.987616, -87.521467 30.987616, -87.521467 24.246904))"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "podid",
+          "value": "gdsc-postgis-node-cgiaaxifrv4cwih4"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "up",
+          "value": "false"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "customParameters",
+          "value": "county;=;'Miami-Dade'"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "derivativeUrl",
+          "value": "/data/mdc_2026_flma/"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "customEtl",
+          "value": "subset"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "dependencyTable",
+          "value": "{'etl_group/dependency_group/dependency_table_name': 'fl_2026_flma'}"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "pointOfContact",
+          "value": "{'iso_group/point_of_contact_group/contact_affiliation': 'University of Miami Libraries, Frost Institute for Data Science and Computing', 'iso_group/point_of_contact_group/contact_affiliation_identifier': 'https://ror.org/02dgjyy92', 'iso_group/point_of_contact_group/contact_affiliation_schema': 'ror', 'iso_group/point_of_contact_group/contact_affiliation_schema_uri': 'https://ror.org/', 'iso_group/point_of_contact_group/contact_email': 'tnorris@miami.edu', 'iso_group/point_of_contact_group/contact_first_name': 'Timothy', 'iso_group/point_of_contact_group/contact_identifier': 'https://orcid.org/0000-0002-0898-3027', 'iso_group/point_of_contact_group/contact_identifier_schema': 'orcid', 'iso_group/point_of_contact_group/contact_identifier_schema_uri': 'https://orcid.org/', 'iso_group/point_of_contact_group/contact_last_name': 'Norris', 'iso_group/point_of_contact_group/contact_name': 'Timothy B. Norris'}"
+        }
+      ],
+      "identifier": {
+        "@type": "PropertyValue",
+        "name": "external_id",
+        "value": "842265225"
+      },
       "url": "https://www.fnai.org/publications/gis-data",
       "inLanguage": "en",
       "datePublished": "2026-03-01",
-      "dateModified": "2023-12-31",
+      "dateModified": "2026-07-16 09:51:31",
       "creator": [
         {
           "@type": "Role",
@@ -130,63 +222,6 @@
           "name": "Source distribution",
           "contentUrl": "fl_2026_flma",
           "encodingFormat": "application/x-shapefile"
-        }
-      ],
-      "additionalProperty": [
-        {
-          "@type": "PropertyValue",
-          "name": "postgis_table",
-          "value": "mdc_2026_flma"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "kobo_record_id",
-          "value": "260.0"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "cartography_label_field",
-          "value": "ma_id"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "analytic_function",
-          "value": "gdsc_get_attributes gdsc_nearest_neighbor"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "Spatial Reference System",
-          "value": "http://www.opengis.net/def/crs/EPSG/0/2236"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "source_file",
-          "value": "{'etl_group/file_name_group/file_name_value': 'mdc_2026_flma'}"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "extent",
-          "value": "-87.509056|24.246904\n  |-79.879813|31.030878"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "customParameters",
-          "value": "county;=;'Miami-Dade'"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "customEtl",
-          "value": "subset"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "dependencyTable",
-          "value": "{'etl_group/dependency_group/dependency_table_name': 'fl_2026_flma'}"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "pointOfContact",
-          "value": "{'iso_group/point_of_contact_group/contact_name': 'TBD'}"
         }
       ],
       "dct:accrualPeriodicity": "four_months",

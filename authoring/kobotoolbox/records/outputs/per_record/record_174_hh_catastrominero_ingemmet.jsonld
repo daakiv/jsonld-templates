@@ -11,10 +11,102 @@
       "@id": "https://gdsc.idsc.miami.edu/detail/hh_catastrominero_ingemmet",
       "name": "Catastro Minero Huayhuash (INGEMMET)",
       "description": "Un catastro minero digital se puede definir como un inventario de áreas mineras que cuenta con respaldos en forma gráfica y alfanumérica en una base de datos digital.",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "name": "size",
+          "value": "1.2M"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "postgis_table",
+          "value": "hh_catastrominero_ingemmet"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "kobo_record_id",
+          "value": "174"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "process_step",
+          "value": "#########\n  # GDSC ETL is performed in two steps: shell script to ETL data into postgres\n  # and then additional transformations with SQL in postGIS (if needed).\n  ####\n  \n  #########\n  # Step 1 - bash script (pseudo code)\n  ####\n  \n  # create directory structure and move into it\n  mkdir -p /data/hh_catastrominero_ingemmet/download -p /data/hh_catastrominero_ingemmet/etl\n  chmod 777 /data/hh_catastrominero_ingemmet/download\n  cd /data/hh_catastrominero_ingemmet\n  \n  # set update flag based on last update and update frequency\n  do_update=0 if date() < last_update + update_frequency else do_update = 1\n  \n  # download if update flag is set:\n  if do_update == 1 then\n  ogr2ogr -nln hh_catastrominero_ingemmet download/hh_catastrominero_ingemmet.json 'https://geocatmin.ingemmet.gob.pe/arcgis/rest/services/SERV_CATASTRO_MINERO_WGS84/MapServer/0/query?where=1%3D1&geometry=%22xmin%22%3A-77.33%2C%22ymin%22%3A-10.7%2C%22xmax%22%3A-76.55%2C%22ymax%22%3A-9.8&geometryType=esriGeometryEnvelope&inSR=4326&spatialRel=esriSpatialRelIntersects&outFields=*&returnGeometry=true&outSR=4326&f=geojson'\n  \n  # replace column names Shape__Length and Shape__Area to avoid conflict when\n  # providing as service on ArcServer.\n  sed -i 's/Shape__Length/shape_length/gI; s/Shape__Area/shape_area/gI' download/hh_catastrominero_ingemmet.json\n  \n  # load into postGIS with:\n    ogr2ogr -lco GEOMETRY_NAME=geom -f PostgreSQL PG:\"<postgres connection>\" download/hh_catastrominero_ingemmet.json -nlt multipolygon -nln hh_catastrominero_ingemmet\n  \n  #########\n  # Step 2 - SQL script (pseudo code):\n  ####\n  \n  # remove duplicate points and make geometries valid:\n  UPDATE hh_catastrominero_ingemmet\n    SET geom=ST_MakeValid(ST_RemoveRepeatedPoints(geom));\n  \n  # add local geometry column and reproject existing geometries into local EPSG:\n  SELECT AddGeometryColumn (\n    'hh_catastrominero_ingemmet',\n    'geom_local', 5387, 'multipolygon', 2\n  );\n  UPDATE hh_catastrominero_ingemmet\n    SET geom_local=ST_MakeValid(ST_RemoveRepeatedPoints(ST_Transform(ST_Multi(geom),5387)));\n  CREATE INDEX hh_catastrominero_ingemmet_geom_local_idx\n    ON hh_catastrominero_ingemmet\n    USING GIST (geom_local);\n  NOTIFY pgrst, 'reload schema';\n  # Move into corrrect directory and create derivative directory in data package on osgeo\n  cd /data/hh_catastrominero_ingemmet/\n  mkdir -p derived\n  \n  # Create shapefile of table in derivate directory on osgeo \n  ogr2ogr -f \"ESRI Shapefile\" -overwrite derived/hh_catastrominero_ingemmet.shp PG:\"<postgres connection>\" hh_catastrominero_ingemmet\n  \n  # Create downloadable tarfile of shp in derivative directory on osgeo\n  rm -f derived/hh_catastrominero_ingemmet.shp.tar.gz\n  tar -czf derived/hh_catastrominero_ingemmet.shp.tar.gz meta_dcat_hh_catastrominero_ingemmet.json -C derived hh_catastrominero_ingemmet.shp hh_catastrominero_ingemmet.prj hh_catastrominero_ingemmet.shx hh_catastrominero_ingemmet.dbf\n  \n  # Create gpkg of table in derivate directory on osgeo \n  rm -f derived/hh_catastrominero_ingemmet.gpkg\n  ogr2ogr -f GPKG -overwrite derived/hh_catastrominero_ingemmet.gpkg PG:\"<postgres connection>\" -select \"objectid,codigou,fec_denu,concesion,tit_conces,hectagis,estado,d_estado,hor_denu,carta,zona,demagis,observ,leyenda,estado_minem,resol_exti,fecha_resol_exti,desic_resol_ext,ubica_exp,califica,sustancia,depa,provi,distri,direccion,hasdatum,fecha_actualizacion,geom\" hh_catastrominero_ingemmet\n  \n  # Create downloadable tarfile of gpkg in derivative directory on osgeo\n  rm -f derived/hh_catastrominero_ingemmet.gpkg.tar.gz\n  tar -czf derived/hh_catastrominero_ingemmet.gpkg.tar.gz meta_dcat_hh_catastrominero_ingemmet.json -C derived hh_catastrominero_ingemmet.gpkg\n  \n  # Create geojson of table in derivate directory on osgeo \n  rm -f derived/hh_catastrominero_ingemmet.json\n  ogr2ogr -f GeoJSON -overwrite derived/hh_catastrominero_ingemmet.json PG:\"<postgres connection>\" -select \"objectid,codigou,fec_denu,concesion,tit_conces,hectagis,estado,d_estado,hor_denu,carta,zona,demagis,observ,leyenda,estado_minem,resol_exti,fecha_resol_exti,desic_resol_ext,ubica_exp,califica,sustancia,depa,provi,distri,direccion,hasdatum,fecha_actualizacion,geom\" hh_catastrominero_ingemmet\n  \n  # Create downloadable tarfile of geojson in derivative directory on osgeo\n  rm -f derived/hh_catastrominero_ingemmet.geojson.tar.gz\n  tar -czf derived/hh_catastrominero_ingemmet.geojson.tar.gz meta_dcat_hh_catastrominero_ingemmet.json -C derived hh_catastrominero_ingemmet.json\n  \n  # Move into correct directory\n  cd /data/hh_catastrominero_ingemmet/"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "processor",
+          "value": "GDSC automation (see Process Step)"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "label",
+          "value": "concesion"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "values",
+          "value": "objectid"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "Spatial Reference System",
+          "value": "http://www.opengis.net/def/crs/EPSG/0/5387"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "derivatives",
+          "value": "shp geojson gpkg"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "download_method",
+          "value": "esri_recursive_ogr"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "source_file",
+          "value": "{'etl_group/file_name_group/file_name_value': 'hh_catastrominero_ingemmet'}"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "extent",
+          "value": "POLYGON((-77.382612 -10.953824, -76.504720 -10.953824, -76.504720 -9.763171, -77.382612 -9.763171, -77.382612 -10.953824))"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "podid",
+          "value": "gdsc-postgis-node-f67sdli3hwjyrdo1"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "up",
+          "value": "true"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "serviceDefinition",
+          "value": "API|arcgis|query"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "derivativeUrl",
+          "value": "/data/hh_catastrominero_ingemmet/"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "pointOfContact",
+          "value": "{'iso_group/point_of_contact_group/contact_affiliation': 'University of Miami Libraries, Frost Institute for Data Science and Computing', 'iso_group/point_of_contact_group/contact_affiliation_identifier': 'https://ror.org/02dgjyy92', 'iso_group/point_of_contact_group/contact_affiliation_schema': 'ror', 'iso_group/point_of_contact_group/contact_affiliation_schema_uri': 'https://ror.org/', 'iso_group/point_of_contact_group/contact_email': 'tnorris@miami.edu', 'iso_group/point_of_contact_group/contact_first_name': 'Timothy', 'iso_group/point_of_contact_group/contact_identifier': 'https://orcid.org/0000-0002-0898-3027', 'iso_group/point_of_contact_group/contact_identifier_schema': 'orcid', 'iso_group/point_of_contact_group/contact_identifier_schema_uri': 'https://orcid.org/', 'iso_group/point_of_contact_group/contact_last_name': 'Norris', 'iso_group/point_of_contact_group/contact_name': 'Timothy B. Norris'}"
+        }
+      ],
+      "identifier": {
+        "@type": "PropertyValue",
+        "name": "external_id",
+        "value": "842259491"
+      },
       "url": "https://geocatmin.ingemmet.gob.pe/arcgis/rest/services/SERV_CATASTRO_MINERO_WGS84/MapServer/0",
       "inLanguage": "es",
       "datePublished": "2025-02-27",
-      "dateModified": "2025-02-27",
+      "dateModified": "2026-08-03 11:56:29",
       "creator": [
         {
           "@type": "Role",
@@ -95,70 +187,13 @@
           "encodingFormat": "application/json"
         }
       ],
-      "additionalProperty": [
-        {
-          "@type": "PropertyValue",
-          "name": "postgis_table",
-          "value": "hh_catastrominero_ingemmet"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "kobo_record_id",
-          "value": "174"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "cartography_label_field",
-          "value": "concesion"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "cartography_value_field",
-          "value": "objectid"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "Spatial Reference System",
-          "value": "http://www.opengis.net/def/crs/EPSG/0/5387"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "derivatives",
-          "value": "shp geojson gpkg"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "download_method",
-          "value": "esri_recursive_ogr"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "source_file",
-          "value": "{'etl_group/file_name_group/file_name_value': 'hh_catastrominero_ingemmet'}"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "extent",
-          "value": "-77.33|-10.7|-76.55|-9.8"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "serviceDefinition",
-          "value": "API|arcgis|query"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "pointOfContact",
-          "value": "{'iso_group/point_of_contact_group/contact_name': 'INGEMMET Unidad de Catastro Subunidad de Áreas Restringidas al Teléfono (511) 6189800 Anexo 413, Lima - Perú.'}"
-        }
-      ],
       "dct:accrualPeriodicity": "one_day",
       "variableMeasured": [
         {
           "@type": "PropertyValue",
           "name": "objectid",
           "description": "",
-          "qudt:dataType": "xsd:integer",
+          "qudt:dataType": "xsd:int4",
           "sourceOrganization": {
             "@type": "Organization",
             "name": "INGEMMET"
@@ -168,7 +203,7 @@
           "@type": "PropertyValue",
           "name": "codigou",
           "description": "",
-          "qudt:dataType": "xsd:string",
+          "qudt:dataType": "xsd:varchar",
           "sourceOrganization": {
             "@type": "Organization",
             "name": "INGEMMET"
@@ -178,7 +213,7 @@
           "@type": "PropertyValue",
           "name": "fec_denu",
           "description": "",
-          "qudt:dataType": "xsd:int64",
+          "qudt:dataType": "xsd:int8",
           "sourceOrganization": {
             "@type": "Organization",
             "name": "INGEMMET"
@@ -188,7 +223,7 @@
           "@type": "PropertyValue",
           "name": "concesion",
           "description": "",
-          "qudt:dataType": "xsd:string",
+          "qudt:dataType": "xsd:varchar",
           "sourceOrganization": {
             "@type": "Organization",
             "name": "INGEMMET"
@@ -198,7 +233,7 @@
           "@type": "PropertyValue",
           "name": "tit_conces",
           "description": "",
-          "qudt:dataType": "xsd:string",
+          "qudt:dataType": "xsd:varchar",
           "sourceOrganization": {
             "@type": "Organization",
             "name": "INGEMMET"
@@ -208,7 +243,7 @@
           "@type": "PropertyValue",
           "name": "hectagis",
           "description": "",
-          "qudt:dataType": "xsd:real",
+          "qudt:dataType": "xsd:float8",
           "sourceOrganization": {
             "@type": "Organization",
             "name": "INGEMMET"
@@ -218,7 +253,7 @@
           "@type": "PropertyValue",
           "name": "estado",
           "description": "",
-          "qudt:dataType": "xsd:string",
+          "qudt:dataType": "xsd:varchar",
           "sourceOrganization": {
             "@type": "Organization",
             "name": "INGEMMET"
@@ -228,7 +263,7 @@
           "@type": "PropertyValue",
           "name": "d_estado",
           "description": "",
-          "qudt:dataType": "xsd:string",
+          "qudt:dataType": "xsd:varchar",
           "sourceOrganization": {
             "@type": "Organization",
             "name": "INGEMMET"
@@ -238,7 +273,7 @@
           "@type": "PropertyValue",
           "name": "hor_denu",
           "description": "",
-          "qudt:dataType": "xsd:datetime",
+          "qudt:dataType": "xsd:time",
           "sourceOrganization": {
             "@type": "Organization",
             "name": "INGEMMET"
@@ -248,7 +283,7 @@
           "@type": "PropertyValue",
           "name": "carta",
           "description": "",
-          "qudt:dataType": "xsd:string",
+          "qudt:dataType": "xsd:varchar",
           "sourceOrganization": {
             "@type": "Organization",
             "name": "INGEMMET"
@@ -258,7 +293,7 @@
           "@type": "PropertyValue",
           "name": "zona",
           "description": "",
-          "qudt:dataType": "xsd:string",
+          "qudt:dataType": "xsd:varchar",
           "sourceOrganization": {
             "@type": "Organization",
             "name": "INGEMMET"
@@ -268,7 +303,7 @@
           "@type": "PropertyValue",
           "name": "demagis",
           "description": "",
-          "qudt:dataType": "xsd:string",
+          "qudt:dataType": "xsd:varchar",
           "sourceOrganization": {
             "@type": "Organization",
             "name": "INGEMMET"
@@ -278,7 +313,7 @@
           "@type": "PropertyValue",
           "name": "observ",
           "description": "",
-          "qudt:dataType": "xsd:string",
+          "qudt:dataType": "xsd:varchar",
           "sourceOrganization": {
             "@type": "Organization",
             "name": "INGEMMET"
@@ -288,7 +323,7 @@
           "@type": "PropertyValue",
           "name": "leyenda",
           "description": "",
-          "qudt:dataType": "xsd:string",
+          "qudt:dataType": "xsd:varchar",
           "sourceOrganization": {
             "@type": "Organization",
             "name": "INGEMMET"
@@ -298,7 +333,7 @@
           "@type": "PropertyValue",
           "name": "estado_minem",
           "description": "",
-          "qudt:dataType": "xsd:string",
+          "qudt:dataType": "xsd:varchar",
           "sourceOrganization": {
             "@type": "Organization",
             "name": "INGEMMET"
@@ -308,7 +343,7 @@
           "@type": "PropertyValue",
           "name": "resol_exti",
           "description": "",
-          "qudt:dataType": "xsd:string",
+          "qudt:dataType": "xsd:varchar",
           "sourceOrganization": {
             "@type": "Organization",
             "name": "INGEMMET"
@@ -318,7 +353,7 @@
           "@type": "PropertyValue",
           "name": "fecha_resol_exti",
           "description": "",
-          "qudt:dataType": "xsd:int64",
+          "qudt:dataType": "xsd:int8",
           "sourceOrganization": {
             "@type": "Organization",
             "name": "INGEMMET"
@@ -328,7 +363,7 @@
           "@type": "PropertyValue",
           "name": "desic_resol_ext",
           "description": "",
-          "qudt:dataType": "xsd:string",
+          "qudt:dataType": "xsd:varchar",
           "sourceOrganization": {
             "@type": "Organization",
             "name": "INGEMMET"
@@ -338,7 +373,7 @@
           "@type": "PropertyValue",
           "name": "ubica_exp",
           "description": "",
-          "qudt:dataType": "xsd:string",
+          "qudt:dataType": "xsd:varchar",
           "sourceOrganization": {
             "@type": "Organization",
             "name": "INGEMMET"
@@ -348,7 +383,7 @@
           "@type": "PropertyValue",
           "name": "califica",
           "description": "",
-          "qudt:dataType": "xsd:string",
+          "qudt:dataType": "xsd:varchar",
           "sourceOrganization": {
             "@type": "Organization",
             "name": "INGEMMET"
@@ -358,7 +393,7 @@
           "@type": "PropertyValue",
           "name": "sustancia",
           "description": "",
-          "qudt:dataType": "xsd:string",
+          "qudt:dataType": "xsd:varchar",
           "sourceOrganization": {
             "@type": "Organization",
             "name": "INGEMMET"
@@ -368,7 +403,7 @@
           "@type": "PropertyValue",
           "name": "depa",
           "description": "",
-          "qudt:dataType": "xsd:string",
+          "qudt:dataType": "xsd:varchar",
           "sourceOrganization": {
             "@type": "Organization",
             "name": "INGEMMET"
@@ -378,7 +413,7 @@
           "@type": "PropertyValue",
           "name": "provi",
           "description": "",
-          "qudt:dataType": "xsd:string",
+          "qudt:dataType": "xsd:varchar",
           "sourceOrganization": {
             "@type": "Organization",
             "name": "INGEMMET"
@@ -388,7 +423,7 @@
           "@type": "PropertyValue",
           "name": "distri",
           "description": "",
-          "qudt:dataType": "xsd:string",
+          "qudt:dataType": "xsd:varchar",
           "sourceOrganization": {
             "@type": "Organization",
             "name": "INGEMMET"
@@ -398,7 +433,7 @@
           "@type": "PropertyValue",
           "name": "direccion",
           "description": "",
-          "qudt:dataType": "xsd:string",
+          "qudt:dataType": "xsd:varchar",
           "sourceOrganization": {
             "@type": "Organization",
             "name": "INGEMMET"
@@ -408,7 +443,7 @@
           "@type": "PropertyValue",
           "name": "hasdatum",
           "description": "",
-          "qudt:dataType": "xsd:real",
+          "qudt:dataType": "xsd:float8",
           "sourceOrganization": {
             "@type": "Organization",
             "name": "INGEMMET"
@@ -418,7 +453,7 @@
           "@type": "PropertyValue",
           "name": "fecha_actualizacion",
           "description": "",
-          "qudt:dataType": "xsd:int64",
+          "qudt:dataType": "xsd:int8",
           "sourceOrganization": {
             "@type": "Organization",
             "name": "INGEMMET"

@@ -11,10 +11,102 @@
       "@id": "https://gdsc.idsc.miami.edu/detail/mdc_water_polygons",
       "name": "Miami-Dade Bodies of Water",
       "description": "This feature class has been created to illustrate the water bodies within the Urban Development Boundary (UDB) and outside the UDB, approximately 938 square miles.\n  \n  A collection of vector polygon features for water bodies within the Urban Development Boundary (UDB) and outside the UDB, approximately 938 square miles. The planimetric layer for Miami-Dade County was previously digitized in 2001 by Woolpert, in 2012 by GPI Geospatial (GPI), and in 2020 by GPI. GPIs 2022 update utilized a Geodatabase provided by ITD for Miami-Dade County containing two layers to be updated: Water and Edge of Pavement. GPI used the recent set of county orthoimages, produced by Woolpert in 2022, to perform the update of the various feature classes. The feature classes were clipped into smaller blocks. Compilers made adjustments or recollected any missing features. The corresponding attributes were assigned to each separate shapefile as adjustments and new collection occurred. The shapefiles were then merged back together into a full file. Topological checks were performed to make sure the linework did not cross unexpectedly, ends dangled, or strange gaps exist in the collected features. Depending on the layer, different checks were done using the existing data layer to evaluate the completeness of the overall collection. The final layers were quality checked for formatting and file corruption before being sent to the client for review. Personnel that collected this data are either photogrammetrists trained in stereo collection or editors trained in ortho-photography based collection. Items included in the feature class WATER BODIES (Polygons) are: Water bodies and water-under-the-bridge features Definition of particular fields in the Water feature class: Water = {0,1} where 0 = Feature does not represent water; 1 = Water feature. Type = {'', 'B'} where B = Water under the bridge. Where '' marks water locations without bridges. Possible combinations of these fields are: 0,''; 1,'';1, 'B'.",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "name": "size",
+          "value": "37M"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "postgis_table",
+          "value": "mdc_water_polygons"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "kobo_record_id",
+          "value": "89"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "creator_type",
+          "value": "organization"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "process_step",
+          "value": "#########\n  # GDSC ETL is performed in two steps: shell script to ETL data into postgres\n  # and then additional transformations with SQL in postGIS (if needed).\n  ####\n  \n  #########\n  # Step 1 - bash script (pseudo code)\n  ####\n  \n  # create directory structure and move into it\n  mkdir -p /data/mdc_water_polygons/download -p /data/mdc_water_polygons/etl\n  chmod 777 /data/mdc_water_polygons/download\n  cd /data/mdc_water_polygons\n  \n  # set update flag based on last update and update frequency\n  do_update=0 if date() < last_update + update_frequency else do_update = 1\n  \n  # download if update flag is set:\n  if do_update == 1 then\n  ogr2ogr -nln mdc_water_polygons download/mdc_water_polygons.geojson 'https://services.arcgis.com/8Pc9XBTAsYuxx9Ny/arcgis/rest/services/WaterP_gdb/FeatureServer/0/query?outFields=*&where=1%3D1&outSR=4326&f=geojson'\n  \n  # replace column names Shape__Length and Shape__Area to avoid conflict when\n  # providing as service on ArcServer.\n  sed -i 's/Shape__Length/shape_length/gI; s/Shape__Area/shape_area/gI' download/mdc_water_polygons.geojson\n  \n  # load into postGIS with:\n    ogr2ogr -lco GEOMETRY_NAME=geom -f PostgreSQL PG:\"<postgres connection>\" download/mdc_water_polygons.geojson -nlt multipolygon -nln mdc_water_polygons\n  \n  #########\n  # Step 2 - SQL script (pseudo code):\n  ####\n  \n  # remove duplicate points and make geometries valid:\n  UPDATE mdc_water_polygons\n    SET geom=ST_MakeValid(ST_RemoveRepeatedPoints(geom));\n  \n  # add local geometry column and reproject existing geometries into local EPSG:\n  SELECT AddGeometryColumn (\n    'mdc_water_polygons',\n    'geom_local', 2236, 'multipolygon', 2\n  );\n  UPDATE mdc_water_polygons\n    SET geom_local=ST_MakeValid(ST_RemoveRepeatedPoints(ST_Transform(ST_Multi(geom),2236)));\n  CREATE INDEX mdc_water_polygons_geom_local_idx\n    ON mdc_water_polygons\n    USING GIST (geom_local);\n  NOTIFY pgrst, 'reload schema';"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "processor",
+          "value": "GDSC automation (see Process Step)"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "label",
+          "value": "objectid"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "analytic_function",
+          "value": "gdsc_nearest_neighbor"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "Spatial Reference System",
+          "value": "http://www.opengis.net/def/crs/EPSG/0/2236"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "download_method",
+          "value": "esri_recursive_ogr"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "source_file",
+          "value": "{'etl_group/file_name_group/file_name_value': 'mdc_water_polygons'}"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "extent",
+          "value": "POLYGON((-80.925685 25.130965, -80.087687 25.130965, -80.087687 25.983802, -80.925685 25.983802, -80.925685 25.130965))"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "podid",
+          "value": "gdsc-postgis-node-m26c1qrdzglmj3n5"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "up",
+          "value": "false"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "serviceDefinition",
+          "value": "API|arcgis|query"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "derivativeUrl",
+          "value": "/data/mdc_water_polygons/"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "pointOfContact",
+          "value": "{'iso_group/point_of_contact_group/contact_affiliation': 'University of Miami Libraries, Frost Institute for Data Science and Computing', 'iso_group/point_of_contact_group/contact_affiliation_identifier': 'https://ror.org/02dgjyy92', 'iso_group/point_of_contact_group/contact_affiliation_schema': 'ror', 'iso_group/point_of_contact_group/contact_affiliation_schema_uri': 'https://ror.org/', 'iso_group/point_of_contact_group/contact_email': 'tnorris@miami.edu', 'iso_group/point_of_contact_group/contact_first_name': 'Timothy', 'iso_group/point_of_contact_group/contact_identifier': 'https://orcid.org/0000-0002-0898-3027', 'iso_group/point_of_contact_group/contact_identifier_schema': 'orcid', 'iso_group/point_of_contact_group/contact_identifier_schema_uri': 'https://orcid.org/', 'iso_group/point_of_contact_group/contact_last_name': 'Norris', 'iso_group/point_of_contact_group/contact_name': 'Timothy B. Norris'}"
+        }
+      ],
+      "identifier": {
+        "@type": "PropertyValue",
+        "name": "external_id",
+        "value": "842264561"
+      },
       "url": "https://gis-mdc.opendata.arcgis.com/datasets/MDC::water-p/about",
       "inLanguage": "en",
       "datePublished": "2020-11-24",
-      "dateModified": "2023-11-07",
+      "dateModified": "2025-09-15 14:03:40",
       "creator": [
         {
           "@type": "Role",
@@ -126,63 +218,6 @@
           "encodingFormat": "application/geo+json"
         }
       ],
-      "additionalProperty": [
-        {
-          "@type": "PropertyValue",
-          "name": "postgis_table",
-          "value": "mdc_water_polygons"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "kobo_record_id",
-          "value": "89.0"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "creator_type",
-          "value": "organization"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "cartography_label_field",
-          "value": "objectid"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "analytic_function",
-          "value": "gdsc_nearest_neighbor"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "Spatial Reference System",
-          "value": "http://www.opengis.net/def/crs/EPSG/0/2236"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "download_method",
-          "value": "esri_recursive_ogr"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "source_file",
-          "value": "{'etl_group/file_name_group/file_name_value': 'mdc_water_polygons'}"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "extent",
-          "value": "-9008606.0344|2891839.2926|-8915320.499|2996516.889"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "serviceDefinition",
-          "value": "API|arcgis|query"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "pointOfContact",
-          "value": "{'iso_group/point_of_contact_group/contact_name': 'TBD'}"
-        }
-      ],
       "dct:accrualPeriodicity": "as_needed",
       "variableMeasured": [
         {
@@ -197,7 +232,7 @@
         },
         {
           "@type": "PropertyValue",
-          "name": "\n    water",
+          "name": "water",
           "description": "Water = 0 for no water and 1 for water present",
           "qudt:dataType": "xsd:boolean",
           "sourceOrganization": {
@@ -207,7 +242,7 @@
         },
         {
           "@type": "PropertyValue",
-          "name": "\n    type",
+          "name": "type",
           "description": "Type =\"\" for open water and 'B' for locations that water flows under structure  and is blocked from the orthos view",
           "qudt:dataType": "xsd:string",
           "sourceOrganization": {
@@ -217,7 +252,7 @@
         },
         {
           "@type": "PropertyValue",
-          "name": "\n    last_updated",
+          "name": "last_updated",
           "description": "Year date that feature was last revised",
           "qudt:dataType": "xsd:int4",
           "sourceOrganization": {
@@ -227,7 +262,7 @@
         },
         {
           "@type": "PropertyValue",
-          "name": "\n    shape_area",
+          "name": "shape_area",
           "description": "area of feature",
           "qudt:dataType": "xsd:float",
           "sourceOrganization": {
@@ -237,7 +272,7 @@
         },
         {
           "@type": "PropertyValue",
-          "name": "\n    shape_length",
+          "name": "shape_length",
           "description": "length of feature",
           "qudt:dataType": "xsd:float",
           "sourceOrganization": {

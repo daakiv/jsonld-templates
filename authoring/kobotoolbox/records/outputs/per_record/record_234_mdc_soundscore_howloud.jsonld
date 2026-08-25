@@ -11,9 +11,86 @@
       "@id": "https://gdsc.idsc.miami.edu/detail/mdc_soundscore_howloud",
       "name": "MDC HowLoud SoundScore (Local)",
       "description": "Soundscore™ is HowLoud, Inc.’s patent-pending technology to build our noise map and deliver data to users. A Soundscore™ rating is a number between 50 (very loud) and 100 (very quiet) that tells you how loud a location is due to environmental noise. ",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "name": "size",
+          "value": "0"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "postgis_table",
+          "value": "mdc_soundscore_howloud"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "kobo_record_id",
+          "value": "234"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "process_step",
+          "value": "#########\n  # GDSC ETL is performed in two steps: shell script to ETL data into postgres\n  # and then additional transformations with SQL in postGIS (if needed).\n  ####\n  \n  #########\n  # Step 1 - bash script (pseudo code)\n  ####\n  \n  # create directory structure and move into it\n  mkdir -p /data/mdc_soundscore_howloud/download -p /data/mdc_soundscore_howloud/etl\n  chmod 777 /data/mdc_soundscore_howloud/download\n  cd /data/mdc_soundscore_howloud\n  \n  # set update flag based on last update and update frequency\n  do_update=0 if date() < last_update + update_frequency else do_update = 1"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "processor",
+          "value": "GDSC automation (see Process Step)"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "source_file",
+          "value": "{'etl_group/file_name_group/file_name_value': 'mdc_soundscore_howloud'}"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "podid",
+          "value": "gdsc-postgis-node-q1dpg7zstrv2n9uv"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "up",
+          "value": "true"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "serviceDefinition",
+          "value": "API"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "colorRamp",
+          "value": "100 0 25 212 255\n  Calm 68 201 254 255\n  90 109 235 220 255\n  Active 205 255 162 255\n  80 219 247 145 255\n  Busy 246 85 84 255\n  65 249 114 113 255\n  60 255 158 158 255\n  55 254 205 205 255"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "tileBaseUrl",
+          "value": "{'cartography_group/tile_url_group/tile_base_url': 'https://gdsc.idsc.miami.edu/rastertiles/mdc_soundscore_howloud/'}"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "tileMinZoom",
+          "value": "{'cartography_group/tile_zoom_group/tile_min_zoom': '14'}"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "derivativeUrl",
+          "value": "/data/mdc_soundscore_howloud/"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "pointOfContact",
+          "value": "{'iso_group/point_of_contact_group/contact_affiliation': 'University of Miami Libraries, Frost Institute for Data Science and Computing', 'iso_group/point_of_contact_group/contact_affiliation_identifier': 'https://ror.org/02dgjyy92', 'iso_group/point_of_contact_group/contact_affiliation_schema': 'ror', 'iso_group/point_of_contact_group/contact_affiliation_schema_uri': 'https://ror.org/', 'iso_group/point_of_contact_group/contact_email': 'tnorris@miami.edu', 'iso_group/point_of_contact_group/contact_first_name': 'Timothy', 'iso_group/point_of_contact_group/contact_identifier': 'https://orcid.org/0000-0002-0898-3027', 'iso_group/point_of_contact_group/contact_identifier_schema': 'orcid', 'iso_group/point_of_contact_group/contact_identifier_schema_uri': 'https://orcid.org/', 'iso_group/point_of_contact_group/contact_last_name': 'Norris', 'iso_group/point_of_contact_group/contact_name': 'Timothy B. Norris'}"
+        }
+      ],
+      "identifier": {
+        "@type": "PropertyValue",
+        "name": "external_id",
+        "value": "842265208"
+      },
       "url": "https://howloud.com/soundscore/",
       "inLanguage": "en",
-      "dateModified": "2024-05-21",
+      "dateModified": "not known",
       "creator": [
         {
           "@type": "Role",
@@ -109,48 +186,6 @@
           "encodingFormat": "xyz"
         }
       ],
-      "additionalProperty": [
-        {
-          "@type": "PropertyValue",
-          "name": "postgis_table",
-          "value": "mdc_soundscore_howloud"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "kobo_record_id",
-          "value": "234.0"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "source_file",
-          "value": "{'etl_group/file_name_group/file_name_value': 'mdc_soundscore_howloud'}"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "serviceDefinition",
-          "value": "API"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "colorRamp",
-          "value": "100 0 25 212 255\n  Calm 68 201 254 255\n  90 109 235 220 255\n  Active 205 255 162 255\n  80 219 247 145 255\n  Busy 246 85 84 255\n  65 249 114 113 255\n  60 255 158 158 255\n  55 254 205 205 255"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "tileBaseUrl",
-          "value": "{'cartography_group/tile_url_group/tile_base_url': 'https://gdsc.idsc.miami.edu/rastertiles/mdc_soundscore_howloud/'}"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "tileMinZoom",
-          "value": "{'cartography_group/tile_zoom_group/tile_min_zoom': '14'}"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "pointOfContact",
-          "value": "{'iso_group/point_of_contact_group/contact_name': 'TBD'}"
-        }
-      ],
       "dct:accrualPeriodicity": "never",
       "variableMeasured": [
         {
@@ -166,7 +201,7 @@
         }
       ],
       "isAccessibleForFree": false,
-      "usageInfo": "The API may make up to 100,000 requests per month. Note that the API has a rate limit of 3 requests per second.",
+      "conditionsOfAccess": "The API may make up to 100,000 requests per month. Note that the API has a rate limit of 3 requests per second.",
       "dct:provenance": "Direct from source",
       "additionalType": "raster_tiles",
       "funder": {

@@ -11,10 +11,97 @@
       "@id": "https://gdsc.idsc.miami.edu/detail/hh_distritos_minam",
       "name": "Límite Distrital Huayhuash (MINAM)",
       "description": "Las delimitaciones de los distritos del Perú",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "name": "size",
+          "value": "2.0M"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "postgis_table",
+          "value": "hh_distritos_minam"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "kobo_record_id",
+          "value": "206"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "process_step",
+          "value": "#########\n  # GDSC ETL is performed in two steps: shell script to ETL data into postgres\n  # and then additional transformations with SQL in postGIS (if needed).\n  ####\n  \n  #########\n  # Step 1 - bash script (pseudo code)\n  ####\n  \n  # create directory structure and move into it\n  mkdir -p /data/hh_distritos_minam/download -p /data/hh_distritos_minam/etl\n  chmod 777 /data/hh_distritos_minam/download\n  cd /data/hh_distritos_minam\n  \n  # set update flag based on last update and update frequency\n  do_update=0 if date() < last_update + update_frequency else do_update = 1\n  \n  # download if update flag is set:\n  if do_update == 1 then\n  ogr2ogr -nln hh_distritos_minam download/hh_distritos_minam.json 'https://geoservidorperu.minam.gob.pe/arcgis/rest/services/ServicioBase/MapServer/12/query?where=1%3D1&geometry=%22xmin%22%3A-77.33%2C%22ymin%22%3A-10.7%2C%22xmax%22%3A-76.55%2C%22ymax%22%3A-9.8&geometryType=esriGeometryEnvelope&inSR=4326&spatialRel=esriSpatialRelIntersects&outFields=*&where=1%3D1&outSR=4326&f=geojson'\n  \n  # replace column names Shape__Length and Shape__Area to avoid conflict when\n  # providing as service on ArcServer.\n  sed -i 's/Shape__Length/shape_length/gI; s/Shape__Area/shape_area/gI' download/hh_distritos_minam.json\n  \n  # load into postGIS with:\n    ogr2ogr -lco GEOMETRY_NAME=geom -f PostgreSQL PG:\"<postgres connection>\" download/hh_distritos_minam.json -nlt multipolygon -nln hh_distritos_minam\n  \n  #########\n  # Step 2 - SQL script (pseudo code):\n  ####\n  \n  # remove duplicate points and make geometries valid:\n  UPDATE hh_distritos_minam\n    SET geom=ST_MakeValid(ST_RemoveRepeatedPoints(geom));\n  \n  # add local geometry column and reproject existing geometries into local EPSG:\n  SELECT AddGeometryColumn (\n    'hh_distritos_minam',\n    'geom_local', 5387, 'multipolygon', 2\n  );\n  UPDATE hh_distritos_minam\n    SET geom_local=ST_MakeValid(ST_RemoveRepeatedPoints(ST_Transform(ST_Multi(geom),5387)));\n  CREATE INDEX hh_distritos_minam_geom_local_idx\n    ON hh_distritos_minam\n    USING GIST (geom_local);\n  NOTIFY pgrst, 'reload schema';\n  # Move into corrrect directory and create derivative directory in data package on osgeo\n  cd /data/hh_distritos_minam/\n  mkdir -p derived\n  \n  # Create shapefile of table in derivate directory on osgeo \n  ogr2ogr -f \"ESRI Shapefile\" -overwrite derived/hh_distritos_minam.shp PG:\"<postgres connection>\" hh_distritos_minam\n  \n  # Create downloadable tarfile of shp in derivative directory on osgeo\n  rm -f derived/hh_distritos_minam.shp.tar.gz\n  tar -czf derived/hh_distritos_minam.shp.tar.gz meta_dcat_hh_distritos_minam.json -C derived hh_distritos_minam.shp hh_distritos_minam.prj hh_distritos_minam.shx hh_distritos_minam.dbf\n  \n  # Create gpkg of table in derivate directory on osgeo \n  rm -f derived/hh_distritos_minam.gpkg\n  ogr2ogr -f GPKG -overwrite derived/hh_distritos_minam.gpkg PG:\"<postgres connection>\" -select \"objectid_1,objectid,iddist,iddpto,idprov,nombdist,nombprov,nombdep,dcto,ley,fecha,nom_cap,shape_leng,shape_le_1,shape_ar_1,area_minam,geom\" hh_distritos_minam\n  \n  # Create downloadable tarfile of gpkg in derivative directory on osgeo\n  rm -f derived/hh_distritos_minam.gpkg.tar.gz\n  tar -czf derived/hh_distritos_minam.gpkg.tar.gz meta_dcat_hh_distritos_minam.json -C derived hh_distritos_minam.gpkg\n  \n  # Create geojson of table in derivate directory on osgeo \n  rm -f derived/hh_distritos_minam.json\n  ogr2ogr -f GeoJSON -overwrite derived/hh_distritos_minam.json PG:\"<postgres connection>\" -select \"objectid_1,objectid,iddist,iddpto,idprov,nombdist,nombprov,nombdep,dcto,ley,fecha,nom_cap,shape_leng,shape_le_1,shape_ar_1,area_minam,geom\" hh_distritos_minam\n  \n  # Create downloadable tarfile of geojson in derivative directory on osgeo\n  rm -f derived/hh_distritos_minam.geojson.tar.gz\n  tar -czf derived/hh_distritos_minam.geojson.tar.gz meta_dcat_hh_distritos_minam.json -C derived hh_distritos_minam.json\n  \n  # Move into correct directory\n  cd /data/hh_distritos_minam/"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "processor",
+          "value": "GDSC automation (see Process Step)"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "values",
+          "value": "objectid_1"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "Spatial Reference System",
+          "value": "http://www.opengis.net/def/crs/EPSG/0/5387"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "derivatives",
+          "value": "shp geojson gpkg"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "download_method",
+          "value": "esri_recursive_ogr"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "source_file",
+          "value": "{'etl_group/file_name_group/file_name_value': 'hh_distritos_minam'}"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "extent",
+          "value": "POLYGON((-77.528287 -10.968167, -76.254418 -10.968167, -76.254418 -9.428510, -77.528287 -9.428510, -77.528287 -10.968167))"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "podid",
+          "value": "gdsc-postgis-node-2t2k16ujd4z0dlf5"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "up",
+          "value": "true"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "serviceDefinition",
+          "value": "API|arcgis|query"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "derivativeUrl",
+          "value": "/data/hh_distritos_minam/"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "pointOfContact",
+          "value": "{'iso_group/point_of_contact_group/contact_affiliation': 'University of Miami Libraries, Frost Institute for Data Science and Computing', 'iso_group/point_of_contact_group/contact_affiliation_identifier': 'https://ror.org/02dgjyy92', 'iso_group/point_of_contact_group/contact_affiliation_schema': 'ror', 'iso_group/point_of_contact_group/contact_affiliation_schema_uri': 'https://ror.org/', 'iso_group/point_of_contact_group/contact_email': 'tnorris@miami.edu', 'iso_group/point_of_contact_group/contact_first_name': 'Timothy', 'iso_group/point_of_contact_group/contact_identifier': 'https://orcid.org/0000-0002-0898-3027', 'iso_group/point_of_contact_group/contact_identifier_schema': 'orcid', 'iso_group/point_of_contact_group/contact_identifier_schema_uri': 'https://orcid.org/', 'iso_group/point_of_contact_group/contact_last_name': 'Norris', 'iso_group/point_of_contact_group/contact_name': 'Timothy B. Norris'}"
+        }
+      ],
+      "identifier": {
+        "@type": "PropertyValue",
+        "name": "external_id",
+        "value": "842259690"
+      },
       "url": "https://geoservidorperu.minam.gob.pe/arcgis/rest/services/ServicioBase/MapServer/12",
       "inLanguage": "es",
       "datePublished": "2025-02-07",
-      "dateModified": "2025-02-07",
+      "dateModified": "2026-08-15 21:35:46",
       "creator": [
         {
           "@type": "Role",
@@ -104,134 +191,103 @@
           "encodingFormat": "application/json"
         }
       ],
-      "additionalProperty": [
-        {
-          "@type": "PropertyValue",
-          "name": "postgis_table",
-          "value": "hh_distritos_minam"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "kobo_record_id",
-          "value": "206"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "cartography_value_field",
-          "value": "objectid_1"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "Spatial Reference System",
-          "value": "http://www.opengis.net/def/crs/EPSG/0/5387"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "derivatives",
-          "value": "shp geojson gpkg"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "download_method",
-          "value": "esri_recursive_ogr"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "source_file",
-          "value": "{'etl_group/file_name_group/file_name_value': 'hh_distritos_minam'}"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "serviceDefinition",
-          "value": "API|arcgis|query"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "pointOfContact",
-          "value": "{'iso_group/point_of_contact_group/contact_name': 'TBD'}"
-        }
-      ],
       "dct:accrualPeriodicity": "one_week",
       "variableMeasured": [
         {
           "@type": "PropertyValue",
           "name": "objectid_1",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:int4"
         },
         {
           "@type": "PropertyValue",
           "name": "objectid",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:int4"
         },
         {
           "@type": "PropertyValue",
           "name": "iddist",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:varchar"
         },
         {
           "@type": "PropertyValue",
           "name": "iddpto",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:varchar"
         },
         {
           "@type": "PropertyValue",
           "name": "idprov",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:varchar"
         },
         {
           "@type": "PropertyValue",
           "name": "nombdist",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:varchar"
         },
         {
           "@type": "PropertyValue",
           "name": "nombprov",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:varchar"
         },
         {
           "@type": "PropertyValue",
           "name": "nombdep",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:varchar"
         },
         {
           "@type": "PropertyValue",
           "name": "dcto",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:varchar"
         },
         {
           "@type": "PropertyValue",
           "name": "ley",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:varchar"
         },
         {
           "@type": "PropertyValue",
           "name": "fecha",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:varchar"
         },
         {
           "@type": "PropertyValue",
           "name": "nom_cap",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:varchar"
         },
         {
           "@type": "PropertyValue",
           "name": "shape_leng",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:float8"
         },
         {
           "@type": "PropertyValue",
           "name": "shape_le_1",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:float8"
         },
         {
           "@type": "PropertyValue",
           "name": "shape_ar_1",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:float8"
         },
         {
           "@type": "PropertyValue",
           "name": "area_minam",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:float8"
         }
       ],
       "isAccessibleForFree": false,

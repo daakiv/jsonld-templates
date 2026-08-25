@@ -11,10 +11,97 @@
       "@id": "https://gdsc.idsc.miami.edu/detail/hh_areaprivada_sernanp",
       "name": "Área de Conservación Privada Huayhuash (SERNANP)",
       "description": "Representa aquellos espacios geográficos que ha solicitud de sus propietarios han sido reconocidos como áreas protegidas privadas mediante un Resolución Ministerial, con el propósito de conservar diversidad biológica y que son administrados por los propietarios de dichos predios.",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "name": "size",
+          "value": "122K"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "postgis_table",
+          "value": "hh_areaprivada_sernanp"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "kobo_record_id",
+          "value": "167"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "process_step",
+          "value": "#########\n  # GDSC ETL is performed in two steps: shell script to ETL data into postgres\n  # and then additional transformations with SQL in postGIS (if needed).\n  ####\n  \n  #########\n  # Step 1 - bash script (pseudo code)\n  ####\n  \n  # create directory structure and move into it\n  mkdir -p /data/hh_areaprivada_sernanp/download -p /data/hh_areaprivada_sernanp/etl\n  chmod 777 /data/hh_areaprivada_sernanp/download\n  cd /data/hh_areaprivada_sernanp\n  \n  # set update flag based on last update and update frequency\n  do_update=0 if date() < last_update + update_frequency else do_update = 1\n  \n  # download if update flag is set:\n  if do_update == 1 then\n  ogr2ogr -nln hh_areaprivada_sernanp download/hh_areaprivada_sernanp.json 'https://geoservicios.sernanp.gob.pe/arcgis/rest/services/base_fisica/peru_sernanp_0102/MapServer/3/query?where=1%3D1&geometry=%22xmin%22%3A-77.33%2C%22ymin%22%3A-10.7%2C%22xmax%22%3A-76.55%2C%22ymax%22%3A-9.8&geometryType=esriGeometryEnvelope&inSR=4326&spatialRel=esriSpatialRelIntersects&outFields=*&returnGeometry=true&outSR=4326&f=geojson'\n  \n  # replace column names Shape__Length and Shape__Area to avoid conflict when\n  # providing as service on ArcServer.\n  sed -i 's/Shape__Length/shape_length/gI; s/Shape__Area/shape_area/gI' download/hh_areaprivada_sernanp.json\n  \n  # load into postGIS with:\n    ogr2ogr -lco GEOMETRY_NAME=geom -f PostgreSQL PG:\"<postgres connection>\" download/hh_areaprivada_sernanp.json -nlt multipolygon -nln hh_areaprivada_sernanp\n  \n  #########\n  # Step 2 - SQL script (pseudo code):\n  ####\n  \n  # remove duplicate points and make geometries valid:\n  UPDATE hh_areaprivada_sernanp\n    SET geom=ST_MakeValid(ST_RemoveRepeatedPoints(geom));\n  \n  # add local geometry column and reproject existing geometries into local EPSG:\n  SELECT AddGeometryColumn (\n    'hh_areaprivada_sernanp',\n    'geom_local', 5387, 'multipolygon', 2\n  );\n  UPDATE hh_areaprivada_sernanp\n    SET geom_local=ST_MakeValid(ST_RemoveRepeatedPoints(ST_Transform(ST_Multi(geom),5387)));\n  CREATE INDEX hh_areaprivada_sernanp_geom_local_idx\n    ON hh_areaprivada_sernanp\n    USING GIST (geom_local);\n  NOTIFY pgrst, 'reload schema';\n  # Move into corrrect directory and create derivative directory in data package on osgeo\n  cd /data/hh_areaprivada_sernanp/\n  mkdir -p derived\n  \n  # Create shapefile of table in derivate directory on osgeo \n  ogr2ogr -f \"ESRI Shapefile\" -overwrite derived/hh_areaprivada_sernanp.shp PG:\"<postgres connection>\" hh_areaprivada_sernanp\n  \n  # Create downloadable tarfile of shp in derivative directory on osgeo\n  rm -f derived/hh_areaprivada_sernanp.shp.tar.gz\n  tar -czf derived/hh_areaprivada_sernanp.shp.tar.gz meta_dcat_hh_areaprivada_sernanp.json -C derived hh_areaprivada_sernanp.shp hh_areaprivada_sernanp.prj hh_areaprivada_sernanp.shx hh_areaprivada_sernanp.dbf\n  \n  # Create gpkg of table in derivate directory on osgeo \n  rm -f derived/hh_areaprivada_sernanp.gpkg\n  ogr2ogr -f GPKG -overwrite derived/hh_areaprivada_sernanp.gpkg PG:\"<postgres connection>\" -select \"objectid,acp_codi,acp_nomb,acp_suleg,acp_balec,acp_felec,acp_balem,acp_felem,acp_fecad,acp_ubpo,acp_titu,acp_tipro,acp_tirec,acp_pareg,shape,met_link,acp_id,geom\" hh_areaprivada_sernanp\n  \n  # Create downloadable tarfile of gpkg in derivative directory on osgeo\n  rm -f derived/hh_areaprivada_sernanp.gpkg.tar.gz\n  tar -czf derived/hh_areaprivada_sernanp.gpkg.tar.gz meta_dcat_hh_areaprivada_sernanp.json -C derived hh_areaprivada_sernanp.gpkg\n  \n  # Create geojson of table in derivate directory on osgeo \n  rm -f derived/hh_areaprivada_sernanp.json\n  ogr2ogr -f GeoJSON -overwrite derived/hh_areaprivada_sernanp.json PG:\"<postgres connection>\" -select \"objectid,acp_codi,acp_nomb,acp_suleg,acp_balec,acp_felec,acp_balem,acp_felem,acp_fecad,acp_ubpo,acp_titu,acp_tipro,acp_tirec,acp_pareg,shape,met_link,acp_id,geom\" hh_areaprivada_sernanp\n  \n  # Create downloadable tarfile of geojson in derivative directory on osgeo\n  rm -f derived/hh_areaprivada_sernanp.geojson.tar.gz\n  tar -czf derived/hh_areaprivada_sernanp.geojson.tar.gz meta_dcat_hh_areaprivada_sernanp.json -C derived hh_areaprivada_sernanp.json\n  \n  # Move into correct directory\n  cd /data/hh_areaprivada_sernanp/"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "processor",
+          "value": "GDSC automation (see Process Step)"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "values",
+          "value": "objectid"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "Spatial Reference System",
+          "value": "http://www.opengis.net/def/crs/EPSG/0/5387"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "derivatives",
+          "value": "shp geojson gpkg"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "download_method",
+          "value": "esri_recursive_ogr"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "source_file",
+          "value": "{'etl_group/file_name_group/file_name_value': 'hh_areaprivada_sernanp'}"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "extent",
+          "value": "POLYGON((-77.139715 -10.420308, -76.782354 -10.420308, -76.782354 -10.119316, -77.139715 -10.119316, -77.139715 -10.420308))"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "podid",
+          "value": "gdsc-postgis-node-6o2rr861ptdxf0z7"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "up",
+          "value": "true"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "serviceDefinition",
+          "value": "API|arcgis|query"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "derivativeUrl",
+          "value": "/data/hh_areaprivada_sernanp/"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "pointOfContact",
+          "value": "{'iso_group/point_of_contact_group/contact_affiliation': 'University of Miami Libraries, Frost Institute for Data Science and Computing', 'iso_group/point_of_contact_group/contact_affiliation_identifier': 'https://ror.org/02dgjyy92', 'iso_group/point_of_contact_group/contact_affiliation_schema': 'ror', 'iso_group/point_of_contact_group/contact_affiliation_schema_uri': 'https://ror.org/', 'iso_group/point_of_contact_group/contact_email': 'tnorris@miami.edu', 'iso_group/point_of_contact_group/contact_first_name': 'Timothy', 'iso_group/point_of_contact_group/contact_identifier': 'https://orcid.org/0000-0002-0898-3027', 'iso_group/point_of_contact_group/contact_identifier_schema': 'orcid', 'iso_group/point_of_contact_group/contact_identifier_schema_uri': 'https://orcid.org/', 'iso_group/point_of_contact_group/contact_last_name': 'Norris', 'iso_group/point_of_contact_group/contact_name': 'Timothy B. Norris'}"
+        }
+      ],
+      "identifier": {
+        "@type": "PropertyValue",
+        "name": "external_id",
+        "value": "842259467"
+      },
       "url": "https://geoservicios.sernanp.gob.pe/arcgis/rest/services/base_fisica/peru_sernanp_0102/MapServer/3",
       "inLanguage": "es",
       "datePublished": "2025-02-28",
-      "dateModified": "2025-02-11",
+      "dateModified": "2025-05-07 12:07:22",
       "creator": [
         {
           "@type": "Role",
@@ -95,129 +182,91 @@
           "encodingFormat": "application/json"
         }
       ],
-      "additionalProperty": [
-        {
-          "@type": "PropertyValue",
-          "name": "postgis_table",
-          "value": "hh_areaprivada_sernanp"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "kobo_record_id",
-          "value": "167"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "cartography_value_field",
-          "value": "objectid"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "Spatial Reference System",
-          "value": "http://www.opengis.net/def/crs/EPSG/0/5387"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "derivatives",
-          "value": "shp geojson gpkg"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "download_method",
-          "value": "esri_recursive_ogr"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "source_file",
-          "value": "{'etl_group/file_name_group/file_name_value': 'hh_areaprivada_sernanp'}"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "extent",
-          "value": "-77.33|-10.7|-76.55|-9.8"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "serviceDefinition",
-          "value": "API|arcgis|query"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "pointOfContact",
-          "value": "{'iso_group/point_of_contact_group/contact_name': 'Ing. Jessica Oliveros Bustamante, Responsable de la temática (Dirección de Desarrollo Estratégico, joliveros@sernanp.gob.pe)'}"
-        }
-      ],
       "dct:accrualPeriodicity": "as_needed",
       "variableMeasured": [
         {
           "@type": "PropertyValue",
           "name": "objectid",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:int4"
         },
         {
           "@type": "PropertyValue",
           "name": "acp_codi",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:varchar"
         },
         {
           "@type": "PropertyValue",
           "name": "acp_nomb",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:varchar"
         },
         {
           "@type": "PropertyValue",
           "name": "acp_suleg",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:float8"
         },
         {
           "@type": "PropertyValue",
           "name": "acp_balec",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:varchar"
         },
         {
           "@type": "PropertyValue",
           "name": "acp_felec",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:int8"
         },
         {
           "@type": "PropertyValue",
           "name": "acp_balem",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:varchar"
         },
         {
           "@type": "PropertyValue",
           "name": "acp_felem",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:int8"
         },
         {
           "@type": "PropertyValue",
           "name": "acp_fecad",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:varchar"
         },
         {
           "@type": "PropertyValue",
           "name": "acp_ubpo",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:varchar"
         },
         {
           "@type": "PropertyValue",
           "name": "acp_titu",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:varchar"
         },
         {
           "@type": "PropertyValue",
           "name": "acp_tipro",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:varchar"
         },
         {
           "@type": "PropertyValue",
           "name": "acp_tirec",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:varchar"
         },
         {
           "@type": "PropertyValue",
           "name": "acp_pareg",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:varchar"
         },
         {
           "@type": "PropertyValue",
@@ -227,12 +276,14 @@
         {
           "@type": "PropertyValue",
           "name": "met_link",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:varchar"
         },
         {
           "@type": "PropertyValue",
           "name": "acp_id",
-          "description": ""
+          "description": "",
+          "qudt:dataType": "xsd:int4"
         }
       ],
       "isAccessibleForFree": false,

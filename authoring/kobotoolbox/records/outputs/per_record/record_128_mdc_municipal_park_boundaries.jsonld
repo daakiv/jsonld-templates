@@ -11,10 +11,102 @@
       "@id": "https://gdsc.idsc.miami.edu/detail/mdc_municipal_park_boundaries",
       "name": "Miami-Dade County Municipal Park Boundaries",
       "description": "A polygon feature class of Miami-Dade Municipal (Incorporated) Maintained Parks and Recreational boundary.",
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "name": "size",
+          "value": "1.5M"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "postgis_table",
+          "value": "mdc_municipal_park_boundaries"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "kobo_record_id",
+          "value": "128"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "creator_type",
+          "value": "organization"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "process_step",
+          "value": "#########\n  # GDSC ETL is performed in two steps: shell script to ETL data into postgres\n  # and then additional transformations with SQL in postGIS (if needed).\n  ####\n  \n  #########\n  # Step 1 - bash script (pseudo code)\n  ####\n  \n  # create directory structure and move into it\n  mkdir -p /data/mdc_municipal_park_boundaries/download -p /data/mdc_municipal_park_boundaries/etl\n  chmod 777 /data/mdc_municipal_park_boundaries/download\n  cd /data/mdc_municipal_park_boundaries\n  \n  # set update flag based on last update and update frequency\n  do_update=0 if date() < last_update + update_frequency else do_update = 1\n  \n  # download if update flag is set:\n  if do_update == 1 then\n  wget -O download/mdc_municipal_park_boundaries.geojson 'https://opendata.arcgis.com/api/v3/datasets/16fe02a1defa45b28bf14a29fb5f0428_0/downloads/data?format=geojson&spatialRefId=4326&where=1%3D1'\n  \n  # replace column names Shape__Length and Shape__Area to avoid conflict when\n  # providing as service on ArcServer.\n  sed -i 's/Shape__Length/shape_length/gI; s/Shape__Area/shape_area/gI' download/mdc_municipal_park_boundaries.geojson\n  \n  # load into postGIS with:\n    ogr2ogr -lco GEOMETRY_NAME=geom -f PostgreSQL PG:\"<postgres connection>\" download/mdc_municipal_park_boundaries.geojson -nlt multipolygon -nln mdc_municipal_park_boundaries\n  \n  #########\n  # Step 2 - SQL script (pseudo code):\n  ####\n  \n  # remove duplicate points and make geometries valid:\n  UPDATE mdc_municipal_park_boundaries\n    SET geom=ST_MakeValid(ST_RemoveRepeatedPoints(geom));\n  \n  # add local geometry column and reproject existing geometries into local EPSG:\n  SELECT AddGeometryColumn (\n    'mdc_municipal_park_boundaries',\n    'geom_local', 2236, 'multipolygon', 2\n  );\n  UPDATE mdc_municipal_park_boundaries\n    SET geom_local=ST_MakeValid(ST_RemoveRepeatedPoints(ST_Transform(ST_Multi(geom),2236)));\n  CREATE INDEX mdc_municipal_park_boundaries_geom_local_idx\n    ON mdc_municipal_park_boundaries\n    USING GIST (geom_local);\n  NOTIFY pgrst, 'reload schema';"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "processor",
+          "value": "GDSC automation (see Process Step)"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "label",
+          "value": "objectid"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "analytic_function",
+          "value": "gdsc_get_attributes"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "Spatial Reference System",
+          "value": "http://www.opengis.net/def/crs/EPSG/0/2236"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "download_method",
+          "value": "wget"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "source_file",
+          "value": "{'etl_group/file_name_group/file_name_value': 'mdc_municipal_park_boundaries'}"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "extent",
+          "value": "POLYGON((-0.000723 0.000229, -0.000720 0.000229, -0.000720 0.000233, -0.000723 0.000233, -0.000723 0.000229))"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "podid",
+          "value": "gdsc-postgis-node-ale9fopdsr6sslkv"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "up",
+          "value": "false"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "serviceDefinition",
+          "value": "API|arcgis|query"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "derivativeUrl",
+          "value": "/data/mdc_municipal_park_boundaries/"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "pointOfContact",
+          "value": "{'iso_group/point_of_contact_group/contact_affiliation': 'University of Miami Libraries, Frost Institute for Data Science and Computing', 'iso_group/point_of_contact_group/contact_affiliation_identifier': 'https://ror.org/02dgjyy92', 'iso_group/point_of_contact_group/contact_affiliation_schema': 'ror', 'iso_group/point_of_contact_group/contact_affiliation_schema_uri': 'https://ror.org/', 'iso_group/point_of_contact_group/contact_email': 'tnorris@miami.edu', 'iso_group/point_of_contact_group/contact_first_name': 'Timothy', 'iso_group/point_of_contact_group/contact_identifier': 'https://orcid.org/0000-0002-0898-3027', 'iso_group/point_of_contact_group/contact_identifier_schema': 'orcid', 'iso_group/point_of_contact_group/contact_identifier_schema_uri': 'https://orcid.org/', 'iso_group/point_of_contact_group/contact_last_name': 'Norris', 'iso_group/point_of_contact_group/contact_name': 'Timothy B. Norris'}"
+        }
+      ],
+      "identifier": {
+        "@type": "PropertyValue",
+        "name": "external_id",
+        "value": "842264683"
+      },
       "url": "https://gis-mdc.opendata.arcgis.com/datasets/MDC::municipal-park-boundary/about",
       "inLanguage": "en",
       "datePublished": "2018-06-05",
-      "dateModified": "2023-05-23",
+      "dateModified": "2025-10-05 22:24:31",
       "creator": [
         {
           "@type": "Role",
@@ -119,58 +211,6 @@
           "name": "Source distribution",
           "contentUrl": "https://opendata.arcgis.com/api/v3/datasets/16fe02a1defa45b28bf14a29fb5f0428_0/downloads/data?format=geojson&spatialRefId=4326&where=1%3D1",
           "encodingFormat": "application/geo+json"
-        }
-      ],
-      "additionalProperty": [
-        {
-          "@type": "PropertyValue",
-          "name": "postgis_table",
-          "value": "mdc_municipal_park_boundaries"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "kobo_record_id",
-          "value": "128.0"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "creator_type",
-          "value": "organization"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "cartography_label_field",
-          "value": "objectid"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "analytic_function",
-          "value": "gdsc_get_attributes"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "Spatial Reference System",
-          "value": "http://www.opengis.net/def/crs/EPSG/0/2236"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "download_method",
-          "value": "wget"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "source_file",
-          "value": "{'etl_group/file_name_group/file_name_value': 'mdc_municipal_park_boundaries'}"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "serviceDefinition",
-          "value": "API|arcgis|query"
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "pointOfContact",
-          "value": "{'iso_group/point_of_contact_group/contact_name': 'TBD'}"
         }
       ],
       "dct:accrualPeriodicity": "six_months",
@@ -396,23 +436,6 @@
           "sourceOrganization": {
             "@type": "Organization",
             "name": "MDC"
-          },
-          "additionalProperty": [
-            {
-              "@type": "PropertyValue",
-              "name": "temporal_interval",
-              "value": "2018-06-01/2025-06-30"
-            }
-          ]
-        },
-        {
-          "@type": "PropertyValue",
-          "name": "objectid",
-          "description": "Unique object identifer",
-          "qudt:dataType": "xsd:oid",
-          "sourceOrganization": {
-            "@type": "Organization",
-            "name": "Esri"
           },
           "additionalProperty": [
             {

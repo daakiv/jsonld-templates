@@ -2,94 +2,120 @@
 
 Python scripts for the **KoboToolbox → SSSOM → JSON-LD** workflow.
 
-The pipeline authors one reusable SSSOM mapping for the form, then applies it to
-every record — you do not write a mapping per record.
+One reusable SSSOM mapping is authored for the form, then applied to every
+record — you do **not** write a mapping per record.
 
-```text
-1. Pull ALL Kobo records            -> pull_all_kobo_records.py
-2. Author / update the SSSOM mapping -> AI prompt + human review
-3. Transform records to JSON-LD      -> sssom_to_jsonld.py   (combined @graph)
-                                        split_records_to_jsonld.py (one file per record)
-4. (optional) Inspect the mapping    -> vanilla_sssom.py
+---
+
+## Setup (do this once)
+
+From the repository root:
+
+```bash
+python3 -m venv .venv && source .venv/bin/activate      # Windows: py -m venv .venv; .\.venv\Scripts\Activate.ps1
+python -m pip install --upgrade pip
+python -m pip install -r authoring/kobotoolbox/requirements.txt
 ```
 
-Run all commands from this folder:
+Then work from this folder — **every command below assumes you are here**:
 
 ```bash
 cd authoring/kobotoolbox/mappings/scripts
 ```
 
----
-
-## Script flow
-
-| Step | Script | Purpose | Main output |
-| ---- | ------ | ------- | ----------- |
-| 1 | `pull_all_kobo_records.py` | Pull **all** submissions for the form; emit the wrapped record file, a prompt-sized sample, and a field inventory. | `records/raw/all_records_raw.json` (+ `sample_records_raw.json`, `field_inventory.md`) |
-| 2 | AI prompt + manual review | Author or update the reusable SSSOM crosswalk (Kobo JSON → Schema.org JSON-LD). | `sssom/kobo_form.sssom.tsv` |
-| 3a | `sssom_to_jsonld.py` | Transform records into a **single combined** JSON-LD (`@graph`). | `records/outputs/all_records.jsonld` |
-| 3b | `split_records_to_jsonld.py` | Transform into **one JSON-LD file per record**. | `records/outputs/per_record/record_<id>_<table>.jsonld` |
-| — | `vanilla_sssom.py` | Optional: inspect/validate the mapping's structure (does not read records or produce JSON-LD). | summary / turtle / validation report |
-
-> A previous version of this repo pulled one record at a time
-> (`01_pull_kobo_raw_json_records.py`, still present for reference). The current
-> flow pulls the whole form in one call with `pull_all_kobo_records.py`.
+The reviewed mapping the commands use is `../sssom/kobo_form.sssom.tsv`. If your
+current mapping has another name (e.g. `kobo_form.regenerated_128.sssom.tsv`),
+either rename it to `kobo_form.sssom.tsv` or substitute its name in every
+`--sssom` argument below. Keep **one** canonical mapping file.
 
 ---
 
-## Step 1 — Pull all Kobo records
+## Quickstart — pick your path
+
+**Path A — Reproduce the committed outputs (no Kobo token needed).**
+Everything is already in the repo; this just re-runs the deterministic transform
++ QC on the committed records:
+
+```bash
+./run_pipeline.sh
+```
+
+**Path B — Run on fresh data from Kobo (needs a token).**
+Pull first, then run the pipeline:
 
 ```bash
 unset KOBO_API_TOKEN
-python3 pull_all_kobo_records.py --form-name gaia_metadata_authoring_form_v2
+python3 pull_all_kobo_records.py --form-name GDSC   # paste token when prompted
+./run_pipeline.sh
 ```
-You should then see:
+
+`run_pipeline.sh` runs steps 3 → 4 below and writes all outputs. To run the
+steps by hand instead, follow them in order.
+
+---
+
+## The flow
+
+```text
+1. Pull ALL Kobo records       -> pull_all_kobo_records.py         (needs token; Path B only)
+2. Author/update SSSOM mapping  -> AI prompt + human review
+3. Transform to JSON-LD         -> sssom_to_jsonld.py    (combined @graph)
+                                   split_records_to_jsonld.py (one file per record)
+4. Quality-check + store report -> qc_report.py
+—  Inspect the mapping (optional)-> vanilla_sssom.py
+—  Run 3+4 in one command        -> run_pipeline.sh
+```
+
+| Step | Script | Output |
+| ---- | ------ | ------ |
+| 1 | `pull_all_kobo_records.py` | `records/raw/all_records_raw.json` (+ `sample_records_raw.json`, `field_inventory.md`, `all_records_keys.txt`) |
+| 2 | AI prompt + manual review | `sssom/kobo_form.sssom.tsv` |
+| 3a | `sssom_to_jsonld.py` | `records/outputs/all_records.jsonld` (one `@graph`) |
+| 3b | `split_records_to_jsonld.py` | `records/outputs/per_record/record_<id>_<table>.jsonld` |
+| 4 | `qc_report.py` | `records/validation/qc_issues.tsv`, `qc_summary.md`, `qc_summary.json` |
+| — | `vanilla_sssom.py` | mapping summary (does not read records) |
+| — | `run_pipeline.sh` | runs 3a + 3b + 4 |
+
+---
+
+## Step 1 — Pull all Kobo records (Path B only)
+
 ```bash
-Paste Kobo API token:
+unset KOBO_API_TOKEN
+python3 pull_all_kobo_records.py --form-name GDSC
 ```
+**Expected:** a `Paste Kobo API token:` prompt, then a count of records written.
 Writes into `records/raw/`:
 
 ```text
-all_records_raw.json      # every record, wrapped as {"datasets": [ ... ]}  -> for the transformer
-sample_records_raw.json   # a few records per dataset type                 -> for the prompt
-field_inventory.md        # union of all fields (+ repeat groups, vector/raster) -> for the prompt
+all_records_raw.json      # every record, wrapped {"datasets":[ ... ]}  -> transformer input
+sample_records_raw.json   # a few records per dataset type              -> for the prompt
+field_inventory.md        # union of all fields                         -> for the prompt
 all_records_keys.txt      # flat list of every field key
 ```
 
-Useful flags: `--asset-uid <uid>` (skip the form-name lookup),
-`--record-id <id>` (also write a single `record_<id>_raw.json`),
-`--out-dir <path>` (override the output location).
-
-To pull just one record by ID (spot-checks / debugging):
-
-```bash
-python3 pull_single_kobo_record.py --record-id 217
-```
+`--form-name` matches the project name **exactly** (case-insensitive), so `GDSC`
+will not match `GDSC_TESTING`/`GDSC_Authoring`. More robust: `--asset-uid <uid>`
+(copy the `aXXXX…` id from the project URL). Non-default server:
+`--server-url <url>`. Spot-check one record: `python3 pull_single_kobo_record.py
+--record-id 217`.
 
 ---
 
-## Step 2 — Author or update the SSSOM mapping
+## Step 2 — Author or update the mapping
 
-The SSSOM TSV defines, per row: source JSONPath (Kobo), target JSON-LD path,
-mapping predicate, confidence, transform rule, and a comment.
-
-Attach **`field_inventory.md`** and **`sample_records_raw.json`** to the
-generation prompt:
-
-```text
-../prompts/kobo_reusable_sssom_generation_prompt.md
-```
-
-AI-generated mappings **must be reviewed by a human** before use. The production
-mapping lives at:
-
-```text
-../sssom/kobo_form.sssom.tsv
-```
+Attach **`field_inventory.md`** and **`sample_records_raw.json`** to the prompt at
+`../prompts/kobo_reusable_sssom_generation_prompt.md`. AI output **must be
+human-reviewed** before use, then saved as `../sssom/kobo_form.sssom.tsv`.
+Skip this step entirely if you are reusing the committed mapping.
 
 ---
 
-## Step 3a — Transform to a single combined JSON-LD
+## Step 3 — Transform to JSON-LD
+
+Run **3a or 3b** (not both in sequence — they read the same raw file).
+
+**3a — one combined file (all datasets in a single `@graph`):**
 
 ```bash
 python3 sssom_to_jsonld.py \
@@ -97,20 +123,9 @@ python3 sssom_to_jsonld.py \
   --input  ../../records/raw/all_records_raw.json \
   --output ../../records/outputs/all_records.jsonld
 ```
+**Expected:** `N mapping row(s) loaded` → `N dataset record(s) mapped` → `Output written…`
 
-Produces one file with all records in a single `@graph`.
-
-> **Do NOT add `--wrap-key datasets` here.** `all_records_raw.json` is already
-> `{"datasets": [ ... ]}`. Adding the flag wraps it a second time into
-> `{"datasets": [{"datasets": [ ... ]}]}`, so `$.datasets[*]` matches only the
-> inner object and **just one record is produced**. `--wrap-key datasets` is
-> only for a single *bare* record (one unwrapped object) — see below.
-
----
-
-## Step 3b — Transform to one file per record
-
-This is the desired output for catalogue ingestion (one JSON-LD per dataset).
+**3b — one file per record (this is what catalogue ingestion uses):**
 
 ```bash
 python3 split_records_to_jsonld.py \
@@ -118,49 +133,41 @@ python3 split_records_to_jsonld.py \
   --input  ../../records/raw/all_records_raw.json \
   --outdir ../../records/outputs/per_record
 ```
-
-Writes `record_<id>_<table_name>.jsonld` — one per record — into `per_record/`.
-
-**How it works:** the splitter reads `all_records_raw.json`, separates it into
-single records, and calls `sssom_to_jsonld.py` once per record. Each single
-record *is* a bare object, so the splitter applies `--wrap-key datasets`
-internally. The core transformer is unchanged — the splitter simply orchestrates
-it. You run **either** 3a **or** 3b; they both read the same raw file and are not
-a sequence.
-
-**Duplicate records:** if the pull contains duplicate `control_group/id` values,
-the splitter still writes every file, suffixing collisions `__2` / `__3`. Those
-files share the same `@id`, so they would collide in a catalogue keyed on `@id`.
-De-duplicate at the source, then regenerate.
+**Expected:** `Done: N written, 0 failed`, plus a NOTE if any `control_group/id`
+is duplicated (those files share an `@id` and collide in a catalogue — fix at
+source, then regenerate). Step 4 lists and classifies duplicates.
 
 ---
 
-## `--wrap-key` in one line
+## Step 4 — Quality checks + stored validation
 
-| Input | Command |
-| ----- | ------- |
-| `all_records_raw.json` (already `{"datasets": [...]}`) | **omit** `--wrap-key` |
-| a single bare record (one unwrapped object) | add `--wrap-key datasets` |
+```bash
+python3 qc_report.py \
+  --input ../../records/raw/all_records_raw.json \
+  --sssom ../sssom/kobo_form.sssom.tsv \
+  --out   ../../records/validation/qc_issues.tsv
+```
+`--input` is the **records `.json`**; `--sssom` is the **mapping `.sssom.tsv`**.
+Swapping them is the most common error.
+
+Checks: duplicate `control_group/id` (classified as *true duplicate submission* vs
+*id collision*), float-formatted ids (`116.0`), malformed concatenated key,
+missing descriptions, and transform validation (records mapped, empty
+PropertyValues, unmapped license codes).
+
+**Writes to `records/validation/`:** `qc_issues.tsv` (per-record table),
+`qc_summary.md` (readable report), `qc_summary.json` (machine-readable +
+provenance: git commit, python, mapping). Add `--no-report` for the TSV only.
 
 ---
 
-## Optional — Inspect the mapping (`vanilla_sssom.py`)
-
-A mapping **inspector**, not part of JSON-LD production. It parses the SSSOM,
-prints a summary, can export the alignments (json / tsv / turtle), and can
-validate with `sssom-py`. Useful as a pre-flight check that the mapping is
-well-formed before a big run.
+## Optional — inspect the mapping
 
 ```bash
 python3 vanilla_sssom.py --sssom ../sssom/kobo_form.sssom.tsv --validate
 ```
+Prints an alignment summary (not JSON-LD); prints to the terminal unless you add
+`--output <path>`. `--validate` needs `pip install sssom` for the deep check.
 
 ---
 
-## Conventions
-
-- Don't edit scripts to change records — use the CLI flags.
-- Raw Kobo files → `records/raw/`
-- Generated JSON-LD → `records/outputs/` (combined) and `records/outputs/per_record/` (per record)
-- Mapping files → `sssom/`
-- Validation / comparison outputs → `records/validation/`

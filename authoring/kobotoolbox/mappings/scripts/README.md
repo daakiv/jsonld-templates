@@ -170,4 +170,10 @@ Prints an alignment summary (not JSON-LD); prints to the terminal unless you add
 `--output <path>`. `--validate` needs `pip install sssom` for the deep check.
 
 ---
+##  Future extension:
+> The transformation layer may evolve to a hybrid model in
+> which deterministic rules remain the default and LLM-assisted transformation
+> is selectively invoked for mappings requiring semantic interpretation.
+
+---
 

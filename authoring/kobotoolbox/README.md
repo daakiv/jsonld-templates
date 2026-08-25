@@ -78,6 +78,17 @@ Gaia Catalog review and ingestion
 | [`requirements.txt`](requirements.txt) | Python dependencies required to reproduce and run the KoboToolbox → SSSOM → JSON-LD pipeline. |
 | [`REPRODUCIBILITY.md`](REPRODUCIBILITY.md) | Step-by-step instructions for setting up a local environment and reproducing the committed workflow. |
 | [`README.md`](README.md) | This KoboToolbox metadata-authoring workflow overview. |                                                                                  |
+## Future development
 
+### Hybrid transformation
+
+The current pipeline uses a **deterministic Python transformer** to apply reviewed
+SSSOM mappings consistently and reproducibly across records.
+
+A future extension will explore a **hybrid transformation approach**, retaining
+deterministic rules as the default while allowing optional LLM-assisted
+transformation for fields requiring semantic interpretation, normalization, or
+enrichment. SSSOM will remain the explicit semantic mapping layer, with
+model/prompt provenance and validation captured for non-deterministic outputs.
 
 > For Science-on-Schema.org guidance on dataset roles, see the [official Dataset guide](https://github.com/ESIPFed/science-on-schema.org/blob/main/guides/Dataset.md#roles-of-people).
